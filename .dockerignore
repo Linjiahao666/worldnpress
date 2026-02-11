@@ -1,0 +1,67 @@
+# 依赖
+node_modules
+.npm
+.pnpm-store
+
+# 构建产物
+.output
+.nuxt
+dist
+.turbo
+
+# 环境和配置
+.env
+.env.*
+!.env.example
+
+# 日志
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# Git
+.git
+.gitignore
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# 测试
+coverage
+.nyc_output
+
+# 数据库和上传文件（由 volume 管理）
+data
+*.db
+*.db-shm
+*.db-wal
+public/uploads
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# 文档
+README.md
+*.md
+docs
+
+# CI/CD
+.github
+.gitlab-ci.yml
+
+# 临时文件
+tmp
+temp

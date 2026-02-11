@@ -26,6 +26,15 @@ logs
 # Database
 data/
 *.db
+*.db-shm
+*.db-wal
+
+# Uploads
+public/uploads/
+
+# Docker
+.docker/
+docker-compose.override.yml
 
 .github
 

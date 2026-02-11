@@ -1,10 +1,15 @@
 # 多阶段构建 - 构建阶段
-FROM node:18-alpine AS builder
+FROM node:20-bookworm-slim AS builder
 
 WORKDIR /app
 
 # 复制依赖文件
 COPY package*.json ./
+
+# 安装构建依赖
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends python3 make g++ && \
+    rm -rf /var/lib/apt/lists/*
 
 # 安装依赖（包括 devDependencies 用于构建）
 RUN npm ci
@@ -16,7 +21,7 @@ COPY . .
 RUN npm run build
 
 # 生产阶段
-FROM node:18-alpine AS runner
+FROM node:20-bookworm-slim AS runner
 
 WORKDIR /app
 
@@ -27,9 +32,11 @@ ENV NODE_ENV=production
 COPY --from=builder /app/.output /app/.output
 COPY --from=builder /app/package*.json /app/
 
-# 安装 better-sqlite3 生产依赖（native 模块需要在目标环境编译）
-RUN npm ci --omit=dev && \
-    npm rebuild better-sqlite3
+# 安装运行时依赖（better-sqlite3 可能需要编译）
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends python3 make g++ && \
+    rm -rf /var/lib/apt/lists/* && \
+    npm ci --omit=dev
 
 # 创建数据目录（将通过 volume 挂载）
 RUN mkdir -p /app/data /app/public/uploads
@@ -39,8 +46,8 @@ RUN ln -sf /data/db /app/data && \
     ln -sf /data/uploads /app/public/uploads
 
 # 设置非 root 用户运行
-RUN addgroup -g 1001 -S nodejs && \
-    adduser -S nodejs -u 1001 && \
+RUN groupadd -g 1001 nodejs && \
+    useradd -m -u 1001 -g nodejs nodejs && \
     chown -R nodejs:nodejs /app
 
 USER nodejs

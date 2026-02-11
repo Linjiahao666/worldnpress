@@ -17,8 +17,8 @@ if ! command -v docker &> /dev/null; then
     exit 1
 fi
 
-if ! command -v docker-compose &> /dev/null; then
-    echo -e "${YELLOW}错误: 未安装 Docker Compose，请先安装${NC}"
+if ! docker compose version &> /dev/null; then
+    echo -e "${YELLOW}错误: 未安装 Docker Compose V2，请先安装${NC}"
     exit 1
 fi
 
@@ -31,18 +31,18 @@ MODE=${MODE:-1}
 
 # 清理旧容器
 echo -e "\n${GREEN}停止并清理旧容器...${NC}"
-docker-compose down 2>/dev/null || true
+docker compose down 2>/dev/null || true
 
 if [ "$MODE" = "2" ]; then
     # 临时禁用 Nginx 服务
     echo -e "${GREEN}使用仅 Nuxt 模式...${NC}"
-    docker-compose up -d --build worldnpress
+    docker compose up -d --build worldnpress
     echo -e "\n${GREEN}✓ 部署完成！${NC}"
     echo -e "访问地址: ${YELLOW}http://localhost:3000${NC}"
 else
     # 完整部署
     echo -e "${GREEN}使用完整模式（Nuxt + Nginx）...${NC}"
-    docker-compose up -d --build
+    docker compose up -d --build
     echo -e "\n${GREEN}✓ 部署完成！${NC}"
     echo -e "访问地址: ${YELLOW}http://localhost${NC} (Nginx)"
     echo -e "直接访问: ${YELLOW}http://localhost:3000${NC} (Nuxt)"
@@ -54,14 +54,14 @@ sleep 5
 
 # 显示状态
 echo -e "\n${GREEN}=== 服务状态 ===${NC}"
-docker-compose ps
+docker compose ps
 
 # 显示日志
 echo -e "\n${GREEN}=== 最新日志 ===${NC}"
-docker-compose logs --tail=20 worldnpress
+docker compose logs --tail=20 worldnpress
 
-echo -e "\n${YELLOW}提示: 使用 'docker-compose logs -f' 查看实时日志${NC}"
-echo -e "${YELLOW}提示: 使用 'docker-compose down' 停止服务${NC}"
+echo -e "\n${YELLOW}提示: 使用 'docker compose logs -f' 查看实时日志${NC}"
+echo -e "${YELLOW}提示: 使用 'docker compose down' 停止服务${NC}"
 
 # 管理员账号信息
 echo -e "\n${GREEN}=== 管理后台 ===${NC}"

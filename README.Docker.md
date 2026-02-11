@@ -6,10 +6,10 @@
 
 ```bash
 # 构建镜像并启动容器
-docker-compose up -d --build
+docker compose up -d --build
 
 # 查看日志
-docker-compose logs -f worldnpress
+docker compose logs -f worldnpress
 
 # 访问应用
 # http://localhost        (通过 Nginx)
@@ -20,22 +20,22 @@ docker-compose logs -f worldnpress
 
 ```bash
 # 停止服务
-docker-compose down
+docker compose down
 
 # 停止并删除数据卷（谨慎使用！）
-docker-compose down -v
+docker compose down -v
 
 # 重启服务
-docker-compose restart
+docker compose restart
 
 # 查看运行状态
-docker-compose ps
+docker compose ps
 
 # 进入容器
-docker-compose exec worldnpress sh
+docker compose exec worldnpress sh
 
 # 查看实时日志
-docker-compose logs -f worldnpress
+docker compose logs -f worldnpress
 ```
 
 ## 生产环境部署
@@ -126,7 +126,7 @@ volumes:
 然后运行：
 
 ```bash
-docker-compose up -d --build
+docker compose up -d --build
 ```
 
 访问 `http://localhost:3000`
@@ -171,20 +171,20 @@ services:
 ### 查看容器日志
 
 ```bash
-docker-compose logs -f worldnpress
+docker compose logs -f worldnpress
 ```
 
 ### 检查容器状态
 
 ```bash
-docker-compose ps
+docker compose ps
 docker inspect worldnpress
 ```
 
 ### 进入容器调试
 
 ```bash
-docker-compose exec worldnpress sh
+docker compose exec worldnpress sh
 # 在容器内检查
 ls -la /app
 ls -la /data
@@ -196,7 +196,7 @@ ps aux
 如果遇到数据库无法写入：
 
 ```bash
-docker-compose exec worldnpress sh
+docker compose exec worldnpress sh
 chown -R nodejs:nodejs /data
 ```
 

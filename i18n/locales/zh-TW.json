@@ -1,0 +1,137 @@
+{
+  "site": {
+    "title": "國際社會責任通訊社有限公司",
+    "subtitle": "International Social Responsibility News Agency Limited",
+    "description": "全球財經資訊門戶"
+  },
+  "nav": {
+    "home": "首頁",
+    "news": "新聞中心",
+    "esg": "ESG與可持續發展",
+    "gbaHk": "粵港澳大灣區·香港財經",
+    "greenFinance": "綠色金融",
+    "aiData": "AI輿情大數據中心",
+    "thinkTank": "智庫研究中心",
+    "events": "會展與活動中心",
+    "supervision": "輿論監督與誠信建設",
+    "brand": "品牌與企業服務",
+    "about": "關於我們"
+  },
+  "news": {
+    "title": "新聞中心",
+    "latest": "最新要聞",
+    "hot": "熱點新聞",
+    "more": "查看更多",
+    "categories": {
+      "macro-economy": "宏觀經濟",
+      "global-finance": "環球財經",
+      "financial-market": "金融市場",
+      "industrial-economy": "產業經濟",
+      "international-trade": "國際貿易",
+      "corporate-finance": "企業財經",
+      "financial-law": "財經法治"
+    },
+    "detail": {
+      "publishedAt": "發佈時間",
+      "author": "作者",
+      "source": "來源",
+      "share": "分享",
+      "related": "相關文章",
+      "backToList": "返回列表"
+    }
+  },
+  "esg": {
+    "title": "ESG與可持續發展",
+    "categories": {
+      "esg-news": "ESG要聞",
+      "governance": "治理實踐",
+      "carbon-management": "碳管理",
+      "circular-economy": "循環經濟",
+      "disclosure": "信息披露",
+      "report-service": "報告服務",
+      "rating": "評級認定",
+      "education": "教育培訓"
+    },
+    "stats": {
+      "title": "ESG 數據概覽",
+      "articles": "文章數",
+      "categories": "分類數",
+      "views": "閱讀量"
+    }
+  },
+  "home": {
+    "hero": {
+      "title": "全球財經資訊 一站掌握",
+      "subtitle": "專注ESG與可持續發展、綠色金融、全球財經報道"
+    },
+    "sections": {
+      "title": "欄目導覽",
+      "viewAll": "查看全部"
+    },
+    "quickLinks": {
+      "title": "快速通道"
+    }
+  },
+  "common": {
+    "readMore": "閱讀全文",
+    "loading": "載入中…",
+    "noData": "暫無數據",
+    "comingSoon": "即將上線",
+    "comingSoonDesc": "此欄目正在建設中，敬請期待",
+    "backToHome": "返回首頁",
+    "search": "搜索",
+    "searchPlaceholder": "搜索文章…",
+    "page": "第 {page} 頁",
+    "totalArticles": "共 {total} 篇文章",
+    "cancel": "取消",
+    "viewAll": "查看全部"
+  },
+  "footer": {
+    "companyName": "國際社會責任通訊社有限公司",
+    "companyNameEn": "International Social Responsibility News Agency Limited",
+    "address": "B27 SHINGLEE COMMERCIAL BUILDING 8 WING KUT STREET, CENTRAL HK (香港中环永吉街8号成利商业大厦室)",
+    "phone": "+85234667423",
+    "fax": "+85226916469",
+    "email": "info{'@'}worldnpress.com",
+    "copyright": "© {year} WorldnPress. 版權所有。",
+    "links": {
+      "title": "快速連結",
+      "privacy": "隱私政策",
+      "terms": "使用條款",
+      "disclaimer": "免責聲明",
+      "contact": "聯繫我們"
+    },
+    "about": {
+      "title": "關於我們",
+      "description": "世界財經新聞（WorldnPress）是一個專注於全球財經、ESG可持續發展及綠色金融的專業新聞資訊平台。"
+    }
+  },
+  "admin": {
+    "title": "管理後台",
+    "dashboard": "管理後台",
+    "description": "管理網站文章與內容",
+    "articles": "文章管理",
+    "create": "發布文章",
+    "edit": "編輯文章",
+    "comingSoon": "管理系統正在開發中",
+    "totalArticles": "文章總數",
+    "totalCategories": "分類總數",
+    "totalViews": "總閱讀量",
+    "quickActions": "快捷操作",
+    "createArticle": "新增文章",
+    "manageArticles": "文章管理",
+    "recentArticles": "最近文章",
+    "editArticle": "編輯文章",
+    "articleTitle": "標題",
+    "articleTitlePlaceholder": "請輸入文章標題",
+    "articleSection": "所屬板塊",
+    "articleCategory": "分類",
+    "articleCategoryPlaceholder": "請輸入分類 slug",
+    "articleDate": "發佈日期",
+    "actions": "操作",
+    "backToDashboard": "返回儀表板",
+    "backToList": "返回列表",
+    "publish": "發布文章",
+    "save": "保存修改"
+  }
+}

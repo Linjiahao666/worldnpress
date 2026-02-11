@@ -1,0 +1,137 @@
+{
+  "site": {
+    "title": "International Social Responsibility News Agency Limited",
+    "subtitle": "International Social Responsibility News Agency Limited",
+    "description": "Global Financial News Portal"
+  },
+  "nav": {
+    "home": "Home",
+    "news": "News Center",
+    "esg": "ESG & Sustainability",
+    "gbaHk": "GBA & Hong Kong Finance",
+    "greenFinance": "Green Finance",
+    "aiData": "AI Sentiment & Big Data",
+    "thinkTank": "Think Tank",
+    "events": "Events & Exhibitions",
+    "supervision": "Supervision & Integrity",
+    "brand": "Brand & Enterprise Services",
+    "about": "About Us"
+  },
+  "news": {
+    "title": "News Center",
+    "latest": "Latest News",
+    "hot": "Hot News",
+    "more": "View More",
+    "categories": {
+      "macro-economy": "Macro Economy",
+      "global-finance": "Global Finance",
+      "financial-market": "Financial Market",
+      "industrial-economy": "Industrial Economy",
+      "international-trade": "International Trade",
+      "corporate-finance": "Corporate Finance",
+      "financial-law": "Financial Law"
+    },
+    "detail": {
+      "publishedAt": "Published",
+      "author": "Author",
+      "source": "Source",
+      "share": "Share",
+      "related": "Related Articles",
+      "backToList": "Back to List"
+    }
+  },
+  "esg": {
+    "title": "ESG & Sustainability",
+    "categories": {
+      "esg-news": "ESG News",
+      "governance": "Governance Practices",
+      "carbon-management": "Carbon Management",
+      "circular-economy": "Circular Economy",
+      "disclosure": "Information Disclosure",
+      "report-service": "Report Services",
+      "rating": "Rating & Certification",
+      "education": "Education & Training"
+    },
+    "stats": {
+      "title": "ESG Data Overview",
+      "articles": "Articles",
+      "categories": "Categories",
+      "views": "Views"
+    }
+  },
+  "home": {
+    "hero": {
+      "title": "Global Financial Insights at Your Fingertips",
+      "subtitle": "Focused on ESG & Sustainability, Green Finance, and Global Financial Reporting"
+    },
+    "sections": {
+      "title": "Section Directory",
+      "viewAll": "View All"
+    },
+    "quickLinks": {
+      "title": "Quick Links"
+    }
+  },
+  "common": {
+    "readMore": "Read More",
+    "loading": "Loading…",
+    "noData": "No Data Available",
+    "comingSoon": "Coming Soon",
+    "comingSoonDesc": "This section is under construction. Stay tuned!",
+    "backToHome": "Back to Home",
+    "search": "Search",
+    "searchPlaceholder": "Search articles…",
+    "page": "Page {page}",
+    "totalArticles": "{total} articles in total",
+    "cancel": "Cancel",
+    "viewAll": "View All"
+  },
+  "footer": {
+    "companyName": "International Social Responsibility News Agency Limited",
+    "companyNameEn": "International Social Responsibility News Agency Limited",
+    "address": "B27 SHINGLEE COMMERCIAL BUILDING 8 WING KUT STREET, CENTRAL HK (Room B27, Shinglee Commercial Building, 8 Wing Kut Street, Central, Hong Kong)",
+    "phone": "+85234667423",
+    "fax": "+85226916469",
+    "email": "info{'@'}worldnpress.com",
+    "copyright": "© {year} WorldnPress. All rights reserved.",
+    "links": {
+      "title": "Quick Links",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Use",
+      "disclaimer": "Disclaimer",
+      "contact": "Contact Us"
+    },
+    "about": {
+      "title": "About Us",
+      "description": "WorldnPress is a professional news and information platform focused on global finance, ESG sustainability, and green finance."
+    }
+  },
+  "admin": {
+    "title": "Admin Panel",
+    "dashboard": "Dashboard",
+    "description": "Manage website articles and content",
+    "articles": "Article Management",
+    "create": "Create Article",
+    "edit": "Edit Article",
+    "comingSoon": "Admin system is under development",
+    "totalArticles": "Total Articles",
+    "totalCategories": "Total Categories",
+    "totalViews": "Total Views",
+    "quickActions": "Quick Actions",
+    "createArticle": "Create Article",
+    "manageArticles": "Manage Articles",
+    "recentArticles": "Recent Articles",
+    "editArticle": "Edit Article",
+    "articleTitle": "Title",
+    "articleTitlePlaceholder": "Enter article title",
+    "articleSection": "Section",
+    "articleCategory": "Category",
+    "articleCategoryPlaceholder": "Enter category slug",
+    "articleDate": "Publish Date",
+    "actions": "Actions",
+    "backToDashboard": "Back to Dashboard",
+    "backToList": "Back to List",
+    "publish": "Publish",
+    "save": "Save Changes"
+  }
+}

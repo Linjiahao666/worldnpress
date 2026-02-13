@@ -1,37 +1,11 @@
-services:
-  worldnpress:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: worldnpress
-    restart: unless-stopped
-    ports:
-      - "3000:3000"
-    volumes:
-      # 持久化数据库和上传文件
-      - worldnpress-data:/data
-    environment:
-      - NODE_ENV=production
-      - PORT=3000
-      - HOST=0.0.0.0
-    networks:
-      - worldnpress-network
-    healthcheck:
-      test:
-        [
-          "CMD",
-          "wget",
-          "--no-verbose",
-          "--tries=1",
-          "--spider",
-          "http://localhost:3000",
-        ]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
+# ============================================================
+# WorldnPress Docker Compose
+# Nginx（反向代理 + SSL）+ Certbot（证书管理）
+# Nuxt 应用通过 pm2 原生运行在宿主机，不再 Docker 构建
+# ============================================================
 
-  # Nginx 反向代理
+services:
+  # Nginx 反向代理（反代宿主机 :3000 的 Nuxt 服务）
   nginx:
     image: nginx:alpine
     container_name: worldnpress-nginx
@@ -43,12 +17,12 @@ services:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
       - ./letsencrypt:/etc/letsencrypt:ro
       - ./letsencrypt-webroot:/var/www/letsencrypt
-    depends_on:
-      - worldnpress
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     networks:
       - worldnpress-network
 
-  # Let's Encrypt 证书（按需启动：deploy.sh 指定时才运行）
+  # Let's Encrypt 证书（按需启动）
   certbot:
     image: certbot/certbot
     container_name: worldnpress-certbot
@@ -63,10 +37,6 @@ services:
       [
         "trap exit TERM; while :; do certbot renew --webroot -w /var/www/letsencrypt; sleep 12h & wait $${!}; done",
       ]
-
-volumes:
-  worldnpress-data:
-    driver: local
 
 networks:
   worldnpress-network:

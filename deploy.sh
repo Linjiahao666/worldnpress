@@ -2,14 +2,17 @@
 
 # ============================================================
 # WorldnPress 统一部署脚本
+# 架构: Nuxt (pm2 原生) + Nginx (Docker) + Certbot (Docker)
+#
 # 用法:
 #   chmod +x deploy.sh
 #   ./deploy.sh              # 交互式选择
-#   ./deploy.sh deploy       # 常规部署（自动检测 SSL）
+#   ./deploy.sh setup        # 首次服务器初始化（安装 Node/pm2）
+#   ./deploy.sh deploy       # 构建并部署（快速更新）
 #   ./deploy.sh init-ssl     # 首次申请 SSL 证书
 #   ./deploy.sh renew-ssl    # 手动续期 SSL 证书
-#   ./deploy.sh dev          # 仅启动 Nuxt（开发/测试）
-#   ./deploy.sh down         # 停止并清理所有容器
+#   ./deploy.sh down         # 停止所有服务
+#   ./deploy.sh logs         # 查看 Nuxt 日志
 # ============================================================
 
 set -e
@@ -38,42 +41,24 @@ error() { echo -e "${RED}$*${NC}"; }
 step()  { echo -e "\n${CYAN}[$1] $2${NC}"; }
 
 has_ssl() {
-  # certbot 以 root 创建目录，普通用户可能无权读取，用 sudo 检测
   sudo test -f "letsencrypt/live/${DOMAIN}/fullchain.pem" 2>/dev/null || \
     [ -f "letsencrypt/live/${DOMAIN}/fullchain.pem" ]
 }
 
-# 彻底停止并清理（包括孤儿容器）
-clean_down() {
-  info "停止并清理旧容器..."
+# 停止 Docker 容器
+clean_docker() {
+  info "停止 Docker 容器..."
   docker compose --profile ssl down --remove-orphans 2>/dev/null || true
-  # 清理可能残留的一次性容器
   docker rm -f worldnpress-nginx-init 2>/dev/null || true
   docker rm -f worldnpress-certbot 2>/dev/null || true
 }
 
-wait_for_service() {
-  local retries=15
-  info "等待服务启动..."
-  for i in $(seq 1 $retries); do
-    if docker ps --format '{{.Names}}' | grep -q worldnpress-nginx; then
-      info "✓ Nginx 运行正常"
-      return 0
-    fi
-    sleep 2
-  done
-  error "错误：Nginx 未能启动"
-  docker compose logs nginx
-  return 1
-}
-
-show_status() {
-  echo ""
-  info "=== 服务状态 ==="
-  docker compose ps
-  echo ""
-  info "=== 最新日志 ==="
-  docker compose logs --tail=10 worldnpress
+# 停止 pm2 进程
+stop_nuxt() {
+  if command -v pm2 &>/dev/null; then
+    pm2 stop worldnpress 2>/dev/null || true
+    pm2 delete worldnpress 2>/dev/null || true
+  fi
 }
 
 show_admin_info() {
@@ -89,69 +74,123 @@ show_admin_info() {
 }
 
 # ============================================================
-# 命令: deploy — 常规部署
+# 命令: setup — 首次服务器初始化
+# ============================================================
+cmd_setup() {
+  info "=== WorldnPress 服务器初始化 ==="
+
+  step "1/3" "检查 Node.js"
+  if command -v node &>/dev/null; then
+    info "✓ Node.js $(node -v) 已安装"
+  else
+    info "安装 Node.js 20..."
+    curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+    sudo apt-get install -y nodejs
+    info "✓ Node.js $(node -v) 安装完成"
+  fi
+
+  step "2/3" "检查 pm2"
+  if command -v pm2 &>/dev/null; then
+    info "✓ pm2 已安装"
+  else
+    info "安装 pm2..."
+    sudo npm install -g pm2
+    # 设置 pm2 开机自启
+    pm2 startup systemd -u $(whoami) --hp $HOME 2>/dev/null || \
+      sudo env PATH=$PATH:/usr/bin pm2 startup systemd -u $(whoami) --hp $HOME
+    info "✓ pm2 安装完成（已配置开机自启）"
+  fi
+
+  step "3/3" "检查 Docker"
+  if command -v docker &>/dev/null; then
+    info "✓ Docker 已安装"
+  else
+    warn "Docker 未安装，请手动安装 Docker 和 Docker Compose V2"
+    warn "参考: https://docs.docker.com/engine/install/ubuntu/"
+  fi
+
+  echo ""
+  info "✓ 初始化完成！接下来运行:"
+  echo -e "  ${YELLOW}./deploy.sh deploy${NC}      # 部署应用"
+  echo -e "  ${YELLOW}./deploy.sh init-ssl${NC}    # 申请 SSL 证书"
+}
+
+# ============================================================
+# 命令: deploy — 构建并部署（快速更新）
 # ============================================================
 cmd_deploy() {
   info "=== WorldnPress 部署 ==="
 
-  # 检查 Docker
-  if ! command -v docker &>/dev/null || ! docker compose version &>/dev/null; then
-    error "请先安装 Docker 和 Docker Compose V2"
+  # 检查依赖
+  if ! command -v node &>/dev/null; then
+    error "Node.js 未安装，请先运行: ./deploy.sh setup"
+    exit 1
+  fi
+  if ! command -v pm2 &>/dev/null; then
+    error "pm2 未安装，请先运行: ./deploy.sh setup"
     exit 1
   fi
 
-  clean_down
+  step "1/4" "安装依赖"
+  npm install
+  info "✓ 依赖安装完成"
 
+  step "2/4" "构建项目"
+  npm run build
+  info "✓ 构建完成"
+
+  step "3/4" "启动 / 重启 Nuxt (pm2)"
+  mkdir -p logs data public/uploads
+  if pm2 describe worldnpress &>/dev/null 2>&1; then
+    pm2 restart worldnpress
+    info "✓ Nuxt 已重启"
+  else
+    pm2 start ecosystem.config.cjs
+    info "✓ Nuxt 已启动"
+  fi
+  pm2 save
+
+  step "4/4" "启动 Nginx (Docker)"
   if has_ssl; then
-    info "检测到 SSL 证书，使用 HTTPS 模式部署"
-    docker compose --profile ssl up -d --build worldnpress nginx certbot
+    info "检测到 SSL 证书，HTTPS 模式"
+    docker compose --profile ssl up -d nginx certbot
     echo ""
-    info "✓ 部署完成！"
     echo -e "HTTPS 访问: ${YELLOW}https://${DOMAIN}${NC}"
   else
-    warn "未检测到 SSL 证书，使用 HTTP 模式部署"
-    warn "如需 HTTPS，请运行: ./deploy.sh init-ssl"
-
-    # 用 HTTP-only 配置启动 Nginx
+    warn "未检测到 SSL 证书，HTTP 模式"
+    warn "如需 HTTPS: ./deploy.sh init-ssl"
+    # 用 HTTP 临时配置
     use_http_config
-    docker compose up -d --build worldnpress nginx
+    docker compose up -d nginx
     echo ""
-    info "✓ 部署完成（HTTP 模式）"
     echo -e "HTTP 访问: ${YELLOW}http://localhost${NC}"
   fi
 
-  show_status
-  show_admin_info
-
   echo ""
-  warn "提示: docker compose logs -f   查看实时日志"
-  warn "提示: ./deploy.sh down          停止服务"
-}
-
-# ============================================================
-# 命令: dev — 仅启动 Nuxt（无 Nginx）
-# ============================================================
-cmd_dev() {
-  info "=== WorldnPress 开发模式 ==="
-  clean_down
-  docker compose up -d --build worldnpress
-  info "✓ 启动完成！"
-  echo -e "访问地址: ${YELLOW}http://localhost:3000${NC}"
+  info "========================================="
+  info "✓ 部署完成！"
+  info "========================================="
   show_admin_info
+  echo ""
+  info "=== 服务状态 ==="
+  pm2 list
+  docker compose ps
+  echo ""
+  warn "提示: ./deploy.sh logs    查看 Nuxt 日志"
+  warn "提示: ./deploy.sh down    停止所有服务"
 }
 
 # ============================================================
 # 命令: init-ssl — 首次申请 SSL 证书
 # ============================================================
 use_http_config() {
-  # 备份 HTTPS 配置，临时换成 HTTP-only
   if [ ! -f nginx.conf.https-bak ]; then
     cp nginx.conf nginx.conf.https-bak
   fi
 
   cat > nginx.conf <<'NGINXCONF'
 upstream worldnpress {
-    server worldnpress:3000;
+    server host.docker.internal:3000;
 }
 
 server {
@@ -197,27 +236,33 @@ cmd_init_ssl() {
   step "1/5" "创建必要目录"
   mkdir -p letsencrypt letsencrypt-webroot
 
-  step "2/5" "使用 HTTP 模式启动 Nginx"
-  clean_down
-  use_http_config
-  docker compose up -d worldnpress nginx
-  sleep 8
+  step "2/5" "确保 Nuxt 运行中"
+  # Nuxt 需要在宿主机上运行，Nginx 才能反代
+  if ! pm2 describe worldnpress &>/dev/null 2>&1; then
+    warn "Nuxt 未运行，先构建并启动..."
+    npm install
+    npm run build
+    mkdir -p logs data public/uploads
+    pm2 start ecosystem.config.cjs
+    pm2 save
+    sleep 3
+  fi
+  info "✓ Nuxt 运行中"
 
-  step "3/5" "验证 Nginx 运行状态"
-  if ! wait_for_service; then
+  step "3/5" "使用 HTTP 模式启动 Nginx"
+  clean_docker
+  use_http_config
+  docker compose up -d nginx
+  sleep 5
+
+  # 验证 Nginx
+  if ! docker ps --format '{{.Names}}' | grep -q worldnpress-nginx; then
+    error "Nginx 启动失败"
+    docker compose logs nginx
     restore_https_config
     exit 1
   fi
-
-  # 测试 ACME 路径
-  mkdir -p letsencrypt-webroot/.well-known/acme-challenge
-  echo "test" > letsencrypt-webroot/.well-known/acme-challenge/test.txt
-  if docker compose exec nginx wget -q -O - http://localhost/.well-known/acme-challenge/test.txt 2>/dev/null | grep -q test; then
-    info "✓ ACME challenge 路径验证成功"
-  else
-    warn "⚠ ACME 路径测试未通过，继续尝试申请..."
-  fi
-  rm -f letsencrypt-webroot/.well-known/acme-challenge/test.txt
+  info "✓ Nginx 运行正常"
 
   step "4/5" "向 Let's Encrypt 申请 SSL 证书"
   echo -e "域名: ${YELLOW}${DOMAIN}${NC}"
@@ -226,11 +271,10 @@ cmd_init_ssl() {
   docker compose --profile ssl run --rm certbot \
     "certbot certonly --webroot -w /var/www/letsencrypt -d ${DOMAIN} --email ${EMAIL} --agree-tos --no-eff-email --force-renewal"
 
-  # 检查结果
   if ! has_ssl; then
     error "证书申请失败！请检查："
     echo "  1. 域名 ${DOMAIN} 的 A 记录是否指向本服务器"
-    echo "  2. 防火墙/安全组是否已开放 80 端口"
+    echo "  2. 防火墙是否已开放 80 端口"
     echo "  3. docker compose logs certbot 查看详细日志"
     restore_https_config
     exit 1
@@ -240,10 +284,10 @@ cmd_init_ssl() {
 
   step "5/5" "切换到 HTTPS 模式"
   restore_https_config
+  sudo chmod -R 755 letsencrypt/
 
-  # 重启所有服务
   docker compose --profile ssl down --remove-orphans
-  docker compose --profile ssl up -d worldnpress nginx certbot
+  docker compose --profile ssl up -d nginx certbot
 
   echo ""
   info "========================================="
@@ -255,8 +299,6 @@ cmd_init_ssl() {
   echo ""
   echo -e "证书有效期 90 天，certbot 容器会每 12 小时自动续期。"
   echo -e "手动续期:   ${YELLOW}./deploy.sh renew-ssl${NC}"
-  echo ""
-  docker compose ps
 }
 
 # ============================================================
@@ -264,24 +306,30 @@ cmd_init_ssl() {
 # ============================================================
 cmd_renew_ssl() {
   info "=== WorldnPress SSL 证书续期 ==="
-  echo "[$(date)] 开始 SSL 证书续期检查..."
+  echo "[$(date)] 开始续期检查..."
 
   docker compose --profile ssl run --rm certbot \
     "certbot renew --webroot -w /var/www/letsencrypt"
 
-  # 重载 Nginx
   docker compose exec nginx nginx -s reload
-
   info "[$(date)] ✓ SSL 续期检查完成"
 }
 
 # ============================================================
-# 命令: down — 停止服务
+# 命令: down — 停止所有服务
 # ============================================================
 cmd_down() {
   info "=== 停止 WorldnPress ==="
-  clean_down
-  info "✓ 所有容器已停止并清理"
+  stop_nuxt
+  clean_docker
+  info "✓ 所有服务已停止"
+}
+
+# ============================================================
+# 命令: logs — 查看日志
+# ============================================================
+cmd_logs() {
+  pm2 logs worldnpress --lines 50
 }
 
 # ============================================================
@@ -293,21 +341,23 @@ if [ -z "$CMD" ]; then
   echo -e "${GREEN}=== WorldnPress 部署工具 ===${NC}"
   echo ""
   echo "请选择操作："
-  echo "  1) 部署 / 更新（自动检测 SSL）"
-  echo "  2) 首次申请 SSL 证书"
-  echo "  3) 手动续期 SSL 证书"
-  echo "  4) 仅启动 Nuxt（开发模式）"
+  echo "  1) 部署 / 更新"
+  echo "  2) 首次服务器初始化（安装 Node/pm2）"
+  echo "  3) 首次申请 SSL 证书"
+  echo "  4) 手动续期 SSL 证书"
   echo "  5) 停止所有服务"
+  echo "  6) 查看日志"
   echo ""
   read -p "请输入选项 [1]: " CHOICE
   CHOICE=${CHOICE:-1}
 
   case "$CHOICE" in
     1) CMD="deploy" ;;
-    2) CMD="init-ssl" ;;
-    3) CMD="renew-ssl" ;;
-    4) CMD="dev" ;;
+    2) CMD="setup" ;;
+    3) CMD="init-ssl" ;;
+    4) CMD="renew-ssl" ;;
     5) CMD="down" ;;
+    6) CMD="logs" ;;
     *)
       error "无效选项"
       exit 1
@@ -316,15 +366,16 @@ if [ -z "$CMD" ]; then
 fi
 
 case "$CMD" in
+  setup)     cmd_setup ;;
   deploy)    cmd_deploy ;;
   init-ssl)  cmd_init_ssl ;;
   renew-ssl) cmd_renew_ssl ;;
-  dev)       cmd_dev ;;
   down)      cmd_down ;;
+  logs)      cmd_logs ;;
   *)
     error "未知命令: $CMD"
     echo ""
-    echo "可用命令: deploy | init-ssl | renew-ssl | dev | down"
+    echo "可用命令: setup | deploy | init-ssl | renew-ssl | down | logs"
     exit 1
     ;;
 esac

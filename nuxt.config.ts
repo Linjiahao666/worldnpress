@@ -11,6 +11,8 @@ export default defineNuxtConfig({
 
   colorMode: {
     preference: 'light',
+    fallback: 'light',
+    storageKey: 'nuxt-color-mode',
   },
 
   ui: {
@@ -31,6 +33,8 @@ export default defineNuxtConfig({
       useCookie: true,
       cookieKey: 'i18n_redirected',
       redirectOn: 'root',
+      alwaysRedirect: false,
+      fallbackLocale: 'zh-TW',
     },
     customRoutes: 'config',
     pages: {

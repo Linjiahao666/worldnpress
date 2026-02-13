@@ -23,7 +23,6 @@ NC='\033[0m'
 
 # ---- 配置 ----
 DOMAIN="worldnpress.com"
-DOMAIN_WWW="www.worldnpress.com"
 EMAIL="2195781154@qq.com"
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -155,7 +154,7 @@ upstream worldnpress {
 
 server {
     listen 80;
-    server_name worldnpress.com www.worldnpress.com;
+    server_name worldnpress.com;
 
     client_max_body_size 10m;
 
@@ -219,16 +218,16 @@ cmd_init_ssl() {
   rm -f letsencrypt-webroot/.well-known/acme-challenge/test.txt
 
   step "4/5" "向 Let's Encrypt 申请 SSL 证书"
-  echo -e "域名: ${YELLOW}${DOMAIN}, ${DOMAIN_WWW}${NC}"
+  echo -e "域名: ${YELLOW}${DOMAIN}${NC}"
   echo -e "邮箱: ${YELLOW}${EMAIL}${NC}"
 
   docker compose --profile ssl run --rm certbot \
-    "certbot certonly --webroot -w /var/www/letsencrypt -d ${DOMAIN} -d ${DOMAIN_WWW} --email ${EMAIL} --agree-tos --no-eff-email --force-renewal"
+    "certbot certonly --webroot -w /var/www/letsencrypt -d ${DOMAIN} --email ${EMAIL} --agree-tos --no-eff-email --force-renewal"
 
   # 检查结果
   if ! has_ssl; then
     error "证书申请失败！请检查："
-    echo "  1. 域名 ${DOMAIN} 和 ${DOMAIN_WWW} 的 A 记录是否指向本服务器"
+    echo "  1. 域名 ${DOMAIN} 的 A 记录是否指向本服务器"
     echo "  2. 防火墙/安全组是否已开放 80 端口"
     echo "  3. docker compose logs certbot 查看详细日志"
     restore_https_config

@@ -24,7 +24,7 @@ NC='\033[0m'
 # ---- 配置 ----
 DOMAIN="worldnpress.com"
 DOMAIN_WWW="www.worldnpress.com"
-EMAIL="admin@worldnpress.com"
+EMAIL="2195781154@qq.com"
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 cd "$SCRIPT_DIR"

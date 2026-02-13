@@ -5,7 +5,11 @@ export default defineNuxtRouteMiddleware(async (to) => {
   }
 
   try {
-    const { authenticated } = await $fetch('/api/auth/session')
+    const headers = process.server ? useRequestHeaders(['cookie']) : undefined
+    const { authenticated } = await $fetch('/api/auth/session', {
+      headers,
+      credentials: 'include',
+    })
     if (!authenticated) {
       return navigateTo('/admin/login')
     }

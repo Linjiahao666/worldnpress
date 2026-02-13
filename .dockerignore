@@ -53,6 +53,12 @@ Dockerfile
 docker-compose.yml
 .dockerignore
 
+# SSL / Let's Encrypt（由 volume 挂载，不需要进镜像）
+letsencrypt
+letsencrypt-webroot
+nginx.conf
+nginx.conf.*
+
 # 文档
 README.md
 *.md

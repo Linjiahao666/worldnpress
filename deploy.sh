@@ -38,7 +38,9 @@ error() { echo -e "${RED}$*${NC}"; }
 step()  { echo -e "\n${CYAN}[$1] $2${NC}"; }
 
 has_ssl() {
-  [ -f "letsencrypt/live/${DOMAIN}/fullchain.pem" ]
+  # certbot 以 root 创建目录，普通用户可能无权读取，用 sudo 检测
+  sudo test -f "letsencrypt/live/${DOMAIN}/fullchain.pem" 2>/dev/null || \
+    [ -f "letsencrypt/live/${DOMAIN}/fullchain.pem" ]
 }
 
 # 彻底停止并清理（包括孤儿容器）

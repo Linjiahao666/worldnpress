@@ -9,6 +9,10 @@ export default defineNuxtConfig({
     '@nuxt/image',
   ],
 
+  colorMode: {
+    preference: 'light',
+  },
+
   ui: {
     fonts: false,
   },

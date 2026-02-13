@@ -14,8 +14,6 @@ services:
       - NODE_ENV=production
       - PORT=3000
       - HOST=0.0.0.0
-      # 可以在这里添加其他环境变量
-      # - NUXT_PUBLIC_API_BASE=https://yourdomain.com
     networks:
       - worldnpress-network
     healthcheck:
@@ -50,10 +48,12 @@ services:
     networks:
       - worldnpress-network
 
-  # Let's Encrypt 证书自动续期（每12小时检查一次）
+  # Let's Encrypt 证书（按需启动：deploy.sh 指定时才运行）
   certbot:
     image: certbot/certbot
     container_name: worldnpress-certbot
+    profiles:
+      - ssl
     restart: unless-stopped
     volumes:
       - ./letsencrypt:/etc/letsencrypt

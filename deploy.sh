@@ -223,15 +223,7 @@ cmd_init_ssl() {
   echo -e "邮箱: ${YELLOW}${EMAIL}${NC}"
 
   docker compose --profile ssl run --rm certbot \
-    certbot certonly \
-      --webroot \
-      -w /var/www/letsencrypt \
-      -d "${DOMAIN}" \
-      -d "${DOMAIN_WWW}" \
-      --email "${EMAIL}" \
-      --agree-tos \
-      --no-eff-email \
-      --force-renewal
+    "certbot certonly --webroot -w /var/www/letsencrypt -d ${DOMAIN} -d ${DOMAIN_WWW} --email ${EMAIL} --agree-tos --no-eff-email --force-renewal"
 
   # 检查结果
   if ! has_ssl; then
@@ -274,7 +266,7 @@ cmd_renew_ssl() {
   echo "[$(date)] 开始 SSL 证书续期检查..."
 
   docker compose --profile ssl run --rm certbot \
-    certbot renew --webroot -w /var/www/letsencrypt
+    "certbot renew --webroot -w /var/www/letsencrypt"
 
   # 重载 Nginx
   docker compose exec nginx nginx -s reload

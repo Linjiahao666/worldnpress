@@ -47,3 +47,43 @@ export function useFeaturedArticles(section?: string) {
     pageSize: 5,
   })
 }
+
+export function useTopViewedArticles(limit = 5) {
+  const { data, status, refresh } = useFetch<Article[]>('/api/articles/top-viewed', {
+    query: { limit },
+  })
+
+  return {
+    articles: computed(() => data.value ?? []),
+    status,
+    refresh,
+  }
+}
+
+export function useRecordView(articleId: Ref<string> | string) {
+  const idRef = isRef(articleId) ? articleId : ref(articleId)
+  const recorded = ref(false)
+
+  async function recordView() {
+    if (recorded.value || !idRef.value) return
+    try {
+      await $fetch(`/api/articles/${idRef.value}/view`, { method: 'POST' })
+      recorded.value = true
+    }
+    catch {
+      // silently ignore
+    }
+  }
+
+  // Only record view on client side
+  if (import.meta.client) {
+    watch(idRef, (newId) => {
+      if (newId) {
+        recorded.value = false
+        recordView()
+      }
+    }, { immediate: true })
+  }
+
+  return { recorded, recordView }
+}

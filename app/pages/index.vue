@@ -8,7 +8,7 @@ useSeoMeta({
   ogDescription: () => t("home.hero.subtitle"),
 });
 
-const { articles: featuredArticles } = useFeaturedArticles();
+const { articles: featuredArticles } = useTopViewedArticles(5);
 const { articles: latestArticles } = useArticles({ pageSize: 8 });
 const { articles: hotArticles } = useHotArticles();
 </script>

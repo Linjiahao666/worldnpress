@@ -9,10 +9,17 @@ const { t, locale } = useI18n();
 const activeIndex = ref(0);
 const localePath = useLocalePath();
 
+const PLACEHOLDER_IMAGE =
+  "data:image/svg+xml," +
+  encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600"><rect fill="#1e293b" width="1200" height="600"/><text fill="#64748b" font-family="sans-serif" font-size="48" text-anchor="middle" x="600" y="310">WorldnPress</text></svg>',
+  );
+
 let timer: ReturnType<typeof setInterval> | null = null;
 
 function startAutoPlay(length: number) {
   stopAutoPlay();
+  if (length <= 1) return;
   timer = setInterval(() => {
     activeIndex.value = (activeIndex.value + 1) % length;
   }, 5000);
@@ -25,12 +32,16 @@ function stopAutoPlay() {
   }
 }
 
-function formatDate(dateStr: string) {
-  return new Intl.DateTimeFormat(locale.value, {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  }).format(new Date(dateStr));
+function prev(length: number) {
+  activeIndex.value = (activeIndex.value - 1 + length) % length;
+}
+
+function next(length: number) {
+  activeIndex.value = (activeIndex.value + 1) % length;
+}
+
+function getCoverSrc(article: Article) {
+  return article.coverImage || PLACEHOLDER_IMAGE;
 }
 
 onMounted(() => {
@@ -45,22 +56,30 @@ onUnmounted(() => {
 <template>
   <div
     v-if="articles.length > 0"
-    class="relative bg-slate-900 rounded-xl overflow-hidden"
+    class="relative rounded-xl overflow-hidden shadow-lg"
     @mouseenter="stopAutoPlay"
     @mouseleave="startAutoPlay(articles.length)"
   >
-    <div class="relative h-64 sm:h-80 lg:h-96">
+    <div class="relative h-72 sm:h-80 lg:h-105">
       <TransitionGroup name="fade">
         <div
           v-for="(article, index) in articles"
           v-show="index === activeIndex"
           :key="article.id"
-          class="absolute inset-0 flex items-end"
+          class="absolute inset-0"
         >
-          <div
-            class="absolute inset-0 bg-linear-to-t from-slate-900 via-slate-900/50 to-transparent"
+          <!-- 封面图 -->
+          <img
+            :src="getCoverSrc(article)"
+            :alt="article.title"
+            class="w-full h-full object-cover"
+            loading="lazy"
           />
-          <div class="relative z-10 p-6 sm:p-8 lg:p-10 w-full">
+          <!-- 底部渐变遮罩 + 标题 -->
+          <div
+            class="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent"
+          />
+          <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-8 lg:p-10">
             <NuxtLink
               :to="
                 localePath(
@@ -70,21 +89,33 @@ onUnmounted(() => {
               class="block group"
             >
               <h2
-                class="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-2 group-hover:text-green-400 transition-colors"
+                class="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-1 group-hover:text-green-400 transition-colors line-clamp-2 drop-shadow-md"
               >
                 {{ article.title }}
               </h2>
-              <p class="text-slate-300 text-base sm:text-lg line-clamp-2 mb-3">
-                {{ article.summary }}
-              </p>
-              <span class="text-xs text-slate-400">{{
-                formatDate(article.publishedAt)
-              }}</span>
             </NuxtLink>
           </div>
         </div>
       </TransitionGroup>
     </div>
+
+    <!-- 左右箭头 -->
+    <button
+      v-if="articles.length > 1"
+      class="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 flex items-center justify-center rounded-full bg-black/40 text-white hover:bg-black/60 transition-colors"
+      aria-label="Previous"
+      @click="prev(articles.length)"
+    >
+      <UIcon name="i-lucide-chevron-left" class="w-5 h-5" />
+    </button>
+    <button
+      v-if="articles.length > 1"
+      class="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 flex items-center justify-center rounded-full bg-black/40 text-white hover:bg-black/60 transition-colors"
+      aria-label="Next"
+      @click="next(articles.length)"
+    >
+      <UIcon name="i-lucide-chevron-right" class="w-5 h-5" />
+    </button>
 
     <!-- 指示器 -->
     <div class="absolute bottom-3 right-6 flex items-center gap-1.5 z-20">
@@ -107,7 +138,7 @@ onUnmounted(() => {
 <style scoped>
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.5s ease;
+  transition: opacity 0.6s ease;
 }
 .fade-enter-from,
 .fade-leave-to {

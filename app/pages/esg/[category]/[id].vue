@@ -10,6 +10,7 @@ const { getCategoryLabel } = useCategories("esg");
 const categoryLabel = computed(() => getCategoryLabel(category.value));
 
 const { article, status, error } = useArticleDetail(articleId);
+useRecordView(articleId);
 
 useSeoMeta({
   title: () =>

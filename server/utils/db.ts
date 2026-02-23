@@ -141,6 +141,27 @@ export function getArticleById(id: string): Article | null {
   return mapRowToArticle(row)
 }
 
+export function incrementViewCount(id: string): number {
+  const db = useDB()
+  const result = db.prepare('UPDATE articles SET view_count = view_count + 1 WHERE id = ?').run(id)
+  if (result.changes === 0) return 0
+  const row = db.prepare('SELECT view_count FROM articles WHERE id = ?').get(id) as { view_count: number } | undefined
+  return row?.view_count ?? 0
+}
+
+export function getTopViewedArticles(limit = 5): Article[] {
+  const db = useDB()
+  const rows = db.prepare(`
+    SELECT a.*, au.name as author_name, au.avatar as author_avatar
+    FROM articles a
+    LEFT JOIN authors au ON a.author_id = au.id
+    WHERE a.status = 'published'
+    ORDER BY a.view_count DESC, a.published_at DESC
+    LIMIT ?
+  `).all(limit) as any[]
+  return rows.map(mapRowToArticle)
+}
+
 export function createArticle(data: {
   title: string
   summary: string

@@ -99,11 +99,24 @@
       "privacy": "隐私政策",
       "terms": "使用条款",
       "disclaimer": "免责声明",
-      "contact": "联系我们"
+      "contact": "联系我们",
+      "reporters": "记者公示"
     },
     "about": {
       "title": "关于我们",
       "description": "世界财经新闻（WorldnPress）是一个专注于全球财经、ESG可持续发展及绿色金融的专业新闻资讯平台。"
+    }
+  },
+  "reporters": {
+    "title": "记者公示",
+    "description": "以下为本社持证记者名单，接受社会监督。",
+    "notice": "本公示信息如有变动，以最新更新为准。如发现有人冒充本社记者从事活动，请及时向我社举报。",
+    "table": {
+      "index": "序号",
+      "name": "姓 名",
+      "department": "部 门",
+      "position": "职 务",
+      "contact": "联系方式"
     }
   },
   "admin": {

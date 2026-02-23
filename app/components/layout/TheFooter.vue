@@ -62,6 +62,14 @@ const localePath = useLocalePath();
                 {{ t("nav.esg") }}
               </NuxtLink>
             </li>
+            <li>
+              <NuxtLink
+                :to="localePath('/reporters')"
+                class="hover:text-green-400 transition-colors"
+              >
+                {{ t("footer.links.reporters") }}
+              </NuxtLink>
+            </li>
           </ul>
         </div>
       </div>

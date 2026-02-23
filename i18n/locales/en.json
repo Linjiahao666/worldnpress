@@ -99,11 +99,24 @@
       "privacy": "Privacy Policy",
       "terms": "Terms of Use",
       "disclaimer": "Disclaimer",
-      "contact": "Contact Us"
+      "contact": "Contact Us",
+      "reporters": "Reporter Directory"
     },
     "about": {
       "title": "About Us",
       "description": "WorldnPress is a professional news and information platform focused on global finance, ESG sustainability, and green finance."
+    }
+  },
+  "reporters": {
+    "title": "Reporter Directory",
+    "description": "Below is the list of certified reporters of our agency, open to public supervision.",
+    "notice": "This directory is subject to updates. If you find anyone impersonating our reporters, please report to us immediately.",
+    "table": {
+      "index": "No.",
+      "name": "Name",
+      "department": "Department",
+      "position": "Position",
+      "contact": "Contact"
     }
   },
   "admin": {

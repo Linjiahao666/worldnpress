@@ -99,11 +99,24 @@
       "privacy": "隱私政策",
       "terms": "使用條款",
       "disclaimer": "免責聲明",
-      "contact": "聯繫我們"
+      "contact": "聯繫我們",
+      "reporters": "記者公示"
     },
     "about": {
       "title": "關於我們",
       "description": "世界財經新聞（WorldnPress）是一個專注於全球財經、ESG可持續發展及綠色金融的專業新聞資訊平台。"
+    }
+  },
+  "reporters": {
+    "title": "記者公示",
+    "description": "以下為本社持證記者名單，接受社會監督。",
+    "notice": "本公示信息如有變動，以最新更新為準。如發現有人冒充本社記者從事活動，請及時向我社舉報。",
+    "table": {
+      "index": "序號",
+      "name": "姓 名",
+      "department": "部 門",
+      "position": "職 務",
+      "contact": "聯繫方式"
     }
   },
   "admin": {

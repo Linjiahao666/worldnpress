@@ -7,6 +7,7 @@
   "nav": {
     "home": "首页",
     "news": "新闻中心",
+    "politics": "国际时政",
     "esg": "ESG与可持续发展",
     "gbaHk": "粤港澳大湾区·香港财经",
     "greenFinance": "绿色金融",
@@ -38,6 +39,20 @@
       "share": "分享",
       "related": "相关文章",
       "backToList": "返回列表"
+    }
+  },
+  "politics": {
+    "title": "国际时政",
+    "latest": "最新时政",
+    "hot": "热点时政",
+    "more": "查看更多",
+    "categories": {
+      "political-news": "时政要闻",
+      "diplomacy": "外交动态",
+      "international-relations": "国际关系",
+      "policy-analysis": "政策解读",
+      "geopolitics": "地缘政治",
+      "international-orgs": "国际组织"
     }
   },
   "esg": {

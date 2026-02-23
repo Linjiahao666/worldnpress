@@ -7,6 +7,7 @@
   "nav": {
     "home": "Home",
     "news": "News Center",
+    "politics": "International Politics",
     "esg": "ESG & Sustainability",
     "gbaHk": "GBA & Hong Kong Finance",
     "greenFinance": "Green Finance",
@@ -38,6 +39,20 @@
       "share": "Share",
       "related": "Related Articles",
       "backToList": "Back to List"
+    }
+  },
+  "politics": {
+    "title": "International Politics",
+    "latest": "Latest Politics",
+    "hot": "Hot Politics",
+    "more": "View More",
+    "categories": {
+      "political-news": "Political News",
+      "diplomacy": "Diplomatic Affairs",
+      "international-relations": "International Relations",
+      "policy-analysis": "Policy Analysis",
+      "geopolitics": "Geopolitics",
+      "international-orgs": "International Organizations"
     }
   },
   "esg": {

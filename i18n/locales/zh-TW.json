@@ -7,6 +7,7 @@
   "nav": {
     "home": "首頁",
     "news": "新聞中心",
+    "politics": "國際時政",
     "esg": "ESG與可持續發展",
     "gbaHk": "粵港澳大灣區·香港財經",
     "greenFinance": "綠色金融",
@@ -38,6 +39,20 @@
       "share": "分享",
       "related": "相關文章",
       "backToList": "返回列表"
+    }
+  },
+  "politics": {
+    "title": "國際時政",
+    "latest": "最新時政",
+    "hot": "熱點時政",
+    "more": "查看更多",
+    "categories": {
+      "political-news": "時政要聞",
+      "diplomacy": "外交動態",
+      "international-relations": "國際關係",
+      "policy-analysis": "政策解讀",
+      "geopolitics": "地緣政治",
+      "international-orgs": "國際組織"
     }
   },
   "esg": {

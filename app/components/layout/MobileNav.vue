@@ -7,6 +7,7 @@ const localePath = useLocalePath();
 const navItems = [
   { labelKey: "nav.home", to: "/", icon: "i-lucide-home" },
   { labelKey: "nav.news", to: "/news", icon: "i-lucide-newspaper" },
+  { labelKey: "nav.politics", to: "/politics", icon: "i-lucide-landmark" },
   { labelKey: "nav.esg", to: "/esg", icon: "i-lucide-leaf" },
 ];
 

@@ -6,6 +6,7 @@ const localePath = useLocalePath();
 const navItems = [
   { labelKey: "nav.home", to: "/" },
   { labelKey: "nav.news", to: "/news" },
+  { labelKey: "nav.politics", to: "/politics" },
   { labelKey: "nav.esg", to: "/esg" },
 ];
 

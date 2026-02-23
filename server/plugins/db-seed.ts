@@ -1,6 +1,6 @@
 import { mkdirSync, existsSync } from 'node:fs'
 import { resolve } from 'node:path'
-import { newsCategories, esgCategories } from '../../app/utils/navigation'
+import { newsCategories, esgCategories, politicsCategories } from '../../app/utils/navigation'
 
 export default defineNitroPlugin(() => {
   // 确保 data 目录存在
@@ -11,14 +11,15 @@ export default defineNitroPlugin(() => {
 
   const db = useDB()
 
-  // 初始化分类数据
+  // 初始化分类数据（使用 INSERT OR IGNORE 确保新分类被添加）
+  const allCategories = [...newsCategories, ...esgCategories, ...politicsCategories]
   const categoryCount = db.prepare('SELECT COUNT(*) as count FROM categories').get() as { count: number }
-  if (categoryCount.count === 0) {
+  if (categoryCount.count < allCategories.length) {
     console.log('[DB] Seeding categories...')
     const insertCategory = db.prepare(
       'INSERT OR IGNORE INTO categories (slug, section, label_key, icon) VALUES (?, ?, ?, ?)',
     )
-    for (const cat of [...newsCategories, ...esgCategories]) {
+    for (const cat of allCategories) {
       insertCategory.run(cat.slug, cat.section, cat.labelKey, cat.icon || '')
     }
     console.log('[DB] Categories seeded.')

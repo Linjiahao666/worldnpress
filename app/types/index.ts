@@ -7,7 +7,7 @@ export interface Article {
   contentBlocks?: ArticleContentBlock[]
   coverImage?: string
   category: string
-  section: 'news' | 'esg'
+  section: 'news' | 'esg' | 'politics'
   author: Author
   tags: string[]
   publishedAt: string
@@ -26,7 +26,7 @@ export interface ArticleRecord {
   contentBlocksJson?: string
   coverImage?: string
   category: string
-  section: 'news' | 'esg'
+  section: 'news' | 'esg' | 'politics'
   authorId: string
   tagsJson?: string
   publishedAt: string
@@ -54,7 +54,7 @@ export interface ArticleContentBlock {
 
 export interface Category {
   slug: string
-  section: 'news' | 'esg'
+  section: 'news' | 'esg' | 'politics'
   labelKey: string
   icon?: string
 }

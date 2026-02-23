@@ -1,9 +1,11 @@
-import { newsCategories, esgCategories } from '~/utils/navigation'
+import { newsCategories, esgCategories, politicsCategories } from '~/utils/navigation'
 import type { Category } from '~/types'
 
-export function useCategories(section: 'news' | 'esg') {
+export function useCategories(section: 'news' | 'esg' | 'politics') {
   const categories = computed<Category[]>(() => {
-    return section === 'news' ? newsCategories : esgCategories
+    if (section === 'news') return newsCategories
+    if (section === 'politics') return politicsCategories
+    return esgCategories
   })
 
   function getCategoryBySlug(slug: string) {

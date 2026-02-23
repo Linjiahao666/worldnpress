@@ -16,6 +16,60 @@ export function useDB(): Database.Database {
 }
 
 function initDB(db: Database.Database) {
+  // 迁移：如果旧表存在且 CHECK 约束不含 'politics'，则重建表
+  try {
+    const tableInfo = db.prepare("SELECT sql FROM sqlite_master WHERE type='table' AND name='articles'").get() as { sql: string } | undefined
+    if (tableInfo?.sql && !tableInfo.sql.includes('politics')) {
+      console.log('[DB] Migrating articles table to support politics section...')
+      db.exec(`
+        ALTER TABLE articles RENAME TO articles_old;
+      `)
+      db.exec(`
+        CREATE TABLE articles (
+          id TEXT PRIMARY KEY,
+          title TEXT NOT NULL,
+          summary TEXT NOT NULL DEFAULT '',
+          content TEXT NOT NULL DEFAULT '',
+          cover_image TEXT DEFAULT '',
+          category TEXT NOT NULL,
+          section TEXT NOT NULL CHECK(section IN ('news', 'esg', 'politics')),
+          author_id TEXT NOT NULL,
+          tags_json TEXT DEFAULT '[]',
+          published_at TEXT NOT NULL,
+          updated_at TEXT,
+          view_count INTEGER DEFAULT 0,
+          is_hot INTEGER DEFAULT 0,
+          is_featured INTEGER DEFAULT 0,
+          status TEXT DEFAULT 'published',
+          FOREIGN KEY (author_id) REFERENCES authors(id)
+        );
+        INSERT INTO articles SELECT * FROM articles_old;
+        DROP TABLE articles_old;
+      `)
+      console.log('[DB] Articles table migrated.')
+    }
+
+    const catInfo = db.prepare("SELECT sql FROM sqlite_master WHERE type='table' AND name='categories'").get() as { sql: string } | undefined
+    if (catInfo?.sql && !catInfo.sql.includes('politics')) {
+      console.log('[DB] Migrating categories table to support politics section...')
+      db.exec(`
+        ALTER TABLE categories RENAME TO categories_old;
+        CREATE TABLE categories (
+          slug TEXT PRIMARY KEY,
+          section TEXT NOT NULL CHECK(section IN ('news', 'esg', 'politics')),
+          label_key TEXT NOT NULL,
+          icon TEXT DEFAULT ''
+        );
+        INSERT INTO categories SELECT * FROM categories_old;
+        DROP TABLE categories_old;
+      `)
+      console.log('[DB] Categories table migrated.')
+    }
+  }
+  catch (e) {
+    // Tables don't exist yet, that's fine
+  }
+
   db.exec(`
     CREATE TABLE IF NOT EXISTS authors (
       id TEXT PRIMARY KEY,
@@ -30,7 +84,7 @@ function initDB(db: Database.Database) {
       content TEXT NOT NULL DEFAULT '',
       cover_image TEXT DEFAULT '',
       category TEXT NOT NULL,
-      section TEXT NOT NULL CHECK(section IN ('news', 'esg')),
+      section TEXT NOT NULL CHECK(section IN ('news', 'esg', 'politics')),
       author_id TEXT NOT NULL,
       tags_json TEXT DEFAULT '[]',
       published_at TEXT NOT NULL,
@@ -44,7 +98,7 @@ function initDB(db: Database.Database) {
 
     CREATE TABLE IF NOT EXISTS categories (
       slug TEXT PRIMARY KEY,
-      section TEXT NOT NULL CHECK(section IN ('news', 'esg')),
+      section TEXT NOT NULL CHECK(section IN ('news', 'esg', 'politics')),
       label_key TEXT NOT NULL,
       icon TEXT DEFAULT ''
     );
@@ -67,7 +121,7 @@ function mapRowToArticle(row: any): Article {
     content: row.content,
     coverImage: row.cover_image || '',
     category: row.category,
-    section: row.section as 'news' | 'esg',
+    section: row.section as 'news' | 'esg' | 'politics',
     author: {
       id: row.author_id,
       name: row.author_name || '',
@@ -166,7 +220,7 @@ export function createArticle(data: {
   title: string
   summary: string
   content: string
-  section: 'news' | 'esg'
+  section: 'news' | 'esg' | 'politics'
   category: string
   coverImage?: string
   tags?: string[]

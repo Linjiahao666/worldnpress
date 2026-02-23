@@ -19,6 +19,18 @@ export const mainNavigation: NavigationItem[] = [
     ],
   },
   {
+    labelKey: 'nav.politics',
+    to: '/politics',
+    children: [
+      { labelKey: 'politics.categories.political-news', to: '/politics/political-news' },
+      { labelKey: 'politics.categories.diplomacy', to: '/politics/diplomacy' },
+      { labelKey: 'politics.categories.international-relations', to: '/politics/international-relations' },
+      { labelKey: 'politics.categories.policy-analysis', to: '/politics/policy-analysis' },
+      { labelKey: 'politics.categories.geopolitics', to: '/politics/geopolitics' },
+      { labelKey: 'politics.categories.international-orgs', to: '/politics/international-orgs' },
+    ],
+  },
+  {
     labelKey: 'nav.esg',
     to: '/esg',
     children: [
@@ -52,6 +64,15 @@ export const newsCategories: Category[] = [
   { slug: 'financial-law', section: 'news', labelKey: 'news.categories.financial-law', icon: 'i-lucide-scale' },
 ]
 
+export const politicsCategories: Category[] = [
+  { slug: 'political-news', section: 'politics', labelKey: 'politics.categories.political-news', icon: 'i-lucide-landmark' },
+  { slug: 'diplomacy', section: 'politics', labelKey: 'politics.categories.diplomacy', icon: 'i-lucide-handshake' },
+  { slug: 'international-relations', section: 'politics', labelKey: 'politics.categories.international-relations', icon: 'i-lucide-globe' },
+  { slug: 'policy-analysis', section: 'politics', labelKey: 'politics.categories.policy-analysis', icon: 'i-lucide-file-search' },
+  { slug: 'geopolitics', section: 'politics', labelKey: 'politics.categories.geopolitics', icon: 'i-lucide-map' },
+  { slug: 'international-orgs', section: 'politics', labelKey: 'politics.categories.international-orgs', icon: 'i-lucide-building' },
+]
+
 export const esgCategories: Category[] = [
   { slug: 'esg-news', section: 'esg', labelKey: 'esg.categories.esg-news', icon: 'i-lucide-newspaper' },
   { slug: 'governance', section: 'esg', labelKey: 'esg.categories.governance', icon: 'i-lucide-shield-check' },
@@ -65,6 +86,7 @@ export const esgCategories: Category[] = [
 
 export const sectionCards = [
   { labelKey: 'nav.news', to: '/news', icon: 'i-lucide-newspaper', color: 'text-green-600', comingSoon: false },
+  { labelKey: 'nav.politics', to: '/politics', icon: 'i-lucide-landmark', color: 'text-green-600', comingSoon: false },
   { labelKey: 'nav.esg', to: '/esg', icon: 'i-lucide-leaf', color: 'text-green-600', comingSoon: false },
   { labelKey: 'nav.gbaHk', to: '/gba-hk', icon: 'i-lucide-landmark', color: 'text-slate-400', comingSoon: true },
   { labelKey: 'nav.greenFinance', to: '/green-finance', icon: 'i-lucide-banknote', color: 'text-slate-400', comingSoon: true },

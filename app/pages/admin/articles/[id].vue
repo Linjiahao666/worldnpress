@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import { newsCategories, esgCategories } from "~/utils/navigation";
+import {
+  newsCategories,
+  esgCategories,
+  politicsCategories,
+} from "~/utils/navigation";
 
 definePageMeta({
   layout: "admin",
@@ -22,7 +26,7 @@ const form = reactive({
   title: "",
   summary: "",
   content: "",
-  section: "news" as "news" | "esg",
+  section: "news" as "news" | "esg" | "politics",
   category: "",
   coverImage: "",
   tags: "",
@@ -92,11 +96,15 @@ watch(
 
 const sectionOptions = [
   { label: "新聞中心", value: "news" },
+  { label: "國際時政", value: "politics" },
   { label: "ESG 可持續發展", value: "esg" },
 ];
 
 const categoryOptions = computed(() => {
-  const cats = form.section === "news" ? newsCategories : esgCategories;
+  let cats;
+  if (form.section === "news") cats = newsCategories;
+  else if (form.section === "politics") cats = politicsCategories;
+  else cats = esgCategories;
   return cats.map((c) => ({ label: t(c.labelKey), value: c.slug }));
 });
 

@@ -1,75 +1,10 @@
-# Nuxt Minimal Starter
+2.23
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+新需求的修改计划
 
-## Setup
-
-Make sure to install dependencies:
-
-```bash
-# npm
-npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+1. 修改网站名称从國際社會責任通訊社有限公司，为国际经济网，同步修改国际化的内容
+2. 增加网站内相对应的人员公示界面，内容用表格给出，下面是示例：序号 姓 名 部 门 职 务 联系方式，将对应的链接放在网站底部
+3. 增加首页轮播屏，展示五条推荐新闻，从浏览量最高的新闻中选取，点击后进入新闻详情页，展示新闻的封面（如果没有使用站位图代替），标题
+4. 增加一个栏目，为国际时政
+5. 实现一个数据库内容备份功能，通过管理管理系统手动点击备份按钮，并配备对应的恢复功能，能够选择对应的数据库备份进行恢复，数据库备份文件能够被下载到本地
+6. 杂项，优化界面排版和内容，增加 loading

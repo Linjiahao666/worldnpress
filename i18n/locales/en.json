@@ -1,7 +1,7 @@
 {
   "site": {
-    "title": "International Social Responsibility News Agency Limited",
-    "subtitle": "International Social Responsibility News Agency Limited",
+    "title": "International Economy Network",
+    "subtitle": "International Economy Network",
     "description": "Global Financial News Portal"
   },
   "nav": {
@@ -102,8 +102,8 @@
     "viewAll": "View All"
   },
   "footer": {
-    "companyName": "International Social Responsibility News Agency Limited",
-    "companyNameEn": "International Social Responsibility News Agency Limited",
+    "companyName": "International Economy Network",
+    "companyNameEn": "International Economy Network",
     "address": "B27 SHINGLEE COMMERCIAL BUILDING 8 WING KUT STREET, CENTRAL HK (Room B27, Shinglee Commercial Building, 8 Wing Kut Street, Central, Hong Kong)",
     "phone": "+85234667423",
     "fax": "+85226916469",
@@ -160,6 +160,26 @@
     "backToDashboard": "Back to Dashboard",
     "backToList": "Back to List",
     "publish": "Publish",
-    "save": "Save Changes"
+    "save": "Save Changes",
+    "backup": "Database Backup",
+    "backupManagement": "Backup Management",
+    "backupDescription": "Manage database backups and restoration",
+    "createBackup": "Create Backup",
+    "creatingBackup": "Creating backup...",
+    "backupList": "Backup List",
+    "noBackups": "No backup files",
+    "noBackupsDesc": "Click the button above to create the first backup",
+    "restore": "Restore",
+    "restoring": "Restoring...",
+    "download": "Download",
+    "deleteBackup": "Delete",
+    "backupSuccess": "Backup created successfully",
+    "restoreSuccess": "Database restored successfully",
+    "restoreConfirm": "Confirm Restore",
+    "restoreWarning": "Restoring will overwrite the current database. The system will automatically backup current data. Are you sure you want to continue?",
+    "deleteConfirm": "Are you sure you want to delete this backup file? This action cannot be undone.",
+    "fileName": "File Name",
+    "fileSize": "File Size",
+    "createdAt": "Created At"
   }
 }

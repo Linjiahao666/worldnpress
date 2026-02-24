@@ -42,6 +42,7 @@ export default defineNuxtConfig({
       'admin/articles/index': false,
       'admin/articles/create': false,
       'admin/articles/[id]': false,
+      'admin/backup': false,
     },
   },
 
@@ -49,12 +50,12 @@ export default defineNuxtConfig({
     head: {
       charset: 'utf-8',
       viewport: 'width=device-width, initial-scale=1',
-      title: '國際社會責任通訊社有限公司',
+      title: '国际经济网',
       meta: [
         { name: 'description', content: '世界財經新聞門戶 - 提供全球財經、ESG可持續發展、綠色金融等專業資訊' },
         { name: 'theme-color', content: '#4ADE80' },
         { property: 'og:type', content: 'website' },
-        { property: 'og:title', content: '國際社會責任通訊社有限公司' },
+        { property: 'og:title', content: '国际经济网' },
         { property: 'og:description', content: '世界財經新聞門戶 - 提供全球財經、ESG可持續發展、綠色金融等專業資訊' },
         { name: 'twitter:card', content: 'summary_large_image' },
       ],

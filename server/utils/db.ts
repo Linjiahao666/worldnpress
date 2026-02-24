@@ -4,6 +4,13 @@ import type { Article } from '~/types'
 
 let _db: Database.Database | null = null
 
+export function closeDB() {
+  if (_db) {
+    _db.close()
+    _db = null
+  }
+}
+
 export function useDB(): Database.Database {
   if (!_db) {
     const dbPath = resolve(process.cwd(), 'data', 'worldnpress.db')

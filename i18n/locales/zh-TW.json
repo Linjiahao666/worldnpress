@@ -1,7 +1,7 @@
 {
   "site": {
-    "title": "國際社會責任通訊社有限公司",
-    "subtitle": "International Social Responsibility News Agency Limited",
+    "title": "國際經濟網",
+    "subtitle": "International Economy Network",
     "description": "全球財經資訊門戶"
   },
   "nav": {
@@ -102,8 +102,8 @@
     "viewAll": "查看全部"
   },
   "footer": {
-    "companyName": "國際社會責任通訊社有限公司",
-    "companyNameEn": "International Social Responsibility News Agency Limited",
+    "companyName": "國際經濟網",
+    "companyNameEn": "International Economy Network",
     "address": "B27 SHINGLEE COMMERCIAL BUILDING 8 WING KUT STREET, CENTRAL HK (香港中环永吉街8号成利商业大厦室)",
     "phone": "+85234667423",
     "fax": "+85226916469",
@@ -160,6 +160,26 @@
     "backToDashboard": "返回儀表板",
     "backToList": "返回列表",
     "publish": "發布文章",
-    "save": "保存修改"
+    "save": "保存修改",
+    "backup": "數據庫備份",
+    "backupManagement": "備份管理",
+    "backupDescription": "管理數據庫備份與恢復",
+    "createBackup": "創建備份",
+    "creatingBackup": "正在創建備份...",
+    "backupList": "備份列表",
+    "noBackups": "暫無備份文件",
+    "noBackupsDesc": "點擊上方按鈕創建第一個備份",
+    "restore": "恢復",
+    "restoring": "正在恢復...",
+    "download": "下載",
+    "deleteBackup": "刪除",
+    "backupSuccess": "備份創建成功",
+    "restoreSuccess": "數據庫恢復成功",
+    "restoreConfirm": "確認恢復",
+    "restoreWarning": "恢復操作將覆蓋當前數據庫，系統會自動備份當前數據。確定要繼續嗎？",
+    "deleteConfirm": "確認刪除這個備份文件嗎？此操作不可撤銷。",
+    "fileName": "文件名",
+    "fileSize": "文件大小",
+    "createdAt": "創建時間"
   }
 }

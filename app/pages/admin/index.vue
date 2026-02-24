@@ -135,6 +135,15 @@ async function handleLogout() {
             >
               管理文章
             </UButton>
+            <UButton
+              to="/admin/backup"
+              icon="i-lucide-database-backup"
+              color="neutral"
+              variant="outline"
+              block
+            >
+              备份管理
+            </UButton>
           </div>
         </UCard>
 

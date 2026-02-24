@@ -1,30 +1,35 @@
 <script setup lang="ts">
-import { sectionTitleKeys } from "~/utils/navigation";
+import { sectionTitleKeys, categoriesBySection } from "~/utils/navigation";
 
 const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
 const localePath = useLocalePath();
 
-const section = "think-tank";
-const sectionTitle: string = sectionTitleKeys[section] ?? section;
+const section = computed(() => route.params.section as string);
+const sectionTitle = computed(
+  () => sectionTitleKeys[section.value] || section.value,
+);
+
+const { categories } = useCategories(section.value);
 
 useSeoMeta({
-  title: () => `${t(sectionTitle)} - ${t("site.title")}`,
-  description: () => t(sectionTitle),
+  title: () => `${t(sectionTitle.value)} - ${t("site.title")}`,
+  description: () => t(sectionTitle.value),
 });
-
-const { categories } = useCategories(section);
 
 const page = computed(() => Number(route.query.page) || 1);
 const query = computed(() => ({
-  section,
+  section: section.value,
   page: page.value,
   pageSize: 10,
 }));
 
 const { articles, total, totalPages, currentPage } = useArticles(query);
-const { articles: hotArticles } = useArticles({ section, pageSize: 5 });
+const { articles: hotArticles } = useArticles({
+  section: section.value,
+  pageSize: 5,
+});
 
 function onPageChange(newPage: number) {
   router.push({ query: { ...route.query, page: newPage } });
@@ -40,14 +45,17 @@ function onPageChange(newPage: number) {
       ]"
       class="mb-4"
     />
+
     <div class="mb-6">
       <h1 class="text-2xl font-bold text-slate-900 mb-2">
         {{ t(sectionTitle) }}
       </h1>
     </div>
+
     <div v-if="categories.length > 0" class="mb-6">
       <CommonCategoryNav :categories="categories" :section="section" />
     </div>
+
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
       <div class="lg:col-span-2">
         <NewsList

@@ -11,6 +11,15 @@ useHead({
 const router = useRouter();
 const isLoggingOut = ref(false);
 
+// 从 API 获取真实数据
+const { data: stats } = useFetch<{
+  totalArticles: number;
+  totalCategories: number;
+  totalViews: number;
+}>("/api/admin/stats");
+
+const { articles: recentArticles } = useArticles({ pageSize: 5 });
+
 async function handleLogout() {
   isLoggingOut.value = true;
   try {
@@ -19,6 +28,12 @@ async function handleLogout() {
   } catch {
     router.push("/admin/login");
   }
+}
+
+function formatViews(n: number) {
+  if (n >= 10000) return `${(n / 10000).toFixed(1)}万`;
+  if (n >= 1000) return `${(n / 1000).toFixed(1)}k`;
+  return String(n);
 }
 </script>
 
@@ -77,7 +92,9 @@ async function handleLogout() {
             </div>
             <div>
               <p class="text-sm text-slate-500">文章總數</p>
-              <p class="text-2xl font-bold text-slate-900">18</p>
+              <p class="text-2xl font-bold text-slate-900">
+                {{ stats?.totalArticles ?? "..." }}
+              </p>
             </div>
           </div>
         </UCard>
@@ -91,7 +108,9 @@ async function handleLogout() {
             </div>
             <div>
               <p class="text-sm text-slate-500">分類總數</p>
-              <p class="text-2xl font-bold text-slate-900">15</p>
+              <p class="text-2xl font-bold text-slate-900">
+                {{ stats?.totalCategories ?? "..." }}
+              </p>
             </div>
           </div>
         </UCard>
@@ -105,13 +124,15 @@ async function handleLogout() {
             </div>
             <div>
               <p class="text-sm text-slate-500">總瀏覽量</p>
-              <p class="text-2xl font-bold text-slate-900">89,400</p>
+              <p class="text-2xl font-bold text-slate-900">
+                {{ stats ? formatViews(stats.totalViews) : "..." }}
+              </p>
             </div>
           </div>
         </UCard>
       </div>
 
-      <!-- 快捷操作 -->
+      <!-- 快捷操作 + 最近文章 -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <UCard>
           <template #header>
@@ -151,7 +172,24 @@ async function handleLogout() {
           <template #header>
             <h3 class="text-lg font-semibold text-slate-900">最近文章</h3>
           </template>
-          <p class="text-slate-500 text-sm">登入後可查看最近發佈的文章。</p>
+          <div v-if="recentArticles.length > 0" class="space-y-3">
+            <NuxtLink
+              v-for="article in recentArticles"
+              :key="article.id"
+              :to="`/admin/articles/${article.id}`"
+              class="block group"
+            >
+              <p
+                class="text-sm font-medium text-slate-700 group-hover:text-green-600 transition-colors line-clamp-1"
+              >
+                {{ article.title }}
+              </p>
+              <p class="text-xs text-slate-400 mt-0.5">
+                {{ article.section }} / {{ article.category }}
+              </p>
+            </NuxtLink>
+          </div>
+          <p v-else class="text-slate-500 text-sm">暫無文章</p>
         </UCard>
       </div>
     </div>

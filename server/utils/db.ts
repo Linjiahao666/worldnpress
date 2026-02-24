@@ -23,15 +23,13 @@ export function useDB(): Database.Database {
 }
 
 function initDB(db: Database.Database) {
-  // 迁移：如果旧表存在且 CHECK 约束不含 'politics'，则重建表
+  // 迁移：移除 CHECK 约束以支持更多 section
   try {
     const tableInfo = db.prepare("SELECT sql FROM sqlite_master WHERE type='table' AND name='articles'").get() as { sql: string } | undefined
-    if (tableInfo?.sql && !tableInfo.sql.includes('politics')) {
-      console.log('[DB] Migrating articles table to support politics section...')
+    if (tableInfo?.sql && tableInfo.sql.includes('CHECK')) {
+      console.log('[DB] Migrating articles table to remove CHECK constraint...')
       db.exec(`
-        ALTER TABLE articles RENAME TO articles_old;
-      `)
-      db.exec(`
+        ALTER TABLE articles RENAME TO articles_old_v3;
         CREATE TABLE articles (
           id TEXT PRIMARY KEY,
           title TEXT NOT NULL,
@@ -39,7 +37,7 @@ function initDB(db: Database.Database) {
           content TEXT NOT NULL DEFAULT '',
           cover_image TEXT DEFAULT '',
           category TEXT NOT NULL,
-          section TEXT NOT NULL CHECK(section IN ('news', 'esg', 'politics')),
+          section TEXT NOT NULL,
           author_id TEXT NOT NULL,
           tags_json TEXT DEFAULT '[]',
           published_at TEXT NOT NULL,
@@ -50,25 +48,25 @@ function initDB(db: Database.Database) {
           status TEXT DEFAULT 'published',
           FOREIGN KEY (author_id) REFERENCES authors(id)
         );
-        INSERT INTO articles SELECT * FROM articles_old;
-        DROP TABLE articles_old;
+        INSERT INTO articles SELECT * FROM articles_old_v3;
+        DROP TABLE articles_old_v3;
       `)
       console.log('[DB] Articles table migrated.')
     }
 
     const catInfo = db.prepare("SELECT sql FROM sqlite_master WHERE type='table' AND name='categories'").get() as { sql: string } | undefined
-    if (catInfo?.sql && !catInfo.sql.includes('politics')) {
-      console.log('[DB] Migrating categories table to support politics section...')
+    if (catInfo?.sql && catInfo.sql.includes('CHECK')) {
+      console.log('[DB] Migrating categories table to remove CHECK constraint...')
       db.exec(`
-        ALTER TABLE categories RENAME TO categories_old;
+        ALTER TABLE categories RENAME TO categories_old_v3;
         CREATE TABLE categories (
           slug TEXT PRIMARY KEY,
-          section TEXT NOT NULL CHECK(section IN ('news', 'esg', 'politics')),
+          section TEXT NOT NULL,
           label_key TEXT NOT NULL,
           icon TEXT DEFAULT ''
         );
-        INSERT INTO categories SELECT * FROM categories_old;
-        DROP TABLE categories_old;
+        INSERT INTO categories SELECT * FROM categories_old_v3;
+        DROP TABLE categories_old_v3;
       `)
       console.log('[DB] Categories table migrated.')
     }
@@ -91,7 +89,7 @@ function initDB(db: Database.Database) {
       content TEXT NOT NULL DEFAULT '',
       cover_image TEXT DEFAULT '',
       category TEXT NOT NULL,
-      section TEXT NOT NULL CHECK(section IN ('news', 'esg', 'politics')),
+      section TEXT NOT NULL,
       author_id TEXT NOT NULL,
       tags_json TEXT DEFAULT '[]',
       published_at TEXT NOT NULL,
@@ -105,7 +103,7 @@ function initDB(db: Database.Database) {
 
     CREATE TABLE IF NOT EXISTS categories (
       slug TEXT PRIMARY KEY,
-      section TEXT NOT NULL CHECK(section IN ('news', 'esg', 'politics')),
+      section TEXT NOT NULL,
       label_key TEXT NOT NULL,
       icon TEXT DEFAULT ''
     );
@@ -128,7 +126,7 @@ function mapRowToArticle(row: any): Article {
     content: row.content,
     coverImage: row.cover_image || '',
     category: row.category,
-    section: row.section as 'news' | 'esg' | 'politics',
+    section: row.section as Article['section'],
     author: {
       id: row.author_id,
       name: row.author_name || '',
@@ -227,7 +225,7 @@ export function createArticle(data: {
   title: string
   summary: string
   content: string
-  section: 'news' | 'esg' | 'politics'
+  section: string
   category: string
   coverImage?: string
   tags?: string[]
@@ -250,4 +248,16 @@ export function createArticle(data: {
   )
 
   return getArticleById(id)!
+}
+
+export function getAdminStats() {
+  const db = useDB()
+  const articleCount = db.prepare('SELECT COUNT(*) as count FROM articles').get() as { count: number }
+  const categoryCount = db.prepare('SELECT COUNT(*) as count FROM categories').get() as { count: number }
+  const viewsRow = db.prepare('SELECT COALESCE(SUM(view_count), 0) as total FROM articles').get() as { total: number }
+  return {
+    totalArticles: articleCount.count,
+    totalCategories: categoryCount.count,
+    totalViews: viewsRow.total,
+  }
 }

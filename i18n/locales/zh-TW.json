@@ -9,14 +9,18 @@
     "news": "新聞中心",
     "politics": "國際時政",
     "esg": "ESG與可持續發展",
+    "globalEconomy": "全球經濟",
+    "mainlandEconomy": "大陸經濟",
+    "industry": "產業經濟",
+    "dataCenter": "數據中心",
+    "thinkTank": "智庫研究",
+    "about": "關於我們",
     "gbaHk": "粵港澳大灣區·香港財經",
     "greenFinance": "綠色金融",
     "aiData": "AI輿情大數據中心",
-    "thinkTank": "智庫研究中心",
     "events": "會展與活動中心",
     "supervision": "輿論監督與誠信建設",
-    "brand": "品牌與企業服務",
-    "about": "關於我們"
+    "brand": "品牌與企業服務"
   },
   "news": {
     "title": "新聞中心",
@@ -85,6 +89,79 @@
     },
     "quickLinks": {
       "title": "快速通道"
+    }
+  },
+  "globalEconomy": {
+    "title": "全球經濟",
+    "categories": {
+      "macro-policy": "宏觀政策",
+      "intl-trade": "國際經貿",
+      "regional-economy": "區域經濟",
+      "central-bank": "央行與貨幣",
+      "trade-friction": "貿易摩擦"
+    }
+  },
+  "mainlandEconomy": {
+    "title": "大陸經濟",
+    "categories": {
+      "policy-interpretation": "政策解讀",
+      "ministry-news": "部委動態",
+      "conference-report": "會議報道",
+      "political-commentary": "時政評論",
+      "high-quality-dev": "高質量發展",
+      "a-share": "A股上市",
+      "esg-report": "ESG報告",
+      "esg-disclosure": "ESG披露",
+      "esg-rating": "ESG等級",
+      "esg-consulting": "ESG諮詢",
+      "esg-education": "ESG教育",
+      "lca": "LCA",
+      "cbam": "CBAM",
+      "zero-carbon-park": "零碳園區"
+    }
+  },
+  "industry": {
+    "title": "產業經濟",
+    "categories": {
+      "energy": "能源",
+      "technology": "科技",
+      "manufacturing": "製造",
+      "consumption": "消費",
+      "pharma": "醫藥",
+      "real-estate": "地產",
+      "automotive": "汽車",
+      "agriculture": "農業",
+      "transportation": "交通"
+    }
+  },
+  "dataCenter": {
+    "title": "數據中心",
+    "categories": {
+      "macro-data": "宏觀數據",
+      "industry-data": "行業數據",
+      "market-index": "市場指數",
+      "economic-calendar": "經濟日曆",
+      "chart-tools": "圖表工具"
+    }
+  },
+  "thinkTank": {
+    "title": "智庫研究",
+    "categories": {
+      "deep-analysis": "深度分析",
+      "column": "專欄",
+      "research-report": "研報",
+      "special-topic": "專題",
+      "events": "會議活動"
+    }
+  },
+  "about": {
+    "categories": {
+      "introduction": "網站介紹",
+      "contact": "聯繫方式",
+      "reporter-query": "記者證查詢",
+      "submission": "投稿合作",
+      "disclaimer": "免責聲明",
+      "privacy": "隱私政策"
     }
   },
   "common": {

@@ -1,3 +1,5 @@
+export type SectionType = 'news' | 'esg' | 'politics' | 'global-economy' | 'mainland-economy' | 'industry' | 'data-center' | 'think-tank'
+
 export interface Article {
   id: string
   title: string
@@ -7,7 +9,7 @@ export interface Article {
   contentBlocks?: ArticleContentBlock[]
   coverImage?: string
   category: string
-  section: 'news' | 'esg' | 'politics'
+  section: SectionType
   author: Author
   tags: string[]
   publishedAt: string
@@ -26,7 +28,7 @@ export interface ArticleRecord {
   contentBlocksJson?: string
   coverImage?: string
   category: string
-  section: 'news' | 'esg' | 'politics'
+  section: SectionType
   authorId: string
   tagsJson?: string
   publishedAt: string
@@ -54,7 +56,7 @@ export interface ArticleContentBlock {
 
 export interface Category {
   slug: string
-  section: 'news' | 'esg' | 'politics'
+  section: SectionType
   labelKey: string
   icon?: string
 }

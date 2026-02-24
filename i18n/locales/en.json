@@ -9,14 +9,18 @@
     "news": "News Center",
     "politics": "International Politics",
     "esg": "ESG & Sustainability",
+    "globalEconomy": "Global Economy",
+    "mainlandEconomy": "Mainland Economy",
+    "industry": "Industry",
+    "dataCenter": "Data Center",
+    "thinkTank": "Think Tank",
+    "about": "About Us",
     "gbaHk": "GBA & Hong Kong Finance",
     "greenFinance": "Green Finance",
     "aiData": "AI Sentiment & Big Data",
-    "thinkTank": "Think Tank",
     "events": "Events & Exhibitions",
     "supervision": "Supervision & Integrity",
-    "brand": "Brand & Enterprise Services",
-    "about": "About Us"
+    "brand": "Brand & Enterprise Services"
   },
   "news": {
     "title": "News Center",
@@ -85,6 +89,79 @@
     },
     "quickLinks": {
       "title": "Quick Links"
+    }
+  },
+  "globalEconomy": {
+    "title": "Global Economy",
+    "categories": {
+      "macro-policy": "Macro Policy",
+      "intl-trade": "International Trade",
+      "regional-economy": "Regional Economy",
+      "central-bank": "Central Banks & Currency",
+      "trade-friction": "Trade Friction"
+    }
+  },
+  "mainlandEconomy": {
+    "title": "Mainland Economy",
+    "categories": {
+      "policy-interpretation": "Policy Interpretation",
+      "ministry-news": "Ministry News",
+      "conference-report": "Conference Report",
+      "political-commentary": "Political Commentary",
+      "high-quality-dev": "High Quality Development",
+      "a-share": "A-Share Listing",
+      "esg-report": "ESG Report",
+      "esg-disclosure": "ESG Disclosure",
+      "esg-rating": "ESG Rating",
+      "esg-consulting": "ESG Consulting",
+      "esg-education": "ESG Education",
+      "lca": "LCA",
+      "cbam": "CBAM",
+      "zero-carbon-park": "Zero Carbon Park"
+    }
+  },
+  "industry": {
+    "title": "Industry",
+    "categories": {
+      "energy": "Energy",
+      "technology": "Technology",
+      "manufacturing": "Manufacturing",
+      "consumption": "Consumption",
+      "pharma": "Pharma",
+      "real-estate": "Real Estate",
+      "automotive": "Automotive",
+      "agriculture": "Agriculture",
+      "transportation": "Transportation"
+    }
+  },
+  "dataCenter": {
+    "title": "Data Center",
+    "categories": {
+      "macro-data": "Macro Data",
+      "industry-data": "Industry Data",
+      "market-index": "Market Index",
+      "economic-calendar": "Economic Calendar",
+      "chart-tools": "Chart Tools"
+    }
+  },
+  "thinkTank": {
+    "title": "Think Tank",
+    "categories": {
+      "deep-analysis": "Deep Analysis",
+      "column": "Column",
+      "research-report": "Research Report",
+      "special-topic": "Special Topic",
+      "events": "Events"
+    }
+  },
+  "about": {
+    "categories": {
+      "introduction": "About Us",
+      "contact": "Contact",
+      "reporter-query": "Reporter Query",
+      "submission": "Submission",
+      "disclaimer": "Disclaimer",
+      "privacy": "Privacy Policy"
     }
   },
   "common": {

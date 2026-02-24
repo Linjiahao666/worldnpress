@@ -1,11 +1,9 @@
-import { newsCategories, esgCategories, politicsCategories } from '~/utils/navigation'
-import type { Category } from '~/types'
+import { categoriesBySection } from '~/utils/navigation'
+import type { Category, SectionType } from '~/types'
 
-export function useCategories(section: 'news' | 'esg' | 'politics') {
+export function useCategories(section: SectionType | string) {
   const categories = computed<Category[]>(() => {
-    if (section === 'news') return newsCategories
-    if (section === 'politics') return politicsCategories
-    return esgCategories
+    return categoriesBySection[section] || []
   })
 
   function getCategoryBySlug(slug: string) {

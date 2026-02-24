@@ -9,14 +9,18 @@
     "news": "新闻中心",
     "politics": "国际时政",
     "esg": "ESG与可持续发展",
+    "globalEconomy": "全球经济",
+    "mainlandEconomy": "大陆经济",
+    "industry": "产业经济",
+    "dataCenter": "数据中心",
+    "thinkTank": "智库研究",
+    "about": "关于我们",
     "gbaHk": "粤港澳大湾区·香港财经",
     "greenFinance": "绿色金融",
     "aiData": "AI舆情大数据中心",
-    "thinkTank": "智库研究中心",
     "events": "会展与活动中心",
     "supervision": "舆论监督与诚信建设",
-    "brand": "品牌与企业服务",
-    "about": "关于我们"
+    "brand": "品牌与企业服务"
   },
   "news": {
     "title": "新闻中心",
@@ -85,6 +89,79 @@
     },
     "quickLinks": {
       "title": "快速通道"
+    }
+  },
+  "globalEconomy": {
+    "title": "全球经济",
+    "categories": {
+      "macro-policy": "宏观政策",
+      "intl-trade": "国际经贸",
+      "regional-economy": "区域经济",
+      "central-bank": "央行与货币",
+      "trade-friction": "贸易摩擦"
+    }
+  },
+  "mainlandEconomy": {
+    "title": "大陆经济",
+    "categories": {
+      "policy-interpretation": "政策解读",
+      "ministry-news": "部委动态",
+      "conference-report": "会议报道",
+      "political-commentary": "时政评论",
+      "high-quality-dev": "高质量发展",
+      "a-share": "A股上市",
+      "esg-report": "ESG报告",
+      "esg-disclosure": "ESG披露",
+      "esg-rating": "ESG等级",
+      "esg-consulting": "ESG咨询",
+      "esg-education": "ESG教育",
+      "lca": "LCA",
+      "cbam": "CBAM",
+      "zero-carbon-park": "零碳园区"
+    }
+  },
+  "industry": {
+    "title": "产业经济",
+    "categories": {
+      "energy": "能源",
+      "technology": "科技",
+      "manufacturing": "制造",
+      "consumption": "消费",
+      "pharma": "医药",
+      "real-estate": "地产",
+      "automotive": "汽车",
+      "agriculture": "农业",
+      "transportation": "交通"
+    }
+  },
+  "dataCenter": {
+    "title": "数据中心",
+    "categories": {
+      "macro-data": "宏观数据",
+      "industry-data": "行业数据",
+      "market-index": "市场指数",
+      "economic-calendar": "经济日历",
+      "chart-tools": "图表工具"
+    }
+  },
+  "thinkTank": {
+    "title": "智库研究",
+    "categories": {
+      "deep-analysis": "深度分析",
+      "column": "专栏",
+      "research-report": "研报",
+      "special-topic": "专题",
+      "events": "会议活动"
+    }
+  },
+  "about": {
+    "categories": {
+      "introduction": "网站介绍",
+      "contact": "联系方式",
+      "reporter-query": "记者证查询",
+      "submission": "投稿合作",
+      "disclaimer": "免责声明",
+      "privacy": "隐私政策"
     }
   },
   "common": {

@@ -1,9 +1,5 @@
 <script setup lang="ts">
-import {
-  newsCategories,
-  esgCategories,
-  politicsCategories,
-} from "~/utils/navigation";
+import { categoriesBySection } from "~/utils/navigation";
 
 definePageMeta({
   layout: "admin",
@@ -26,7 +22,7 @@ const form = reactive({
   title: "",
   summary: "",
   content: "",
-  section: "news" as "news" | "esg" | "politics",
+  section: "global-economy" as string,
   category: "",
   coverImage: "",
   tags: "",
@@ -95,16 +91,18 @@ watch(
 );
 
 const sectionOptions = [
+  { label: "全球经济", value: "global-economy" },
+  { label: "大陸经济", value: "mainland-economy" },
+  { label: "产业经济", value: "industry" },
+  { label: "智库研究", value: "think-tank" },
+  { label: "数据中心", value: "data-center" },
   { label: "新聞中心", value: "news" },
   { label: "國際時政", value: "politics" },
   { label: "ESG 可持續發展", value: "esg" },
 ];
 
 const categoryOptions = computed(() => {
-  let cats;
-  if (form.section === "news") cats = newsCategories;
-  else if (form.section === "politics") cats = politicsCategories;
-  else cats = esgCategories;
+  const cats = categoriesBySection[form.section] || [];
   return cats.map((c) => ({ label: t(c.labelKey), value: c.slug }));
 });
 

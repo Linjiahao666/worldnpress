@@ -4,34 +4,34 @@ const localePath = useLocalePath();
 
 const links = [
   {
-    labelKey: "news.categories.macro-economy",
-    to: "/news/macro-economy",
-    icon: "i-lucide-trending-up",
-  },
-  {
-    labelKey: "news.categories.global-finance",
-    to: "/news/global-finance",
+    labelKey: "nav.globalEconomy",
+    to: "/global-economy",
     icon: "i-lucide-globe",
   },
   {
-    labelKey: "esg.categories.esg-news",
-    to: "/esg/esg-news",
-    icon: "i-lucide-newspaper",
+    labelKey: "nav.mainlandEconomy",
+    to: "/mainland-economy",
+    icon: "i-lucide-landmark",
   },
   {
-    labelKey: "esg.categories.carbon-management",
-    to: "/esg/carbon-management",
-    icon: "i-lucide-leaf",
+    labelKey: "nav.industry",
+    to: "/industry",
+    icon: "i-lucide-factory",
   },
   {
-    labelKey: "news.categories.financial-market",
-    to: "/news/financial-market",
-    icon: "i-lucide-bar-chart-3",
+    labelKey: "nav.thinkTank",
+    to: "/think-tank",
+    icon: "i-lucide-lightbulb",
   },
   {
-    labelKey: "esg.categories.governance",
-    to: "/esg/governance",
-    icon: "i-lucide-shield-check",
+    labelKey: "nav.about",
+    to: "/about",
+    icon: "i-lucide-info",
+  },
+  {
+    labelKey: "about.categories.reporter-query",
+    to: "/reporters",
+    icon: "i-lucide-users",
   },
 ];
 </script>

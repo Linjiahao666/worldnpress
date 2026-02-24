@@ -7,7 +7,7 @@
 }
 
 html {
-  font-size: 17px;
+  font-size: 20px;
   color-scheme: light only;
 }
 
@@ -48,14 +48,14 @@ h4 {
 }
 
 .article-content h2 {
-  font-size: 1.5rem;
+  font-size: 1.625rem;
   font-weight: 700;
   margin-top: 2rem;
   margin-bottom: 1rem;
 }
 
 .article-content h3 {
-  font-size: 1.25rem;
+  font-size: 1.375rem;
   font-weight: 600;
   margin-top: 1.5rem;
   margin-bottom: 0.75rem;

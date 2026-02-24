@@ -1,13 +1,12 @@
 export default defineNuxtRouteMiddleware((to) => {
   const hiddenPrefixes = [
+    '/data-center',
     '/gba-hk',
     '/green-finance',
     '/ai-data',
-    '/think-tank',
     '/events',
     '/supervision',
     '/brand',
-    '/about',
   ]
 
   const normalizedPath = to.path.replace(/^\/(zh-TW|zh-CN|en)(?=\/)/, '')

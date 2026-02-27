@@ -69,6 +69,19 @@ export interface NavigationItem {
   comingSoon?: boolean
 }
 
+export interface Section {
+  id: string
+  labelKey: string
+  icon: string
+  color: string
+  sortOrder: number
+  showOnHome: boolean
+  isActive: boolean
+  createdAt: string
+  updatedAt?: string | null
+  categories: Category[]
+}
+
 export interface PaginatedResponse<T> {
   data: T[]
   total: number

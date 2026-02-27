@@ -1,10 +1,15 @@
 <script setup lang="ts">
-import { mainNavigation } from "~/utils/navigation";
+import type { Section } from "~/types";
 
 const { t } = useI18n();
 const open = defineModel<boolean>("open", { default: false });
 const route = useRoute();
 const localePath = useLocalePath();
+
+// 从 API 获取活跃的 sections
+const { data: sections } = useFetch<Section[]>("/api/sections", {
+  query: { active: "1" },
+});
 
 const expandedSection = ref<string | null>(null);
 
@@ -21,8 +26,8 @@ function isActive(to: string) {
   return normalizedPath.startsWith(to);
 }
 
-function toggleSection(to: string) {
-  expandedSection.value = expandedSection.value === to ? null : to;
+function toggleSection(id: string) {
+  expandedSection.value = expandedSection.value === id ? null : id;
 }
 </script>
 
@@ -37,48 +42,77 @@ function toggleSection(to: string) {
       </div>
 
       <nav class="flex flex-col gap-1">
-        <div v-for="item in mainNavigation" :key="item.to">
+        <!-- 首页 -->
+        <NuxtLink
+          :to="localePath('/')"
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-base font-bold transition-colors"
+          :class="[
+            isActive('/')
+              ? 'text-green-600 bg-green-50'
+              : 'text-slate-800 hover:text-green-600 hover:bg-slate-50',
+          ]"
+          @click="open = false"
+        >
+          {{ t("nav.home") }}
+        </NuxtLink>
+
+        <!-- 动态 sections -->
+        <div v-for="section in sections" :key="section.id">
           <div class="flex items-center">
             <NuxtLink
-              :to="localePath(item.to)"
-              class="flex-1 flex items-center gap-3 px-3 py-2.5 rounded-lg text-base font-medium transition-colors"
+              :to="localePath(`/${section.id}`)"
+              class="flex-1 flex items-center gap-3 px-3 py-2.5 rounded-lg text-base font-bold transition-colors"
               :class="[
-                isActive(item.to)
+                isActive(`/${section.id}`)
                   ? 'text-green-600 bg-green-50'
-                  : 'text-slate-600 hover:text-green-600 hover:bg-slate-50',
+                  : 'text-slate-800 hover:text-green-600 hover:bg-slate-50',
               ]"
               @click="open = false"
             >
-              {{ t(item.labelKey) }}
+              {{ t(section.labelKey) }}
             </NuxtLink>
             <button
-              v-if="item.children"
+              v-if="section.categories && section.categories.length > 0"
               class="p-2 text-slate-400 hover:text-slate-600"
-              @click="toggleSection(item.to)"
+              @click="toggleSection(section.id)"
             >
               <UIcon
                 name="i-lucide-chevron-down"
                 class="w-4 h-4 transition-transform"
-                :class="{ 'rotate-180': expandedSection === item.to }"
+                :class="{ 'rotate-180': expandedSection === section.id }"
               />
             </button>
           </div>
-          <!-- 子菜单 -->
+          <!-- 子分类 -->
           <div
-            v-if="item.children && expandedSection === item.to"
+            v-if="section.categories && expandedSection === section.id"
             class="ml-4 pl-3 border-l border-slate-200 mt-1 mb-2 space-y-0.5"
           >
             <NuxtLink
-              v-for="child in item.children"
-              :key="child.to"
-              :to="localePath(child.to)"
+              v-for="cat in section.categories"
+              :key="cat.slug"
+              :to="localePath(`/${section.id}/${cat.slug}`)"
               class="block px-3 py-1.5 text-sm text-slate-500 hover:text-green-600 rounded transition-colors"
               @click="open = false"
             >
-              {{ t(child.labelKey) }}
+              {{ t(cat.labelKey) }}
             </NuxtLink>
           </div>
         </div>
+
+        <!-- 关于我们 -->
+        <NuxtLink
+          :to="localePath('/about')"
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-base font-bold transition-colors"
+          :class="[
+            isActive('/about')
+              ? 'text-green-600 bg-green-50'
+              : 'text-slate-800 hover:text-green-600 hover:bg-slate-50',
+          ]"
+          @click="open = false"
+        >
+          {{ t("nav.about") }}
+        </NuxtLink>
       </nav>
 
       <div class="mt-6 pt-6 border-t border-slate-200 px-2">

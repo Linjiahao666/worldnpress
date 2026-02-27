@@ -257,6 +257,18 @@
     "deleteConfirm": "確認刪除這個備份文件嗎？此操作不可撤銷。",
     "fileName": "文件名",
     "fileSize": "文件大小",
-    "createdAt": "創建時間"
+    "createdAt": "創建時間",
+    "sections": "模塊管理",
+    "sectionsDesc": "管理網站版塊模塊",
+    "totalSections": "模塊總數",
+    "createSection": "新增模塊",
+    "editSection": "編輯模塊",
+    "sectionId": "模塊ID",
+    "sectionLabelKey": "標籤鍵",
+    "sectionIcon": "圖標",
+    "sectionColor": "顏色",
+    "sectionSortOrder": "排序",
+    "showOnHome": "首頁展示",
+    "sectionActive": "啟用"
   }
 }

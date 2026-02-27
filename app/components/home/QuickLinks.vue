@@ -1,28 +1,16 @@
 <script setup lang="ts">
+import type { Section } from "~/types";
+
 const { t } = useI18n();
 const localePath = useLocalePath();
 
-const links = [
-  {
-    labelKey: "nav.globalEconomy",
-    to: "/global-economy",
-    icon: "i-lucide-globe",
-  },
-  {
-    labelKey: "nav.mainlandEconomy",
-    to: "/mainland-economy",
-    icon: "i-lucide-landmark",
-  },
-  {
-    labelKey: "nav.industry",
-    to: "/industry",
-    icon: "i-lucide-factory",
-  },
-  {
-    labelKey: "nav.thinkTank",
-    to: "/think-tank",
-    icon: "i-lucide-lightbulb",
-  },
+// 从 API 获取活跃的 sections
+const { data: sections } = useFetch<Section[]>("/api/sections", {
+  query: { active: "1" },
+});
+
+// 额外的固定链接
+const extraLinks = [
   {
     labelKey: "nav.about",
     to: "/about",
@@ -43,7 +31,19 @@ const links = [
     </h2>
     <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
       <NuxtLink
-        v-for="link in links"
+        v-for="section in sections"
+        :key="section.id"
+        :to="localePath(`/${section.id}`)"
+        class="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-50 hover:bg-green-50 border border-slate-100 hover:border-green-200 transition-colors text-base text-slate-600 hover:text-green-700"
+      >
+        <UIcon
+          :name="section.icon || 'i-lucide-folder'"
+          class="w-4 h-4 shrink-0"
+        />
+        <span class="truncate">{{ t(section.labelKey) }}</span>
+      </NuxtLink>
+      <NuxtLink
+        v-for="link in extraLinks"
         :key="link.to"
         :to="localePath(link.to)"
         class="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-50 hover:bg-green-50 border border-slate-100 hover:border-green-200 transition-colors text-base text-slate-600 hover:text-green-700"

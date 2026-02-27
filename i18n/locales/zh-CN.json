@@ -257,6 +257,18 @@
     "deleteConfirm": "确认删除这个备份文件吗？此操作不可撤销。",
     "fileName": "文件名",
     "fileSize": "文件大小",
-    "createdAt": "创建时间"
+    "createdAt": "创建时间",
+    "sections": "模块管理",
+    "sectionsDesc": "管理网站版块模块",
+    "totalSections": "模块总数",
+    "createSection": "新增模块",
+    "editSection": "编辑模块",
+    "sectionId": "模块ID",
+    "sectionLabelKey": "标签键",
+    "sectionIcon": "图标",
+    "sectionColor": "颜色",
+    "sectionSortOrder": "排序",
+    "showOnHome": "首页展示",
+    "sectionActive": "启用"
   }
 }

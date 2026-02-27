@@ -16,6 +16,7 @@ const { data: stats } = useFetch<{
   totalArticles: number;
   totalCategories: number;
   totalViews: number;
+  totalSections: number;
 }>("/api/admin/stats");
 
 const { articles: recentArticles } = useArticles({ pageSize: 5 });
@@ -79,7 +80,7 @@ function formatViews(n: number) {
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <!-- 统计卡片 -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
         <UCard>
           <div class="flex items-center gap-4">
             <div
@@ -130,6 +131,25 @@ function formatViews(n: number) {
             </div>
           </div>
         </UCard>
+
+        <UCard>
+          <div class="flex items-center gap-4">
+            <div
+              class="w-12 h-12 rounded-lg bg-amber-100 flex items-center justify-center"
+            >
+              <UIcon
+                name="i-lucide-layout-grid"
+                class="text-2xl text-amber-600"
+              />
+            </div>
+            <div>
+              <p class="text-sm text-slate-500">模块總數</p>
+              <p class="text-2xl font-bold text-slate-900">
+                {{ stats?.totalSections ?? "..." }}
+              </p>
+            </div>
+          </div>
+        </UCard>
       </div>
 
       <!-- 快捷操作 + 最近文章 -->
@@ -155,6 +175,15 @@ function formatViews(n: number) {
               block
             >
               管理文章
+            </UButton>
+            <UButton
+              to="/admin/sections"
+              icon="i-lucide-layout-grid"
+              color="neutral"
+              variant="outline"
+              block
+            >
+              模块管理
             </UButton>
             <UButton
               to="/admin/backup"

@@ -1,20 +1,39 @@
 <script setup lang="ts">
-import { homeSectionBlocks, sectionTitleKeys } from "~/utils/navigation";
+import type { Section, Article, PaginatedResponse } from "~/types";
 
 const { t, locale } = useI18n();
 const localePath = useLocalePath();
 
-// 获取4个版块的文章数据
-const blocks = homeSectionBlocks.map((block) => {
-  const { articles } = useArticles({
-    section: block.section,
-    pageSize: 5,
-  });
-  return {
-    ...block,
-    articles,
-  };
+// 从 API 获取首页展示的模块
+const { data: homeSections } = useFetch<Section[]>("/api/sections", {
+  query: { active: "1", home: "1" },
 });
+
+// 动态获取每个模块的文章
+const sectionArticles = ref<Record<string, Article[]>>({});
+
+watch(
+  homeSections,
+  async (sections) => {
+    if (!sections) return;
+    const results: Record<string, Article[]> = {};
+    await Promise.all(
+      sections.map(async (sec) => {
+        try {
+          const data = await $fetch<PaginatedResponse<Article>>(
+            "/api/articles",
+            { query: { section: sec.id, pageSize: 5 } },
+          );
+          results[sec.id] = data.data || [];
+        } catch {
+          results[sec.id] = [];
+        }
+      }),
+    );
+    sectionArticles.value = results;
+  },
+  { immediate: true },
+);
 
 function formatDate(dateStr: string) {
   return new Intl.DateTimeFormat(locale.value, {
@@ -28,8 +47,8 @@ function formatDate(dateStr: string) {
   <section>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div
-        v-for="block in blocks"
-        :key="block.section"
+        v-for="section in homeSections"
+        :key="section.id"
         class="bg-white rounded-xl border border-slate-200 overflow-hidden"
       >
         <!-- 版块标题 -->
@@ -37,13 +56,17 @@ function formatDate(dateStr: string) {
           class="flex items-center justify-between px-4 py-3 border-b border-slate-100 bg-slate-50/50"
         >
           <div class="flex items-center gap-2">
-            <UIcon :name="block.icon" class="w-5 h-5" :class="block.color" />
+            <UIcon
+              :name="section.icon || 'i-lucide-folder'"
+              class="w-5 h-5"
+              :class="section.color"
+            />
             <h3 class="text-base font-bold text-slate-800">
-              {{ t(block.labelKey) }}
+              {{ t(section.labelKey) }}
             </h3>
           </div>
           <NuxtLink
-            :to="localePath(`/${block.section}`)"
+            :to="localePath(`/${section.id}`)"
             class="text-xs text-green-600 hover:text-green-700 font-medium"
           >
             {{ t("common.viewAll") }} →
@@ -52,9 +75,14 @@ function formatDate(dateStr: string) {
 
         <!-- 新闻列表 -->
         <div class="divide-y divide-slate-50" style="min-height: 240px">
-          <template v-if="block.articles.value.length > 0">
+          <template
+            v-if="
+              sectionArticles[section.id] &&
+              sectionArticles[section.id]!.length > 0
+            "
+          >
             <NuxtLink
-              v-for="(article, index) in block.articles.value"
+              v-for="(article, index) in sectionArticles[section.id]"
               :key="article.id"
               :to="
                 localePath(

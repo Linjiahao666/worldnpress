@@ -257,6 +257,18 @@
     "deleteConfirm": "Are you sure you want to delete this backup file? This action cannot be undone.",
     "fileName": "File Name",
     "fileSize": "File Size",
-    "createdAt": "Created At"
+    "createdAt": "Created At",
+    "sections": "Section Management",
+    "sectionsDesc": "Manage website sections",
+    "totalSections": "Total Sections",
+    "createSection": "New Section",
+    "editSection": "Edit Section",
+    "sectionId": "Section ID",
+    "sectionLabelKey": "Label Key",
+    "sectionIcon": "Icon",
+    "sectionColor": "Color",
+    "sectionSortOrder": "Sort Order",
+    "showOnHome": "Show on Home",
+    "sectionActive": "Active"
   }
 }

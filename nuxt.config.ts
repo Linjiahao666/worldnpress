@@ -39,6 +39,7 @@ export default defineNuxtConfig({
     pages: {
       'admin/index': false,
       'admin/login': false,
+      'admin/sections': false,
       'admin/articles/index': false,
       'admin/articles/create': false,
       'admin/articles/[id]': false,

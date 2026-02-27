@@ -108,11 +108,25 @@ function initDB(db: Database.Database) {
       icon TEXT DEFAULT ''
     );
 
+    CREATE TABLE IF NOT EXISTS sections (
+      id TEXT PRIMARY KEY,
+      label_key TEXT NOT NULL,
+      icon TEXT DEFAULT '',
+      color TEXT DEFAULT '',
+      sort_order INTEGER DEFAULT 0,
+      show_on_home INTEGER DEFAULT 0,
+      is_active INTEGER DEFAULT 1,
+      created_at TEXT NOT NULL DEFAULT (datetime('now')),
+      updated_at TEXT
+    );
+
     CREATE INDEX IF NOT EXISTS idx_articles_section ON articles(section);
     CREATE INDEX IF NOT EXISTS idx_articles_category ON articles(category);
     CREATE INDEX IF NOT EXISTS idx_articles_published_at ON articles(published_at DESC);
     CREATE INDEX IF NOT EXISTS idx_articles_is_hot ON articles(is_hot);
     CREATE INDEX IF NOT EXISTS idx_articles_is_featured ON articles(is_featured);
+    CREATE INDEX IF NOT EXISTS idx_sections_sort_order ON sections(sort_order);
+    CREATE INDEX IF NOT EXISTS idx_sections_show_on_home ON sections(show_on_home);
   `)
 }
 
@@ -255,9 +269,116 @@ export function getAdminStats() {
   const articleCount = db.prepare('SELECT COUNT(*) as count FROM articles').get() as { count: number }
   const categoryCount = db.prepare('SELECT COUNT(*) as count FROM categories').get() as { count: number }
   const viewsRow = db.prepare('SELECT COALESCE(SUM(view_count), 0) as total FROM articles').get() as { total: number }
+  const sectionCount = db.prepare('SELECT COUNT(*) as count FROM sections').get() as { count: number }
   return {
     totalArticles: articleCount.count,
     totalCategories: categoryCount.count,
     totalViews: viewsRow.total,
+    totalSections: sectionCount.count,
   }
+}
+
+// --- Sections (模块) CRUD ---
+
+export interface SectionRecord {
+  id: string
+  label_key: string
+  icon: string
+  color: string
+  sort_order: number
+  show_on_home: number
+  is_active: number
+  created_at: string
+  updated_at: string | null
+}
+
+export function getSections(options?: { activeOnly?: boolean, homeOnly?: boolean }) {
+  const db = useDB()
+  const conditions: string[] = []
+  if (options?.activeOnly) conditions.push('is_active = 1')
+  if (options?.homeOnly) conditions.push('show_on_home = 1')
+  const where = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : ''
+  return db.prepare(`SELECT * FROM sections ${where} ORDER BY sort_order ASC, id ASC`).all() as SectionRecord[]
+}
+
+export function getSectionById(id: string): SectionRecord | null {
+  const db = useDB()
+  return (db.prepare('SELECT * FROM sections WHERE id = ?').get(id) as SectionRecord) || null
+}
+
+export function createSection(data: {
+  id: string
+  labelKey: string
+  icon?: string
+  color?: string
+  sortOrder?: number
+  showOnHome?: boolean
+}): SectionRecord {
+  const db = useDB()
+  const now = new Date().toISOString()
+  db.prepare(`
+    INSERT INTO sections (id, label_key, icon, color, sort_order, show_on_home, is_active, created_at)
+    VALUES (?, ?, ?, ?, ?, ?, 1, ?)
+  `).run(
+    data.id,
+    data.labelKey,
+    data.icon || '',
+    data.color || '',
+    data.sortOrder ?? 0,
+    data.showOnHome ? 1 : 0,
+    now,
+  )
+  return getSectionById(data.id)!
+}
+
+export function updateSection(id: string, data: {
+  labelKey?: string
+  icon?: string
+  color?: string
+  sortOrder?: number
+  showOnHome?: boolean
+  isActive?: boolean
+}): SectionRecord | null {
+  const db = useDB()
+  const existing = getSectionById(id)
+  if (!existing) return null
+
+  const now = new Date().toISOString()
+  db.prepare(`
+    UPDATE sections SET
+      label_key = ?,
+      icon = ?,
+      color = ?,
+      sort_order = ?,
+      show_on_home = ?,
+      is_active = ?,
+      updated_at = ?
+    WHERE id = ?
+  `).run(
+    data.labelKey ?? existing.label_key,
+    data.icon ?? existing.icon,
+    data.color ?? existing.color,
+    data.sortOrder ?? existing.sort_order,
+    data.showOnHome !== undefined ? (data.showOnHome ? 1 : 0) : existing.show_on_home,
+    data.isActive !== undefined ? (data.isActive ? 1 : 0) : existing.is_active,
+    now,
+    id,
+  )
+  return getSectionById(id)
+}
+
+export function deleteSection(id: string): boolean {
+  const db = useDB()
+  const result = db.prepare('DELETE FROM sections WHERE id = ?').run(id)
+  return result.changes > 0
+}
+
+export function getSectionCategories(sectionId: string) {
+  const db = useDB()
+  return db.prepare('SELECT * FROM categories WHERE section = ?').all(sectionId) as Array<{
+    slug: string
+    section: string
+    label_key: string
+    icon: string
+  }>
 }

@@ -60,7 +60,7 @@ onUnmounted(() => {
     @mouseenter="stopAutoPlay"
     @mouseleave="startAutoPlay(articles.length)"
   >
-    <div class="relative h-72 sm:h-80 lg:h-105">
+    <div class="relative h-64 sm:h-72 lg:h-96">
       <TransitionGroup name="fade">
         <div
           v-for="(article, index) in articles"
@@ -77,7 +77,7 @@ onUnmounted(() => {
           <div
             class="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent pointer-events-none"
           />
-          <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-8 lg:p-10 z-10">
+          <div class="absolute bottom-0 left-0 right-0 p-4 sm:p-5 lg:p-6 z-10">
             <NuxtLink
               :to="
                 localePath(

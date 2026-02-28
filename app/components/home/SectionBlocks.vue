@@ -45,16 +45,14 @@ function formatDate(dateStr: string) {
 
 <template>
   <section>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div
         v-for="section in homeSections"
         :key="section.id"
-        class="bg-white rounded-xl border border-slate-200 overflow-hidden"
+        class="bg-white rounded-md overflow-hidden"
       >
         <!-- 版块标题 -->
-        <div
-          class="flex items-center justify-between px-4 py-3 border-b border-blue-100 bg-blue-50/50"
-        >
+        <div class="flex items-center justify-between px-3 py-2 bg-blue-50/40">
           <div class="flex items-center gap-2">
             <UIcon
               :name="section.icon || 'i-lucide-folder'"
@@ -74,7 +72,7 @@ function formatDate(dateStr: string) {
         </div>
 
         <!-- 新闻列表 -->
-        <div class="divide-y divide-slate-50" style="min-height: 240px">
+        <div class="py-1" style="min-height: 220px">
           <template
             v-if="sectionArticles[section.id] && sectionArticles[section.id]!.length > 0"
           >
@@ -86,7 +84,7 @@ function formatDate(dateStr: string) {
                   `/${article.section}/${article.category}/${article.id}`,
                 )
               "
-              class="group flex items-start gap-3 px-4 py-2.5 hover:bg-blue-50 transition-colors"
+              class="group flex items-start gap-2.5 px-3 py-2 hover:bg-blue-50 transition-colors"
             >
               <span
                 class="shrink-0 w-5 h-5 mt-0.5 rounded flex items-center justify-center text-xs font-bold"
@@ -100,7 +98,7 @@ function formatDate(dateStr: string) {
               </span>
               <div class="flex-1 min-w-0">
                 <h4
-                  class="text-sm font-medium text-slate-700 group-hover:text-blue-600 transition-colors line-clamp-1"
+                  class="text-sm font-medium text-slate-700 group-hover:text-blue-600 transition-colors line-clamp-2 leading-snug"
                 >
                   {{ article.title }}
                 </h4>

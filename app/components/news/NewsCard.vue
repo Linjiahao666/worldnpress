@@ -1,14 +1,29 @@
 <script setup lang="ts">
 import type { Article } from "~/types";
+import { sectionTitleKeys } from "~/utils/navigation";
 
 const props = defineProps<{
   article: Article;
   layout?: "horizontal" | "vertical";
 }>();
 
-const { t, locale } = useI18n();
+const { t, te, locale } = useI18n();
 const localePath = useLocalePath();
 const layout = computed(() => props.layout ?? "vertical");
+const categoryLabel = computed(() => {
+  const sectionNamespace = sectionTitleKeys[props.article.section]?.replace(
+    ".title",
+    "",
+  );
+  const key = sectionNamespace
+    ? `${sectionNamespace}.categories.${props.article.category}`
+    : `${props.article.section}.categories.${props.article.category}`;
+  if (te(key)) return t(key);
+  return props.article.category
+    .split("-")
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
+});
 
 function formatDate(dateStr: string) {
   return new Intl.DateTimeFormat(locale.value, {
@@ -28,7 +43,7 @@ function formatViews(count: number) {
 <template>
   <NuxtLink
     :to="localePath(`/${article.section}/${article.category}/${article.id}`)"
-    class="group block rounded-xl border border-slate-100 bg-white hover:border-blue-200 hover:shadow-md transition-all overflow-hidden"
+    class="group block rounded-lg bg-white hover:bg-slate-50 transition-colors overflow-hidden"
     :class="layout === 'horizontal' ? 'flex' : ''"
   >
     <div
@@ -45,7 +60,7 @@ function formatViews(count: number) {
           size="xs"
         />
         <UBadge
-          :label="t(`${article.section}.categories.${article.category}`)"
+          :label="categoryLabel"
           color="primary"
           variant="subtle"
           size="xs"
@@ -54,18 +69,18 @@ function formatViews(count: number) {
 
       <!-- 標題 -->
       <h3
-        class="text-lg font-semibold text-slate-800 group-hover:text-blue-600 transition-colors line-clamp-2 mb-2"
+        class="text-base font-semibold text-slate-800 group-hover:text-blue-600 transition-colors line-clamp-2 mb-2"
       >
         {{ article.title }}
       </h3>
 
       <!-- 摘要 -->
-      <p class="text-base text-slate-500 line-clamp-2 mb-3">
+      <p class="text-sm text-slate-500 line-clamp-2 mb-3">
         {{ article.summary }}
       </p>
 
       <!-- 信息 -->
-      <div class="flex items-center gap-3 text-sm text-slate-400">
+      <div class="flex items-center gap-3 text-xs text-slate-400">
         <span>{{ article.author.name }}</span>
         <span>·</span>
         <span>{{ formatDate(article.publishedAt) }}</span>

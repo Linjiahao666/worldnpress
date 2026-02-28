@@ -1,4 +1,18 @@
-export type SectionType = 'news' | 'gba-hk' | 'esg' | 'green-finance' | 'ai-data' | 'think-tank' | 'events' | 'supervision' | 'brand'
+export type SectionType =
+  | 'news'
+  | 'gba-hk'
+  | 'esg'
+  | 'green-finance'
+  | 'ai-data'
+  | 'think-tank'
+  | 'events'
+  | 'supervision'
+  | 'brand'
+  | 'industry'
+  | 'politics'
+  | 'data-center'
+  | 'global-economy'
+  | 'mainland-economy'
 
 export interface Article {
   id: string

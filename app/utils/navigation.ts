@@ -209,6 +209,60 @@ export const brandCategories: Category[] = [
   { slug: 'gov-enterprise-cooperation', section: 'brand', labelKey: 'brand.categories.gov-enterprise-cooperation', icon: 'i-lucide-building' },
 ]
 
+export const industryCategories: Category[] = [
+  { slug: 'energy', section: 'industry', labelKey: 'industry.categories.energy', icon: 'i-lucide-zap' },
+  { slug: 'technology', section: 'industry', labelKey: 'industry.categories.technology', icon: 'i-lucide-cpu' },
+  { slug: 'manufacturing', section: 'industry', labelKey: 'industry.categories.manufacturing', icon: 'i-lucide-factory' },
+  { slug: 'consumption', section: 'industry', labelKey: 'industry.categories.consumption', icon: 'i-lucide-shopping-bag' },
+  { slug: 'pharma', section: 'industry', labelKey: 'industry.categories.pharma', icon: 'i-lucide-pill' },
+  { slug: 'real-estate', section: 'industry', labelKey: 'industry.categories.real-estate', icon: 'i-lucide-building-2' },
+  { slug: 'automotive', section: 'industry', labelKey: 'industry.categories.automotive', icon: 'i-lucide-car' },
+  { slug: 'agriculture', section: 'industry', labelKey: 'industry.categories.agriculture', icon: 'i-lucide-wheat' },
+  { slug: 'transportation', section: 'industry', labelKey: 'industry.categories.transportation', icon: 'i-lucide-train-front' },
+]
+
+export const politicsCategories: Category[] = [
+  { slug: 'political-news', section: 'politics', labelKey: 'politics.categories.political-news', icon: 'i-lucide-newspaper' },
+  { slug: 'diplomacy', section: 'politics', labelKey: 'politics.categories.diplomacy', icon: 'i-lucide-handshake' },
+  { slug: 'international-relations', section: 'politics', labelKey: 'politics.categories.international-relations', icon: 'i-lucide-globe' },
+  { slug: 'policy-analysis', section: 'politics', labelKey: 'politics.categories.policy-analysis', icon: 'i-lucide-file-search' },
+  { slug: 'geopolitics', section: 'politics', labelKey: 'politics.categories.geopolitics', icon: 'i-lucide-map' },
+  { slug: 'international-orgs', section: 'politics', labelKey: 'politics.categories.international-orgs', icon: 'i-lucide-landmark' },
+]
+
+export const dataCenterCategories: Category[] = [
+  { slug: 'macro-data', section: 'data-center', labelKey: 'dataCenter.categories.macro-data', icon: 'i-lucide-bar-chart-3' },
+  { slug: 'industry-data', section: 'data-center', labelKey: 'dataCenter.categories.industry-data', icon: 'i-lucide-pie-chart' },
+  { slug: 'market-index', section: 'data-center', labelKey: 'dataCenter.categories.market-index', icon: 'i-lucide-chart-line' },
+  { slug: 'economic-calendar', section: 'data-center', labelKey: 'dataCenter.categories.economic-calendar', icon: 'i-lucide-calendar-days' },
+  { slug: 'chart-tools', section: 'data-center', labelKey: 'dataCenter.categories.chart-tools', icon: 'i-lucide-chart-candlestick' },
+]
+
+export const globalEconomyCategories: Category[] = [
+  { slug: 'macro-policy', section: 'global-economy', labelKey: 'globalEconomy.categories.macro-policy', icon: 'i-lucide-file-text' },
+  { slug: 'intl-trade', section: 'global-economy', labelKey: 'globalEconomy.categories.intl-trade', icon: 'i-lucide-ship' },
+  { slug: 'regional-economy', section: 'global-economy', labelKey: 'globalEconomy.categories.regional-economy', icon: 'i-lucide-map-pinned' },
+  { slug: 'central-bank', section: 'global-economy', labelKey: 'globalEconomy.categories.central-bank', icon: 'i-lucide-banknote' },
+  { slug: 'trade-friction', section: 'global-economy', labelKey: 'globalEconomy.categories.trade-friction', icon: 'i-lucide-scale' },
+]
+
+export const mainlandEconomyCategories: Category[] = [
+  { slug: 'policy-interpretation', section: 'mainland-economy', labelKey: 'mainlandEconomy.categories.policy-interpretation', icon: 'i-lucide-file-search' },
+  { slug: 'ministry-news', section: 'mainland-economy', labelKey: 'mainlandEconomy.categories.ministry-news', icon: 'i-lucide-building' },
+  { slug: 'conference-report', section: 'mainland-economy', labelKey: 'mainlandEconomy.categories.conference-report', icon: 'i-lucide-mic' },
+  { slug: 'political-commentary', section: 'mainland-economy', labelKey: 'mainlandEconomy.categories.political-commentary', icon: 'i-lucide-message-square-text' },
+  { slug: 'high-quality-dev', section: 'mainland-economy', labelKey: 'mainlandEconomy.categories.high-quality-dev', icon: 'i-lucide-trending-up' },
+  { slug: 'a-share', section: 'mainland-economy', labelKey: 'mainlandEconomy.categories.a-share', icon: 'i-lucide-chart-candlestick' },
+  { slug: 'esg-report', section: 'mainland-economy', labelKey: 'mainlandEconomy.categories.esg-report', icon: 'i-lucide-file-text' },
+  { slug: 'esg-disclosure', section: 'mainland-economy', labelKey: 'mainlandEconomy.categories.esg-disclosure', icon: 'i-lucide-file-check' },
+  { slug: 'esg-rating', section: 'mainland-economy', labelKey: 'mainlandEconomy.categories.esg-rating', icon: 'i-lucide-award' },
+  { slug: 'esg-consulting', section: 'mainland-economy', labelKey: 'mainlandEconomy.categories.esg-consulting', icon: 'i-lucide-briefcase-business' },
+  { slug: 'esg-education', section: 'mainland-economy', labelKey: 'mainlandEconomy.categories.esg-education', icon: 'i-lucide-graduation-cap' },
+  { slug: 'lca', section: 'mainland-economy', labelKey: 'mainlandEconomy.categories.lca', icon: 'i-lucide-workflow' },
+  { slug: 'cbam', section: 'mainland-economy', labelKey: 'mainlandEconomy.categories.cbam', icon: 'i-lucide-shield' },
+  { slug: 'zero-carbon-park', section: 'mainland-economy', labelKey: 'mainlandEconomy.categories.zero-carbon-park', icon: 'i-lucide-leaf' },
+]
+
 // 所有分类集合（用于 DB seed 和通用查找）
 export const allCategories: Category[] = [
   ...newsCategories,
@@ -220,6 +274,11 @@ export const allCategories: Category[] = [
   ...eventsCategories,
   ...supervisionCategories,
   ...brandCategories,
+  ...industryCategories,
+  ...politicsCategories,
+  ...dataCenterCategories,
+  ...globalEconomyCategories,
+  ...mainlandEconomyCategories,
 ]
 
 // 按 section 获取分类的映射
@@ -233,6 +292,11 @@ export const categoriesBySection: Record<string, Category[]> = {
   'events': eventsCategories,
   'supervision': supervisionCategories,
   'brand': brandCategories,
+  'industry': industryCategories,
+  'politics': politicsCategories,
+  'data-center': dataCenterCategories,
+  'global-economy': globalEconomyCategories,
+  'mainland-economy': mainlandEconomyCategories,
 }
 
 // section 的标题 i18n key 映射
@@ -246,6 +310,11 @@ export const sectionTitleKeys: Record<string, string> = {
   'events': 'events.title',
   'supervision': 'supervision.title',
   'brand': 'brand.title',
+  'industry': 'industry.title',
+  'politics': 'politics.title',
+  'data-center': 'dataCenter.title',
+  'global-economy': 'globalEconomy.title',
+  'mainland-economy': 'mainlandEconomy.title',
 }
 
 // 首页板块展示配置

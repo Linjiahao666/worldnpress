@@ -10,22 +10,20 @@ const { data: sections } = useFetch<Section[]>("/api/sections", {
 </script>
 
 <template>
-  <section class="bg-white rounded-xl border border-slate-200 overflow-hidden">
-    <div
-      class="flex items-center gap-2 px-4 py-3 border-b border-slate-100 bg-slate-50"
-    >
+  <section class="bg-white rounded-lg overflow-hidden">
+    <div class="flex items-center gap-2 px-3 py-2.5 bg-slate-50">
       <UIcon name="i-lucide-compass" class="w-5 h-5 text-blue-600" />
       <h2 class="text-base font-bold text-slate-800">
         {{ t("home.sections.title") }}
       </h2>
     </div>
-    <div class="p-3">
-      <div class="grid grid-cols-2 gap-2">
+    <div class="p-2.5">
+      <div class="grid grid-cols-2 gap-1.5">
         <NuxtLink
           v-for="section in sections"
           :key="section.id"
           :to="localePath(`/${section.id}`)"
-          class="group flex items-center gap-2 p-2.5 rounded-lg transition-all hover:bg-blue-50 hover:shadow-sm"
+          class="group flex items-center gap-2 px-2 py-2 rounded-md transition-colors hover:bg-blue-50"
         >
           <UIcon
             :name="section.icon || 'i-lucide-folder'"

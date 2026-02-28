@@ -1,4 +1,4 @@
-import { categoriesBySection } from '~/utils/navigation'
+import { categoriesBySection, sectionTitleKeys } from '~/utils/navigation'
 import type { Category, SectionType } from '~/types'
 
 export function useCategories(section: SectionType | string) {
@@ -11,9 +11,23 @@ export function useCategories(section: SectionType | string) {
   }
 
   function getCategoryLabel(slug: string) {
-    const { t } = useI18n()
+    const { t, te } = useI18n()
     const cat = getCategoryBySlug(slug)
-    return cat ? t(cat.labelKey) : slug
+    if (cat)
+      return t(cat.labelKey)
+
+    const sectionTitleKey = sectionTitleKeys[String(section)]
+    const sectionNamespace = sectionTitleKey?.replace('.title', '')
+    if (sectionNamespace) {
+      const guessedKey = `${sectionNamespace}.categories.${slug}`
+      if (te(guessedKey))
+        return t(guessedKey)
+    }
+
+    return slug
+      .split('-')
+      .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(' ')
   }
 
   return {

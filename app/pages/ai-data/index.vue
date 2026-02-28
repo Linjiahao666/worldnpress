@@ -1,6 +1,19 @@
 <script setup lang="ts">
-const { t } = useI18n();
+const { t, locale } = useI18n();
 const localePath = useLocalePath();
+const { data: overview } = useFetch<{
+  totalArticles: number;
+  totalCategories: number;
+  totalViews: number;
+  totalSections: number;
+}>("/api/stats/overview", {
+  default: () => ({
+    totalArticles: 0,
+    totalCategories: 0,
+    totalViews: 0,
+    totalSections: 0,
+  }),
+});
 
 useSeoMeta({ title: () => `${t("nav.aiData")} - ${t("site.title")}` });
 
@@ -43,12 +56,32 @@ const features = [
   },
 ];
 
-const dashboardStats = [
-  { label: "监控媒体源", value: "1,000,000+", icon: "i-lucide-globe" },
-  { label: "日均处理数据", value: "5,000万+", icon: "i-lucide-database" },
-  { label: "覆盖国家/地区", value: "195", icon: "i-lucide-map" },
-  { label: "企业数据库", value: "500万+", icon: "i-lucide-building-2" },
-];
+function formatNumber(value: number) {
+  return new Intl.NumberFormat(locale.value).format(value);
+}
+
+const dashboardStats = computed(() => [
+  {
+    label: t("aiData.metrics.articles"),
+    value: formatNumber(overview.value.totalArticles),
+    icon: "i-lucide-newspaper",
+  },
+  {
+    label: t("aiData.metrics.categories"),
+    value: formatNumber(overview.value.totalCategories),
+    icon: "i-lucide-folder-tree",
+  },
+  {
+    label: t("aiData.metrics.views"),
+    value: formatNumber(overview.value.totalViews),
+    icon: "i-lucide-eye",
+  },
+  {
+    label: t("aiData.metrics.sections"),
+    value: formatNumber(overview.value.totalSections),
+    icon: "i-lucide-layout-grid",
+  },
+]);
 </script>
 
 <template>
@@ -66,9 +99,7 @@ const dashboardStats = [
           class="mb-6 opacity-70"
         />
         <div class="max-w-3xl">
-          <h1 class="text-3xl sm:text-4xl font-bold mb-4">
-            AI 舆情大数据中心
-          </h1>
+          <h1 class="text-3xl sm:text-4xl font-bold mb-4">AI 舆情大数据中心</h1>
           <p class="text-lg text-blue-200 leading-relaxed">
             基于人工智能与大数据技术，为机构与企业提供全球财经舆情监控、智能预警、数据核查与风险画像服务。
           </p>
@@ -118,9 +149,7 @@ const dashboardStats = [
 
     <!-- 合作咨询 CTA -->
     <section class="bg-slate-50 border-t border-slate-200">
-      <div
-        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center"
-      >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
         <h2 class="text-xl font-bold text-slate-800 mb-3">
           需要定制化数据服务？
         </h2>

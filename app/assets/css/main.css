@@ -9,7 +9,7 @@
 }
 
 html {
-  font-size: 20px;
+  font-size: 18px;
   color-scheme: light only;
 }
 
@@ -18,7 +18,7 @@ body {
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
   font-size: 1rem;
-  line-height: 1.7;
+  line-height: 1.55;
   background-color: #f8fafc;
 }
 
@@ -56,7 +56,7 @@ h4 {
 /* 文章内容样式 */
 .article-content p {
   margin-bottom: 1rem;
-  line-height: 1.8;
+  line-height: 1.72;
 }
 
 .article-content h2 {

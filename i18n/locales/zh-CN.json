@@ -94,6 +94,12 @@
       "data-verification": "数据核验",
       "risk-profiling": "风险画像",
       "enterprise-subscription": "企业订阅服务"
+    },
+    "metrics": {
+      "articles": "文章总数",
+      "categories": "分类总数",
+      "views": "总阅读量",
+      "sections": "栏目数量"
     }
   },
   "thinkTank": {

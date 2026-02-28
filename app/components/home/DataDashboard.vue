@@ -1,15 +1,21 @@
 <script setup lang="ts">
 const { t } = useI18n();
 
-// 数据看板placeholder数据（日后可接API）
-const dashboardItems = [
-  { label: "USD/CNY", value: "7.2345", change: "+0.0023", up: true },
-  { label: "EUR/CNY", value: "7.8912", change: "-0.0156", up: false },
-  { label: "上证指数", value: "3,256.78", change: "+1.23%", up: true },
-  { label: "恒生指数", value: "20,145.32", change: "-0.45%", up: false },
-  { label: "黄金", value: "2,654.30", change: "+0.82%", up: true },
-  { label: "原油", value: "76.45", change: "-1.12%", up: false },
-];
+interface DashboardItem {
+  label: string;
+  value: string;
+  change: string;
+  up: boolean;
+}
+
+const { data, pending } = useFetch<{ items: DashboardItem[] }>(
+  "/api/market/dashboard",
+  {
+    default: () => ({ items: [] }),
+  },
+);
+
+const dashboardItems = computed(() => data.value?.items ?? []);
 </script>
 
 <template>
@@ -20,8 +26,12 @@ const dashboardItems = [
         t("home.dataDashboard.title")
       }}</span>
     </div>
+    <div v-if="pending" class="text-sm text-blue-200">
+      {{ t("common.loading") }}
+    </div>
     <div
       v-for="item in dashboardItems"
+      v-else
       :key="item.label"
       class="flex items-center gap-2 shrink-0 text-sm"
     >
@@ -37,6 +47,12 @@ const dashboardItems = [
           class="w-3 h-3 inline"
         />
       </span>
+    </div>
+    <div
+      v-if="!pending && dashboardItems.length === 0"
+      class="text-sm text-blue-200"
+    >
+      {{ t("common.noData") }}
     </div>
   </div>
 </template>

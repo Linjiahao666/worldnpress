@@ -94,6 +94,12 @@
       "data-verification": "Data Verification",
       "risk-profiling": "Risk Profiling",
       "enterprise-subscription": "Enterprise Subscription"
+    },
+    "metrics": {
+      "articles": "Total Articles",
+      "categories": "Total Categories",
+      "views": "Total Views",
+      "sections": "Total Sections"
     }
   },
   "thinkTank": {

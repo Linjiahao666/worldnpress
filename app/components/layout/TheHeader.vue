@@ -74,7 +74,14 @@ function handleSearchKeydown(e: KeyboardEvent) {
         <div class="hidden sm:flex items-center gap-3">
           <span>{{ t("site.description") }}</span>
           <span class="text-blue-400">|</span>
-          <span class="text-blue-300">{{ new Date().toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' }) }}</span>
+          <span class="text-blue-300">{{
+            new Date().toLocaleDateString("zh-CN", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+              weekday: "long",
+            })
+          }}</span>
         </div>
         <span class="sm:hidden text-xs">{{ t("site.title") }}</span>
         <div class="flex items-center gap-3">
@@ -136,7 +143,7 @@ function handleSearchKeydown(e: KeyboardEvent) {
     >
       <div
         v-if="showSearch"
-        class="border-t border-slate-200 bg-white shadow-lg"
+        class="absolute left-0 right-0 top-full border-t border-slate-200 bg-white shadow-lg"
       >
         <div class="max-w-3xl mx-auto px-4 py-3">
           <div class="relative">

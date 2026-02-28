@@ -18,7 +18,7 @@ function formatDate(dateStr: string) {
 
 <template>
   <section>
-    <div class="flex items-center gap-2 mb-3">
+    <div class="flex items-center gap-2 mb-2">
       <UIcon name="i-lucide-flame" class="w-5 h-5 text-red-500" />
       <h2 class="text-base font-bold text-slate-800">
         {{ t("news.hot") }}
@@ -32,14 +32,12 @@ function formatDate(dateStr: string) {
         :to="
           localePath(`/${article.section}/${article.category}/${article.id}`)
         "
-        class="group flex items-start gap-2.5 px-2 py-2 rounded-lg hover:bg-blue-50 transition-colors"
+        class="group flex items-start gap-2 px-1.5 py-1.5 rounded-md hover:bg-blue-50 transition-colors"
       >
         <span
           class="shrink-0 w-5 h-5 rounded flex items-center justify-center text-xs font-bold mt-0.5"
           :class="[
-            index < 3
-              ? 'bg-red-600 text-white'
-              : 'bg-slate-100 text-slate-500',
+            index < 3 ? 'bg-red-600 text-white' : 'bg-slate-100 text-slate-500',
           ]"
         >
           {{ index + 1 }}
@@ -50,7 +48,7 @@ function formatDate(dateStr: string) {
           >
             {{ article.title }}
           </h3>
-          <span class="text-xs text-slate-400 mt-0.5">{{
+          <span class="text-xs text-slate-400">{{
             formatDate(article.publishedAt)
           }}</span>
         </div>

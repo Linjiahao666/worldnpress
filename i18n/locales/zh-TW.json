@@ -1,26 +1,27 @@
 {
   "site": {
-    "title": "國際經濟網",
-    "subtitle": "International Economy Network",
-    "description": "全球財經資訊門戶"
+    "title": "國際經濟時報",
+    "subtitle": "International Economy Times",
+    "description": "國際視野·財經權威·大灣區特色·ESG與綠色金融標杆·AI數據智庫"
   },
   "nav": {
     "home": "首頁",
     "news": "新聞中心",
-    "politics": "國際時政",
-    "esg": "ESG與可持續發展",
-    "globalEconomy": "全球經濟",
-    "mainlandEconomy": "大陸經濟",
-    "industry": "產業經濟",
-    "dataCenter": "數據中心",
-    "thinkTank": "智庫研究",
-    "about": "關於我們",
     "gbaHk": "粵港澳大灣區·香港財經",
+    "esg": "ESG與可持續發展",
     "greenFinance": "綠色金融",
     "aiData": "AI輿情大數據中心",
+    "thinkTank": "智庫研究中心",
     "events": "會展與活動中心",
     "supervision": "輿論監督與誠信建設",
-    "brand": "品牌與企業服務"
+    "brand": "品牌與企業服務",
+    "about": "關於我們",
+    "more": "更多",
+    "industry": "產業經濟",
+    "politics": "國際時政",
+    "dataCenter": "數據中心",
+    "globalEconomy": "全球經濟",
+    "mainlandEconomy": "大陸經濟"
   },
   "news": {
     "title": "新聞中心",
@@ -45,18 +46,14 @@
       "backToList": "返回列表"
     }
   },
-  "politics": {
-    "title": "國際時政",
-    "latest": "最新時政",
-    "hot": "熱點時政",
-    "more": "查看更多",
+  "gbaHk": {
+    "title": "粵港澳大灣區·香港財經",
     "categories": {
-      "political-news": "時政要聞",
-      "diplomacy": "外交動態",
-      "international-relations": "國際關係",
-      "policy-analysis": "政策解讀",
-      "geopolitics": "地緣政治",
-      "international-orgs": "國際組織"
+      "bay-area-news": "灣區動態",
+      "shenzhen-hk": "深港合作",
+      "cross-border-investment": "跨境投資",
+      "offshore-finance": "離岸金融",
+      "hk-market": "香港市場"
     }
   },
   "esg": {
@@ -78,17 +75,82 @@
       "views": "閱讀量"
     }
   },
-  "home": {
-    "hero": {
-      "title": "全球財經資訊 一站掌握",
-      "subtitle": "專注ESG與可持續發展、綠色金融、全球財經報道"
-    },
-    "sections": {
-      "title": "欄目導覽",
-      "viewAll": "查看全部"
-    },
-    "quickLinks": {
-      "title": "快速通道"
+  "greenFinance": {
+    "title": "綠色金融",
+    "categories": {
+      "green-credit": "綠色信貸",
+      "green-securities": "綠色證券",
+      "green-insurance": "綠色保險",
+      "green-fund": "綠色基金",
+      "carbon-finance": "碳金融",
+      "sustainable-investment": "可持續投資"
+    }
+  },
+  "aiData": {
+    "title": "AI輿情大數據中心",
+    "categories": {
+      "real-time-monitoring": "實時監測",
+      "sentiment-warning": "輿情預警",
+      "data-verification": "數據核驗",
+      "risk-profiling": "風險畫像",
+      "enterprise-subscription": "企業訂閱服務"
+    }
+  },
+  "thinkTank": {
+    "title": "智庫研究中心",
+    "categories": {
+      "policy-interpretation": "政策解讀",
+      "white-paper": "白皮書",
+      "special-research": "專題研究",
+      "custom-report": "定制報告",
+      "expert-pool": "專家庫",
+      "internal-reference": "內參服務",
+      "deep-analysis": "深度分析",
+      "column": "專欄",
+      "research-report": "研報",
+      "special-topic": "專題",
+      "events": "會議活動"
+    }
+  },
+  "events": {
+    "title": "會展與活動中心",
+    "categories": {
+      "global-forum": "全球論壇",
+      "esg-summit": "ESG峰會",
+      "cloud-summit": "雲峰會",
+      "roadshow": "路演",
+      "exhibition": "展覽",
+      "investment-cooperation": "招商合作"
+    }
+  },
+  "supervision": {
+    "title": "輿論監督與誠信建設",
+    "categories": {
+      "anti-greenwashing": "反漂綠",
+      "dishonesty-exposure": "失信曝光",
+      "integrity-enterprise": "誠信企業",
+      "compliance-tips": "合規提示",
+      "social-responsibility": "社會責任典範"
+    }
+  },
+  "brand": {
+    "title": "品牌與企業服務",
+    "categories": {
+      "interview": "專訪",
+      "press-release": "新聞發佈",
+      "brand-showcase": "品牌展示",
+      "advertising": "廣告服務",
+      "gov-enterprise-cooperation": "政企合作"
+    }
+  },
+  "about": {
+    "categories": {
+      "introduction": "平台介紹",
+      "policy": "經營方針",
+      "qualification": "資質展示",
+      "contact": "聯繫方式",
+      "legal-notice": "法律聲明",
+      "reporter-query": "記者證查詢"
     }
   },
   "globalEconomy": {
@@ -134,6 +196,17 @@
       "transportation": "交通"
     }
   },
+  "politics": {
+    "title": "國際時政",
+    "categories": {
+      "political-news": "時政新聞",
+      "diplomacy": "外交動態",
+      "international-relations": "國際關係",
+      "policy-analysis": "政策分析",
+      "geopolitics": "地緣政治",
+      "international-orgs": "國際組織"
+    }
+  },
   "dataCenter": {
     "title": "數據中心",
     "categories": {
@@ -144,24 +217,30 @@
       "chart-tools": "圖表工具"
     }
   },
-  "thinkTank": {
-    "title": "智庫研究",
-    "categories": {
-      "deep-analysis": "深度分析",
-      "column": "專欄",
-      "research-report": "研報",
-      "special-topic": "專題",
-      "events": "會議活動"
-    }
-  },
-  "about": {
-    "categories": {
-      "introduction": "網站介紹",
-      "contact": "聯繫方式",
-      "reporter-query": "記者證查詢",
-      "submission": "投稿合作",
-      "disclaimer": "免責聲明",
-      "privacy": "隱私政策"
+  "home": {
+    "hero": {
+      "title": "全球財經資訊 一站掌握",
+      "subtitle": "專注ESG與可持續發展、綠色金融、大灣區財經、AI輿情大數據"
+    },
+    "sections": {
+      "title": "欄目導覽",
+      "viewAll": "查看全部"
+    },
+    "quickLinks": {
+      "title": "快速通道"
+    },
+    "announcement": {
+      "title": "最新公告"
+    },
+    "topics": {
+      "title": "專題推薦"
+    },
+    "dataDashboard": {
+      "title": "數據看板",
+      "exchange": "匯率",
+      "stock": "股市",
+      "commodity": "大宗商品",
+      "sentiment": "輿情指數"
     }
   },
   "common": {
@@ -179,13 +258,14 @@
     "viewAll": "查看全部"
   },
   "footer": {
-    "companyName": "國際經濟網",
-    "companyNameEn": "International Economy Network",
-    "address": "B27 SHINGLEE COMMERCIAL BUILDING 8 WING KUT STREET, CENTRAL HK (香港中环永吉街8号成利商业大厦室)",
+    "companyName": "國際經濟時報",
+    "companyNameEn": "International Economy Times",
+    "address": "B27 SHINGLEE COMMERCIAL BUILDING 8 WING KUT STREET, CENTRAL HK (香港中環永吉街8號成利商業大廈室)",
     "phone": "+85234667423",
     "fax": "+85226916469",
     "email": "info{'@'}worldnpress.com",
-    "copyright": "© {year} WorldnPress. 版權所有。",
+    "copyright": "© {year} 國際經濟時報 WorldnPress. 版權所有。",
+    "icp": "本網站內容僅供參考，不構成投資建議。",
     "links": {
       "title": "快速連結",
       "privacy": "隱私政策",
@@ -196,7 +276,15 @@
     },
     "about": {
       "title": "關於我們",
-      "description": "世界財經新聞（WorldnPress）是一個專注於全球財經、ESG可持續發展及綠色金融的專業新聞資訊平台。"
+      "description": "國際經濟時報（WorldnPress）是一個專注於全球財經、ESG可持續發展、綠色金融、粵港澳大灣區經濟及AI輿情大數據的專業新聞資訊平台，致力於成為權威的國際經濟資訊門戶。"
+    },
+    "sections": {
+      "title": "欄目導航"
+    },
+    "legal": {
+      "title": "合規公示",
+      "disclaimer": "本網站所刊載的所有資料及信息，僅供參考之用。本網站對任何由於使用本網站材料而造成的直接或間接損失不承擔責任。",
+      "copyright": "未經許可，禁止轉載、複製或建立鏡像。"
     }
   },
   "reporters": {
@@ -216,7 +304,7 @@
     "dashboard": "管理後台",
     "description": "管理網站文章與內容",
     "articles": "文章管理",
-    "create": "發布文章",
+    "create": "發佈文章",
     "edit": "編輯文章",
     "comingSoon": "管理系統正在開發中",
     "totalArticles": "文章總數",
@@ -236,7 +324,7 @@
     "actions": "操作",
     "backToDashboard": "返回儀表板",
     "backToList": "返回列表",
-    "publish": "發布文章",
+    "publish": "發佈文章",
     "save": "保存修改",
     "backup": "數據庫備份",
     "backupManagement": "備份管理",
@@ -264,7 +352,7 @@
     "createSection": "新增模塊",
     "editSection": "編輯模塊",
     "sectionId": "模塊ID",
-    "sectionLabelKey": "標籤鍵",
+    "sectionLabelKey": "標簽鍵",
     "sectionIcon": "圖標",
     "sectionColor": "顏色",
     "sectionSortOrder": "排序",

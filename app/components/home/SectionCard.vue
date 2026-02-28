@@ -1,47 +1,44 @@
 <script setup lang="ts">
+import type { Section } from "~/types";
+
 const { t } = useI18n();
 const localePath = useLocalePath();
 
-const sections = [
-  {
-    labelKey: "nav.news",
-    to: "/news",
-    icon: "i-lucide-newspaper",
-    active: true,
-  },
-  { labelKey: "nav.esg", to: "/esg", icon: "i-lucide-leaf", active: true },
-];
+const { data: sections } = useFetch<Section[]>("/api/sections", {
+  query: { active: "1" },
+});
 </script>
 
 <template>
-  <section>
-    <h2 class="text-xl font-bold text-slate-800 mb-4">
-      {{ t("home.sections.title") }}
-    </h2>
-    <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-      <NuxtLink
-        v-for="section in sections"
-        :key="section.to"
-        :to="localePath(section.to)"
-        class="group relative flex flex-col items-center gap-2 p-4 rounded-xl border transition-all"
-        :class="[
-          section.active
-            ? 'border-green-200 bg-green-50/50 hover:bg-green-50 hover:border-green-300 hover:shadow-sm'
-            : 'border-slate-100 bg-slate-50/50 hover:bg-slate-50 hover:border-slate-200',
-        ]"
-      >
-        <UIcon
-          :name="section.icon"
-          class="w-8 h-8 transition-colors"
-          :class="section.active ? 'text-green-500' : 'text-slate-400'"
-        />
-        <span
-          class="text-sm font-medium text-center transition-colors"
-          :class="section.active ? 'text-slate-700' : 'text-slate-500'"
+  <section class="bg-white rounded-xl border border-slate-200 overflow-hidden">
+    <div
+      class="flex items-center gap-2 px-4 py-3 border-b border-slate-100 bg-slate-50"
+    >
+      <UIcon name="i-lucide-compass" class="w-5 h-5 text-blue-600" />
+      <h2 class="text-base font-bold text-slate-800">
+        {{ t("home.sections.title") }}
+      </h2>
+    </div>
+    <div class="p-3">
+      <div class="grid grid-cols-2 gap-2">
+        <NuxtLink
+          v-for="section in sections"
+          :key="section.id"
+          :to="localePath(`/${section.id}`)"
+          class="group flex items-center gap-2 p-2.5 rounded-lg transition-all hover:bg-blue-50 hover:shadow-sm"
         >
-          {{ t(section.labelKey) }}
-        </span>
-      </NuxtLink>
+          <UIcon
+            :name="section.icon || 'i-lucide-folder'"
+            class="w-5 h-5 transition-colors shrink-0"
+            :class="section.color || 'text-blue-600'"
+          />
+          <span
+            class="text-sm font-medium text-slate-600 group-hover:text-blue-700 truncate"
+          >
+            {{ t(section.labelKey) }}
+          </span>
+        </NuxtLink>
+      </div>
     </div>
   </section>
 </template>

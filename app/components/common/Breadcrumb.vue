@@ -18,7 +18,7 @@ defineProps<{
       <NuxtLink
         v-if="item.to"
         :to="item.to"
-        class="hover:text-green-600 transition-colors"
+        class="hover:text-blue-600 transition-colors"
       >
         {{ item.label }}
       </NuxtLink>

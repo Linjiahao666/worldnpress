@@ -18,8 +18,8 @@ const localePath = useLocalePath();
       class="px-3 py-1.5 text-base rounded-full border transition-colors"
       :class="[
         !activeCategory
-          ? 'bg-green-500 text-white border-green-500'
-          : 'border-slate-200 text-slate-600 hover:border-green-300 hover:text-green-600',
+          ? 'bg-blue-700 text-white border-blue-700'
+          : 'border-slate-200 text-slate-600 hover:border-blue-300 hover:text-blue-600',
       ]"
     >
       {{ t("home.sections.viewAll") }}
@@ -31,8 +31,8 @@ const localePath = useLocalePath();
       class="px-3 py-1.5 text-base rounded-full border transition-colors"
       :class="[
         activeCategory === cat.slug
-          ? 'bg-green-500 text-white border-green-500'
-          : 'border-slate-200 text-slate-600 hover:border-green-300 hover:text-green-600',
+          ? 'bg-blue-700 text-white border-blue-700'
+          : 'border-slate-200 text-slate-600 hover:border-blue-300 hover:text-blue-600',
       ]"
     >
       {{ t(cat.labelKey) }}

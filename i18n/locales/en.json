@@ -1,26 +1,27 @@
 {
   "site": {
-    "title": "International Economy Network",
-    "subtitle": "International Economy Network",
-    "description": "Global Financial News Portal"
+    "title": "International Economy Times",
+    "subtitle": "International Economy Times",
+    "description": "Global Vision · Financial Authority · GBA Focus · ESG & Green Finance · AI Data Intelligence"
   },
   "nav": {
     "home": "Home",
     "news": "News Center",
-    "politics": "International Politics",
-    "esg": "ESG & Sustainability",
-    "globalEconomy": "Global Economy",
-    "mainlandEconomy": "Mainland Economy",
-    "industry": "Industry",
-    "dataCenter": "Data Center",
-    "thinkTank": "Think Tank",
-    "about": "About Us",
     "gbaHk": "GBA & Hong Kong Finance",
+    "esg": "ESG & Sustainability",
     "greenFinance": "Green Finance",
     "aiData": "AI Sentiment & Big Data",
+    "thinkTank": "Think Tank",
     "events": "Events & Exhibitions",
     "supervision": "Supervision & Integrity",
-    "brand": "Brand & Enterprise Services"
+    "brand": "Brand & Enterprise Services",
+    "about": "About Us",
+    "more": "More",
+    "industry": "Industrial Economy",
+    "politics": "International Politics",
+    "dataCenter": "Data Center",
+    "globalEconomy": "Global Economy",
+    "mainlandEconomy": "Mainland Economy"
   },
   "news": {
     "title": "News Center",
@@ -45,50 +46,111 @@
       "backToList": "Back to List"
     }
   },
-  "politics": {
-    "title": "International Politics",
-    "latest": "Latest Politics",
-    "hot": "Hot Politics",
-    "more": "View More",
+  "gbaHk": {
+    "title": "GBA & Hong Kong Finance",
     "categories": {
-      "political-news": "Political News",
-      "diplomacy": "Diplomatic Affairs",
-      "international-relations": "International Relations",
-      "policy-analysis": "Policy Analysis",
-      "geopolitics": "Geopolitics",
-      "international-orgs": "International Organizations"
+      "bay-area-news": "Bay Area News",
+      "shenzhen-hk": "Shenzhen-HK Cooperation",
+      "cross-border-investment": "Cross-Border Investment",
+      "offshore-finance": "Offshore Finance",
+      "hk-market": "Hong Kong Market"
     }
   },
   "esg": {
     "title": "ESG & Sustainability",
     "categories": {
       "esg-news": "ESG News",
-      "governance": "Governance Practices",
+      "governance": "Governance Practice",
       "carbon-management": "Carbon Management",
       "circular-economy": "Circular Economy",
-      "disclosure": "Information Disclosure",
-      "report-service": "Report Services",
+      "disclosure": "Disclosure",
+      "report-service": "Report Service",
       "rating": "Rating & Certification",
       "education": "Education & Training"
     },
     "stats": {
-      "title": "ESG Data Overview",
+      "title": "ESG Overview",
       "articles": "Articles",
       "categories": "Categories",
       "views": "Views"
     }
   },
-  "home": {
-    "hero": {
-      "title": "Global Financial Insights at Your Fingertips",
-      "subtitle": "Focused on ESG & Sustainability, Green Finance, and Global Financial Reporting"
-    },
-    "sections": {
-      "title": "Section Directory",
-      "viewAll": "View All"
-    },
-    "quickLinks": {
-      "title": "Quick Links"
+  "greenFinance": {
+    "title": "Green Finance",
+    "categories": {
+      "green-credit": "Green Credit",
+      "green-securities": "Green Securities",
+      "green-insurance": "Green Insurance",
+      "green-fund": "Green Fund",
+      "carbon-finance": "Carbon Finance",
+      "sustainable-investment": "Sustainable Investment"
+    }
+  },
+  "aiData": {
+    "title": "AI Sentiment & Big Data",
+    "categories": {
+      "real-time-monitoring": "Real-Time Monitoring",
+      "sentiment-warning": "Sentiment Warning",
+      "data-verification": "Data Verification",
+      "risk-profiling": "Risk Profiling",
+      "enterprise-subscription": "Enterprise Subscription"
+    }
+  },
+  "thinkTank": {
+    "title": "Think Tank",
+    "categories": {
+      "policy-interpretation": "Policy Interpretation",
+      "white-paper": "White Paper",
+      "special-research": "Special Research",
+      "custom-report": "Custom Report",
+      "expert-pool": "Expert Pool",
+      "internal-reference": "Internal Reference",
+      "deep-analysis": "Deep Analysis",
+      "column": "Column",
+      "research-report": "Research Report",
+      "special-topic": "Special Topic",
+      "events": "Events & Conferences"
+    }
+  },
+  "events": {
+    "title": "Events & Exhibitions",
+    "categories": {
+      "global-forum": "Global Forum",
+      "esg-summit": "ESG Summit",
+      "cloud-summit": "Cloud Summit",
+      "roadshow": "Roadshow",
+      "exhibition": "Exhibition",
+      "investment-cooperation": "Investment Cooperation"
+    }
+  },
+  "supervision": {
+    "title": "Supervision & Integrity",
+    "categories": {
+      "anti-greenwashing": "Anti-Greenwashing",
+      "dishonesty-exposure": "Dishonesty Exposure",
+      "integrity-enterprise": "Integrity Enterprise",
+      "compliance-tips": "Compliance Tips",
+      "social-responsibility": "Social Responsibility"
+    }
+  },
+  "brand": {
+    "title": "Brand & Enterprise Services",
+    "categories": {
+      "interview": "Interview",
+      "press-release": "Press Release",
+      "brand-showcase": "Brand Showcase",
+      "advertising": "Advertising",
+      "gov-enterprise-cooperation": "Gov-Enterprise Cooperation"
+    }
+  },
+  "about": {
+    "categories": {
+      "introduction": "About Us",
+      "policy": "Business Policy",
+      "qualification": "Qualifications",
+      "contact": "Contact",
+      "legal-notice": "Legal Notice",
+      "reporter-query": "Reporter Query"
     }
   },
   "globalEconomy": {
@@ -97,7 +159,7 @@
       "macro-policy": "Macro Policy",
       "intl-trade": "International Trade",
       "regional-economy": "Regional Economy",
-      "central-bank": "Central Banks & Currency",
+      "central-bank": "Central Banks & Currencies",
       "trade-friction": "Trade Friction"
     }
   },
@@ -106,22 +168,22 @@
     "categories": {
       "policy-interpretation": "Policy Interpretation",
       "ministry-news": "Ministry News",
-      "conference-report": "Conference Report",
+      "conference-report": "Conference Reports",
       "political-commentary": "Political Commentary",
-      "high-quality-dev": "High Quality Development",
+      "high-quality-dev": "High-Quality Development",
       "a-share": "A-Share Listing",
-      "esg-report": "ESG Report",
+      "esg-report": "ESG Reports",
       "esg-disclosure": "ESG Disclosure",
       "esg-rating": "ESG Rating",
       "esg-consulting": "ESG Consulting",
       "esg-education": "ESG Education",
       "lca": "LCA",
       "cbam": "CBAM",
-      "zero-carbon-park": "Zero Carbon Park"
+      "zero-carbon-park": "Zero-Carbon Park"
     }
   },
   "industry": {
-    "title": "Industry",
+    "title": "Industrial Economy",
     "categories": {
       "energy": "Energy",
       "technology": "Technology",
@@ -134,6 +196,17 @@
       "transportation": "Transportation"
     }
   },
+  "politics": {
+    "title": "International Politics",
+    "categories": {
+      "political-news": "Political News",
+      "diplomacy": "Diplomacy",
+      "international-relations": "International Relations",
+      "policy-analysis": "Policy Analysis",
+      "geopolitics": "Geopolitics",
+      "international-orgs": "International Organizations"
+    }
+  },
   "dataCenter": {
     "title": "Data Center",
     "categories": {
@@ -144,30 +217,36 @@
       "chart-tools": "Chart Tools"
     }
   },
-  "thinkTank": {
-    "title": "Think Tank",
-    "categories": {
-      "deep-analysis": "Deep Analysis",
-      "column": "Column",
-      "research-report": "Research Report",
-      "special-topic": "Special Topic",
-      "events": "Events"
-    }
-  },
-  "about": {
-    "categories": {
-      "introduction": "About Us",
-      "contact": "Contact",
-      "reporter-query": "Reporter Query",
-      "submission": "Submission",
-      "disclaimer": "Disclaimer",
-      "privacy": "Privacy Policy"
+  "home": {
+    "hero": {
+      "title": "Global Financial News at Your Fingertips",
+      "subtitle": "Focused on ESG & Sustainability, Green Finance, GBA Economy, AI Big Data"
+    },
+    "sections": {
+      "title": "Section Guide",
+      "viewAll": "View All"
+    },
+    "quickLinks": {
+      "title": "Quick Links"
+    },
+    "announcement": {
+      "title": "Announcements"
+    },
+    "topics": {
+      "title": "Featured Topics"
+    },
+    "dataDashboard": {
+      "title": "Data Dashboard",
+      "exchange": "Exchange Rate",
+      "stock": "Stock Market",
+      "commodity": "Commodities",
+      "sentiment": "Sentiment Index"
     }
   },
   "common": {
     "readMore": "Read More",
     "loading": "Loading…",
-    "noData": "No Data Available",
+    "noData": "No Data",
     "comingSoon": "Coming Soon",
     "comingSoonDesc": "This section is under construction. Stay tuned!",
     "backToHome": "Back to Home",
@@ -179,13 +258,14 @@
     "viewAll": "View All"
   },
   "footer": {
-    "companyName": "International Economy Network",
-    "companyNameEn": "International Economy Network",
-    "address": "B27 SHINGLEE COMMERCIAL BUILDING 8 WING KUT STREET, CENTRAL HK (Room B27, Shinglee Commercial Building, 8 Wing Kut Street, Central, Hong Kong)",
+    "companyName": "International Economy Times",
+    "companyNameEn": "International Economy Times",
+    "address": "B27 SHINGLEE COMMERCIAL BUILDING 8 WING KUT STREET, CENTRAL HK",
     "phone": "+85234667423",
     "fax": "+85226916469",
     "email": "info{'@'}worldnpress.com",
-    "copyright": "© {year} WorldnPress. All rights reserved.",
+    "copyright": "© {year} International Economy Times WorldnPress. All rights reserved.",
+    "icp": "The content of this website is for reference only and does not constitute investment advice.",
     "links": {
       "title": "Quick Links",
       "privacy": "Privacy Policy",
@@ -196,13 +276,21 @@
     },
     "about": {
       "title": "About Us",
-      "description": "WorldnPress is a professional news and information platform focused on global finance, ESG sustainability, and green finance."
+      "description": "International Economy Times (WorldnPress) is a professional news platform focused on global finance, ESG sustainability, green finance, GBA economy, and AI sentiment big data, dedicated to becoming an authoritative international economic news portal."
+    },
+    "sections": {
+      "title": "Section Navigation"
+    },
+    "legal": {
+      "title": "Compliance Disclosure",
+      "disclaimer": "All materials and information published on this website are for reference only. This website shall not be liable for any direct or indirect losses arising from the use of materials on this website.",
+      "copyright": "Unauthorized reproduction, copying, or mirroring is prohibited."
     }
   },
   "reporters": {
     "title": "Reporter Directory",
-    "description": "Below is the list of certified reporters of our agency, open to public supervision.",
-    "notice": "This directory is subject to updates. If you find anyone impersonating our reporters, please report to us immediately.",
+    "description": "The following is a list of our accredited journalists, open to public supervision.",
+    "notice": "This information is subject to change. Please report any cases of impersonation of our reporters.",
     "table": {
       "index": "No.",
       "name": "Name",
@@ -215,7 +303,7 @@
     "title": "Admin Panel",
     "dashboard": "Dashboard",
     "description": "Manage website articles and content",
-    "articles": "Article Management",
+    "articles": "Articles",
     "create": "Create Article",
     "edit": "Edit Article",
     "comingSoon": "Admin system is under development",
@@ -223,7 +311,7 @@
     "totalCategories": "Total Categories",
     "totalViews": "Total Views",
     "quickActions": "Quick Actions",
-    "createArticle": "Create Article",
+    "createArticle": "New Article",
     "manageArticles": "Manage Articles",
     "recentArticles": "Recent Articles",
     "editArticle": "Edit Article",
@@ -245,7 +333,7 @@
     "creatingBackup": "Creating backup...",
     "backupList": "Backup List",
     "noBackups": "No backup files",
-    "noBackupsDesc": "Click the button above to create the first backup",
+    "noBackupsDesc": "Click the button above to create your first backup",
     "restore": "Restore",
     "restoring": "Restoring...",
     "download": "Download",
@@ -253,9 +341,9 @@
     "backupSuccess": "Backup created successfully",
     "restoreSuccess": "Database restored successfully",
     "restoreConfirm": "Confirm Restore",
-    "restoreWarning": "Restoring will overwrite the current database. The system will automatically backup current data. Are you sure you want to continue?",
-    "deleteConfirm": "Are you sure you want to delete this backup file? This action cannot be undone.",
-    "fileName": "File Name",
+    "restoreWarning": "Restoring will overwrite the current database. The system will automatically back up current data. Continue?",
+    "deleteConfirm": "Are you sure you want to delete this backup? This action cannot be undone.",
+    "fileName": "Filename",
     "fileSize": "File Size",
     "createdAt": "Created At",
     "sections": "Section Management",

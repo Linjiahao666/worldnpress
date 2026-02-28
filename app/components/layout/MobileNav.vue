@@ -35,7 +35,7 @@ function toggleSection(id: string) {
   <USlideover v-model:open="open" side="left" title="">
     <template #body>
       <div class="flex items-center gap-2 mb-6 px-2">
-        <span class="text-2xl font-bold text-green-500">W</span>
+        <span class="text-2xl font-black text-blue-700">IET</span>
         <span class="text-lg font-semibold text-slate-800">{{
           t("site.title")
         }}</span>
@@ -48,8 +48,8 @@ function toggleSection(id: string) {
           class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-base font-bold transition-colors"
           :class="[
             isActive('/')
-              ? 'text-green-600 bg-green-50'
-              : 'text-slate-800 hover:text-green-600 hover:bg-slate-50',
+              ? 'text-blue-700 bg-blue-50'
+              : 'text-slate-800 hover:text-blue-600 hover:bg-slate-50',
           ]"
           @click="open = false"
         >
@@ -64,8 +64,8 @@ function toggleSection(id: string) {
               class="flex-1 flex items-center gap-3 px-3 py-2.5 rounded-lg text-base font-bold transition-colors"
               :class="[
                 isActive(`/${section.id}`)
-                  ? 'text-green-600 bg-green-50'
-                  : 'text-slate-800 hover:text-green-600 hover:bg-slate-50',
+                  ? 'text-blue-700 bg-blue-50'
+                  : 'text-slate-800 hover:text-blue-600 hover:bg-slate-50',
               ]"
               @click="open = false"
             >
@@ -86,13 +86,13 @@ function toggleSection(id: string) {
           <!-- 子分类 -->
           <div
             v-if="section.categories && expandedSection === section.id"
-            class="ml-4 pl-3 border-l border-slate-200 mt-1 mb-2 space-y-0.5"
+            class="ml-4 pl-3 border-l border-blue-200 mt-1 mb-2 space-y-0.5"
           >
             <NuxtLink
               v-for="cat in section.categories"
               :key="cat.slug"
               :to="localePath(`/${section.id}/${cat.slug}`)"
-              class="block px-3 py-1.5 text-sm text-slate-500 hover:text-green-600 rounded transition-colors"
+              class="block px-3 py-1.5 text-sm text-slate-500 hover:text-blue-600 rounded transition-colors"
               @click="open = false"
             >
               {{ t(cat.labelKey) }}
@@ -106,8 +106,8 @@ function toggleSection(id: string) {
           class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-base font-bold transition-colors"
           :class="[
             isActive('/about')
-              ? 'text-green-600 bg-green-50'
-              : 'text-slate-800 hover:text-green-600 hover:bg-slate-50',
+              ? 'text-blue-700 bg-blue-50'
+              : 'text-slate-800 hover:text-blue-600 hover:bg-slate-50',
           ]"
           @click="open = false"
         >

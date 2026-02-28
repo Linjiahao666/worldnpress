@@ -24,7 +24,7 @@ function formatDate(dateStr: string) {
       </h2>
       <NuxtLink
         :to="localePath('/news')"
-        class="text-sm text-green-600 hover:text-green-700 font-medium"
+        class="text-sm text-blue-600 hover:text-blue-700 font-medium"
       >
         {{ t("news.more") }} →
       </NuxtLink>
@@ -37,11 +37,11 @@ function formatDate(dateStr: string) {
         :to="
           localePath(`/${article.section}/${article.category}/${article.id}`)
         "
-        class="group flex gap-4 p-3 rounded-lg hover:bg-slate-50 transition-colors"
+        class="group flex gap-4 p-3 rounded-lg hover:bg-blue-50 transition-colors"
       >
         <div class="flex-1 min-w-0">
           <h3
-            class="text-base font-semibold text-slate-800 group-hover:text-green-600 transition-colors line-clamp-2 mb-1"
+            class="text-base font-semibold text-slate-800 group-hover:text-blue-600 transition-colors line-clamp-2 mb-1"
           >
             {{ article.title }}
           </h3>

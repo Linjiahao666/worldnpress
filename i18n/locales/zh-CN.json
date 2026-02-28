@@ -1,26 +1,27 @@
 {
   "site": {
-    "title": "国际经济网",
-    "subtitle": "International Economy Network",
-    "description": "全球财经资讯门户"
+    "title": "国际经济时报",
+    "subtitle": "International Economy Times",
+    "description": "国际视野·财经权威·大湾区特色·ESG与绿色金融标杆·AI数据智库"
   },
   "nav": {
     "home": "首页",
     "news": "新闻中心",
-    "politics": "国际时政",
-    "esg": "ESG与可持续发展",
-    "globalEconomy": "全球经济",
-    "mainlandEconomy": "大陆经济",
-    "industry": "产业经济",
-    "dataCenter": "数据中心",
-    "thinkTank": "智库研究",
-    "about": "关于我们",
     "gbaHk": "粤港澳大湾区·香港财经",
+    "esg": "ESG与可持续发展",
     "greenFinance": "绿色金融",
     "aiData": "AI舆情大数据中心",
+    "thinkTank": "智库研究中心",
     "events": "会展与活动中心",
     "supervision": "舆论监督与诚信建设",
-    "brand": "品牌与企业服务"
+    "brand": "品牌与企业服务",
+    "about": "关于我们",
+    "more": "更多",
+    "industry": "产业经济",
+    "politics": "国际时政",
+    "dataCenter": "数据中心",
+    "globalEconomy": "全球经济",
+    "mainlandEconomy": "大陆经济"
   },
   "news": {
     "title": "新闻中心",
@@ -45,18 +46,14 @@
       "backToList": "返回列表"
     }
   },
-  "politics": {
-    "title": "国际时政",
-    "latest": "最新时政",
-    "hot": "热点时政",
-    "more": "查看更多",
+  "gbaHk": {
+    "title": "粤港澳大湾区·香港财经",
     "categories": {
-      "political-news": "时政要闻",
-      "diplomacy": "外交动态",
-      "international-relations": "国际关系",
-      "policy-analysis": "政策解读",
-      "geopolitics": "地缘政治",
-      "international-orgs": "国际组织"
+      "bay-area-news": "湾区动态",
+      "shenzhen-hk": "深港合作",
+      "cross-border-investment": "跨境投资",
+      "offshore-finance": "离岸金融",
+      "hk-market": "香港市场"
     }
   },
   "esg": {
@@ -78,17 +75,82 @@
       "views": "阅读量"
     }
   },
-  "home": {
-    "hero": {
-      "title": "全球财经资讯 一站掌握",
-      "subtitle": "专注ESG与可持续发展、绿色金融、全球财经报道"
-    },
-    "sections": {
-      "title": "栏目导览",
-      "viewAll": "查看全部"
-    },
-    "quickLinks": {
-      "title": "快速通道"
+  "greenFinance": {
+    "title": "绿色金融",
+    "categories": {
+      "green-credit": "绿色信贷",
+      "green-securities": "绿色证券",
+      "green-insurance": "绿色保险",
+      "green-fund": "绿色基金",
+      "carbon-finance": "碳金融",
+      "sustainable-investment": "可持续投资"
+    }
+  },
+  "aiData": {
+    "title": "AI舆情大数据中心",
+    "categories": {
+      "real-time-monitoring": "实时监测",
+      "sentiment-warning": "舆情预警",
+      "data-verification": "数据核验",
+      "risk-profiling": "风险画像",
+      "enterprise-subscription": "企业订阅服务"
+    }
+  },
+  "thinkTank": {
+    "title": "智库研究中心",
+    "categories": {
+      "policy-interpretation": "政策解读",
+      "white-paper": "白皮书",
+      "special-research": "专题研究",
+      "custom-report": "定制报告",
+      "expert-pool": "专家库",
+      "internal-reference": "内参服务",
+      "deep-analysis": "深度分析",
+      "column": "专栏",
+      "research-report": "研报",
+      "special-topic": "专题",
+      "events": "会议活动"
+    }
+  },
+  "events": {
+    "title": "会展与活动中心",
+    "categories": {
+      "global-forum": "全球论坛",
+      "esg-summit": "ESG峰会",
+      "cloud-summit": "云峰会",
+      "roadshow": "路演",
+      "exhibition": "展览",
+      "investment-cooperation": "招商合作"
+    }
+  },
+  "supervision": {
+    "title": "舆论监督与诚信建设",
+    "categories": {
+      "anti-greenwashing": "反漂绿",
+      "dishonesty-exposure": "失信曝光",
+      "integrity-enterprise": "诚信企业",
+      "compliance-tips": "合规提示",
+      "social-responsibility": "社会责任典范"
+    }
+  },
+  "brand": {
+    "title": "品牌与企业服务",
+    "categories": {
+      "interview": "专访",
+      "press-release": "新闻发布",
+      "brand-showcase": "品牌展示",
+      "advertising": "广告服务",
+      "gov-enterprise-cooperation": "政企合作"
+    }
+  },
+  "about": {
+    "categories": {
+      "introduction": "平台介绍",
+      "policy": "经营方针",
+      "qualification": "资质展示",
+      "contact": "联系方式",
+      "legal-notice": "法律声明",
+      "reporter-query": "记者证查询"
     }
   },
   "globalEconomy": {
@@ -134,6 +196,17 @@
       "transportation": "交通"
     }
   },
+  "politics": {
+    "title": "国际时政",
+    "categories": {
+      "political-news": "时政新闻",
+      "diplomacy": "外交动态",
+      "international-relations": "国际关系",
+      "policy-analysis": "政策分析",
+      "geopolitics": "地缘政治",
+      "international-orgs": "国际组织"
+    }
+  },
   "dataCenter": {
     "title": "数据中心",
     "categories": {
@@ -144,24 +217,30 @@
       "chart-tools": "图表工具"
     }
   },
-  "thinkTank": {
-    "title": "智库研究",
-    "categories": {
-      "deep-analysis": "深度分析",
-      "column": "专栏",
-      "research-report": "研报",
-      "special-topic": "专题",
-      "events": "会议活动"
-    }
-  },
-  "about": {
-    "categories": {
-      "introduction": "网站介绍",
-      "contact": "联系方式",
-      "reporter-query": "记者证查询",
-      "submission": "投稿合作",
-      "disclaimer": "免责声明",
-      "privacy": "隐私政策"
+  "home": {
+    "hero": {
+      "title": "全球财经资讯 一站掌握",
+      "subtitle": "专注ESG与可持续发展、绿色金融、大湾区财经、AI舆情大数据"
+    },
+    "sections": {
+      "title": "栏目导览",
+      "viewAll": "查看全部"
+    },
+    "quickLinks": {
+      "title": "快速通道"
+    },
+    "announcement": {
+      "title": "最新公告"
+    },
+    "topics": {
+      "title": "专题推荐"
+    },
+    "dataDashboard": {
+      "title": "数据看板",
+      "exchange": "汇率",
+      "stock": "股市",
+      "commodity": "大宗商品",
+      "sentiment": "舆情指数"
     }
   },
   "common": {
@@ -179,13 +258,14 @@
     "viewAll": "查看全部"
   },
   "footer": {
-    "companyName": "国际经济网",
-    "companyNameEn": "International Economy Network",
+    "companyName": "国际经济时报",
+    "companyNameEn": "International Economy Times",
     "address": "B27 SHINGLEE COMMERCIAL BUILDING 8 WING KUT STREET, CENTRAL HK (香港中环永吉街8号成利商业大厦室)",
     "phone": "+85234667423",
     "fax": "+85226916469",
     "email": "info{'@'}worldnpress.com",
-    "copyright": "© {year} WorldnPress. 版权所有。",
+    "copyright": "© {year} 国际经济时报 WorldnPress. 版权所有。",
+    "icp": "本网站内容仅供参考，不构成投资建议。",
     "links": {
       "title": "快速链接",
       "privacy": "隐私政策",
@@ -196,7 +276,15 @@
     },
     "about": {
       "title": "关于我们",
-      "description": "世界财经新闻（WorldnPress）是一个专注于全球财经、ESG可持续发展及绿色金融的专业新闻资讯平台。"
+      "description": "国际经济时报（WorldnPress）是一个专注于全球财经、ESG可持续发展、绿色金融、粤港澳大湾区经济及AI舆情大数据的专业新闻资讯平台，致力于成为权威的国际经济资讯门户。"
+    },
+    "sections": {
+      "title": "栏目导航"
+    },
+    "legal": {
+      "title": "合规公示",
+      "disclaimer": "本网站所刊载的所有资料及信息，仅供参考之用。本网站对任何由于使用本网站材料而造成的直接或间接损失不承担责任。",
+      "copyright": "未经许可，禁止转载、复制或建立镜像。"
     }
   },
   "reporters": {

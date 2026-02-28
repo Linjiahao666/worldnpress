@@ -10,6 +10,7 @@ useHead({
   title: "模块管理 - WorldnPress 管理后台",
 });
 
+const { t } = useI18n();
 const toast = useToast();
 
 // 获取所有模块
@@ -19,8 +20,8 @@ const {
   status,
 } = useFetch<Section[]>("/api/sections");
 
-// 新增/编辑模态框
-const showModal = ref(false);
+// 新增/编辑对话框
+const showDialog = ref(false);
 const isEditing = ref(false);
 const editForm = ref({
   id: "",
@@ -31,11 +32,12 @@ const editForm = ref({
   showOnHome: false,
 });
 
-// 删除确认
-const showDeleteConfirm = ref(false);
-const deleteTarget = ref<string>("");
+// 删除确认对话框
+const showDeleteDialog = ref(false);
+const deleteTarget = ref<Section | null>(null);
+const isDeleting = ref(false);
 
-function openCreateModal() {
+function openCreateDialog() {
   isEditing.value = false;
   editForm.value = {
     id: "",
@@ -45,10 +47,10 @@ function openCreateModal() {
     sortOrder: (sections.value?.length ?? 0) + 1,
     showOnHome: false,
   };
-  showModal.value = true;
+  showDialog.value = true;
 }
 
-function openEditModal(section: Section) {
+function openEditDialog(section: Section) {
   isEditing.value = true;
   editForm.value = {
     id: section.id,
@@ -58,7 +60,7 @@ function openEditModal(section: Section) {
     sortOrder: section.sortOrder,
     showOnHome: section.showOnHome,
   };
-  showModal.value = true;
+  showDialog.value = true;
 }
 
 const isSaving = ref(false);
@@ -85,7 +87,7 @@ async function handleSave() {
       });
       toast.add({ title: "模块创建成功", color: "success" });
     }
-    showModal.value = false;
+    showDialog.value = false;
     refresh();
   } catch (err: any) {
     toast.add({
@@ -98,16 +100,20 @@ async function handleSave() {
   }
 }
 
-function confirmDelete(id: string) {
-  deleteTarget.value = id;
-  showDeleteConfirm.value = true;
+function confirmDelete(section: Section) {
+  deleteTarget.value = section;
+  showDeleteDialog.value = true;
 }
 
 async function handleDelete() {
+  if (!deleteTarget.value) return;
+  isDeleting.value = true;
   try {
-    await $fetch(`/api/sections/${deleteTarget.value}`, { method: "DELETE" });
+    await $fetch(`/api/sections/${deleteTarget.value.id}`, {
+      method: "DELETE",
+    });
     toast.add({ title: "模块已删除", color: "success" });
-    showDeleteConfirm.value = false;
+    showDeleteDialog.value = false;
     refresh();
   } catch (err: any) {
     toast.add({
@@ -115,31 +121,52 @@ async function handleDelete() {
       description: err?.data?.statusMessage || "未知错误",
       color: "error",
     });
+  } finally {
+    isDeleting.value = false;
   }
 }
 
+// 乐观更新：切换首页展示
 async function toggleHomeDisplay(section: Section) {
+  const original = section.showOnHome;
+  section.showOnHome = !original;
   try {
     await $fetch(`/api/sections/${section.id}`, {
       method: "PUT",
-      body: { showOnHome: !section.showOnHome },
+      body: { showOnHome: !original },
     });
-    refresh();
   } catch {
+    section.showOnHome = original;
     toast.add({ title: "操作失败", color: "error" });
   }
 }
 
+// 乐观更新：切换启用状态
 async function toggleActive(section: Section) {
+  const original = section.isActive;
+  section.isActive = !original;
   try {
     await $fetch(`/api/sections/${section.id}`, {
       method: "PUT",
-      body: { isActive: !section.isActive },
+      body: { isActive: !original },
     });
-    refresh();
   } catch {
+    section.isActive = original;
     toast.add({ title: "操作失败", color: "error" });
   }
+}
+
+// 获取翻译后的模块名称
+function getSectionName(section: Section) {
+  const translated = t(section.labelKey);
+  // 如果翻译键不存在，t() 会返回原始 key，此时尝试用 id 生成可读名称
+  if (translated === section.labelKey) {
+    return section.id
+      .split("-")
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(" ");
+  }
+  return translated;
 }
 
 // 常用图标选项
@@ -186,14 +213,14 @@ const colorOptions = [
         <div class="flex items-center gap-3">
           <NuxtLink
             to="/admin"
-            class="text-slate-500 hover:text-green-600 flex items-center gap-1"
+            class="text-slate-500 hover:text-blue-600 flex items-center gap-1"
           >
             <UIcon name="i-lucide-arrow-left" class="w-4 h-4" />
             返回
           </NuxtLink>
           <h1 class="text-lg font-bold text-slate-900">模块管理</h1>
         </div>
-        <UButton icon="i-lucide-plus" color="primary" @click="openCreateModal">
+        <UButton icon="i-lucide-plus" color="primary" @click="openCreateDialog">
           新增模块
         </UButton>
       </div>
@@ -207,9 +234,7 @@ const colorOptions = [
             <h2 class="text-lg font-semibold text-slate-900">
               全部模块 ({{ sections?.length ?? 0 }})
             </h2>
-            <p class="text-sm text-slate-500">
-              拖拽排序 · 开关首页展示 · 编辑删除
-            </p>
+            <p class="text-sm text-slate-500">开关首页展示 · 编辑删除</p>
           </div>
         </template>
 
@@ -232,7 +257,7 @@ const colorOptions = [
             <!-- 图标 -->
             <div
               class="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
-              :class="[section.isActive ? 'bg-green-50' : 'bg-slate-100']"
+              :class="[section.isActive ? 'bg-blue-50' : 'bg-slate-100']"
             >
               <UIcon
                 :name="section.icon || 'i-lucide-folder'"
@@ -245,14 +270,15 @@ const colorOptions = [
             <div class="flex-1 min-w-0">
               <div class="flex items-center gap-2">
                 <h3 class="text-sm font-semibold text-slate-800">
-                  {{ section.labelKey }}
+                  {{ getSectionName(section) }}
                 </h3>
-                <span class="text-xs text-slate-400 font-mono">{{
-                  section.id
-                }}</span>
+                <span
+                  class="text-xs text-slate-400 font-mono bg-slate-50 px-1.5 py-0.5 rounded"
+                  >{{ section.id }}</span
+                >
                 <span
                   v-if="!section.isActive"
-                  class="px-1.5 py-0.5 text-xs rounded bg-slate-100 text-slate-500"
+                  class="px-1.5 py-0.5 text-xs rounded bg-red-50 text-red-500"
                 >
                   已停用
                 </span>
@@ -268,7 +294,7 @@ const colorOptions = [
               <span class="text-xs text-slate-500">首页展示</span>
               <button
                 class="relative inline-flex h-5 w-9 items-center rounded-full transition-colors"
-                :class="section.showOnHome ? 'bg-green-500' : 'bg-slate-300'"
+                :class="section.showOnHome ? 'bg-blue-500' : 'bg-slate-300'"
                 @click="toggleHomeDisplay(section)"
               >
                 <span
@@ -285,7 +311,7 @@ const colorOptions = [
               <span class="text-xs text-slate-500">启用</span>
               <button
                 class="relative inline-flex h-5 w-9 items-center rounded-full transition-colors"
-                :class="section.isActive ? 'bg-green-500' : 'bg-slate-300'"
+                :class="section.isActive ? 'bg-blue-500' : 'bg-slate-300'"
                 @click="toggleActive(section)"
               >
                 <span
@@ -304,14 +330,14 @@ const colorOptions = [
                 color="neutral"
                 size="xs"
                 icon="i-lucide-pencil"
-                @click="openEditModal(section)"
+                @click="openEditDialog(section)"
               />
               <UButton
                 variant="ghost"
                 color="error"
                 size="xs"
                 icon="i-lucide-trash-2"
-                @click="confirmDelete(section.id)"
+                @click="confirmDelete(section)"
               />
             </div>
           </div>
@@ -327,14 +353,33 @@ const colorOptions = [
       </UCard>
     </div>
 
-    <!-- 新增/编辑模态框 -->
-    <UModal v-model:open="showModal">
-      <template #default>
-        <div class="p-6">
-          <h3 class="text-lg font-bold text-slate-900 mb-4">
-            {{ isEditing ? "编辑模块" : "新增模块" }}
-          </h3>
-          <div class="space-y-4">
+    <!-- 新增/编辑对话框 -->
+    <UModal v-model:open="showDialog">
+      <template #content>
+        <div class="bg-white rounded-xl overflow-hidden">
+          <!-- 对话框标题栏 -->
+          <div
+            class="flex items-center justify-between px-6 py-4 border-b border-slate-200 bg-slate-50"
+          >
+            <div class="flex items-center gap-2">
+              <UIcon
+                :name="isEditing ? 'i-lucide-pencil' : 'i-lucide-plus-circle'"
+                class="w-5 h-5 text-blue-600"
+              />
+              <h3 class="text-lg font-bold text-slate-900">
+                {{ isEditing ? "编辑模块" : "新增模块" }}
+              </h3>
+            </div>
+            <button
+              class="p-1 rounded-lg hover:bg-slate-200 transition-colors"
+              @click="showDialog = false"
+            >
+              <UIcon name="i-lucide-x" class="w-5 h-5 text-slate-400" />
+            </button>
+          </div>
+
+          <!-- 对话框内容 -->
+          <div class="p-6 space-y-4 max-h-[70vh] overflow-y-auto">
             <!-- ID -->
             <div>
               <label class="block text-sm font-medium text-slate-700 mb-1"
@@ -345,7 +390,7 @@ const colorOptions = [
                 type="text"
                 :disabled="isEditing"
                 placeholder="例如: global-economy"
-                class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 disabled:bg-slate-100 disabled:text-slate-500"
+                class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-slate-100 disabled:text-slate-500"
               />
               <p class="text-xs text-slate-400 mt-1">
                 用于 URL 路径，创建后不可修改
@@ -361,7 +406,7 @@ const colorOptions = [
                 v-model="editForm.labelKey"
                 type="text"
                 placeholder="例如: nav.globalEconomy"
-                class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <p class="text-xs text-slate-400 mt-1">对应 i18n 翻译键</p>
             </div>
@@ -378,7 +423,7 @@ const colorOptions = [
                   class="w-9 h-9 rounded-lg flex items-center justify-center border transition-colors"
                   :class="
                     editForm.icon === icon
-                      ? 'border-green-500 bg-green-50'
+                      ? 'border-blue-500 bg-blue-50'
                       : 'border-slate-200 hover:border-slate-300'
                   "
                   @click="editForm.icon = icon"
@@ -390,7 +435,7 @@ const colorOptions = [
                 v-model="editForm.icon"
                 type="text"
                 placeholder="或直接输入图标类名"
-                class="w-full px-3 py-2 mt-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                class="w-full px-3 py-2 mt-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
@@ -406,7 +451,7 @@ const colorOptions = [
                   class="px-3 py-1 rounded-full text-xs border transition-colors"
                   :class="
                     editForm.color === color.value
-                      ? 'border-green-500 bg-green-50 font-semibold'
+                      ? 'border-blue-500 bg-blue-50 font-semibold'
                       : 'border-slate-200 hover:border-slate-300'
                   "
                   @click="editForm.color = color.value"
@@ -425,7 +470,7 @@ const colorOptions = [
                 v-model.number="editForm.sortOrder"
                 type="number"
                 min="0"
-                class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
@@ -434,17 +479,20 @@ const colorOptions = [
               <input
                 v-model="editForm.showOnHome"
                 type="checkbox"
-                class="w-4 h-4 rounded text-green-500 focus:ring-green-500"
+                class="w-4 h-4 rounded text-blue-500 focus:ring-blue-500"
               />
               <label class="text-sm text-slate-700">在首页展示此模块</label>
             </div>
           </div>
 
-          <div class="flex justify-end gap-3 mt-6">
+          <!-- 对话框底部按钮 -->
+          <div
+            class="flex justify-end gap-3 px-6 py-4 border-t border-slate-200 bg-slate-50"
+          >
             <UButton
               variant="outline"
               color="neutral"
-              @click="showModal = false"
+              @click="showDialog = false"
             >
               取消
             </UButton>
@@ -456,24 +504,64 @@ const colorOptions = [
       </template>
     </UModal>
 
-    <!-- 删除确认 -->
-    <UModal v-model:open="showDeleteConfirm">
-      <template #default>
-        <div class="p-6">
-          <h3 class="text-lg font-bold text-slate-900 mb-2">确认删除</h3>
-          <p class="text-sm text-slate-600 mb-4">
-            确定要删除模块
-            <strong>{{ deleteTarget }}</strong> 吗？此操作不可撤销。
-          </p>
-          <div class="flex justify-end gap-3">
+    <!-- 删除确认对话框 -->
+    <UModal v-model:open="showDeleteDialog">
+      <template #content>
+        <div class="bg-white rounded-xl overflow-hidden">
+          <!-- 对话框标题栏 -->
+          <div
+            class="flex items-center justify-between px-6 py-4 border-b border-slate-200"
+          >
+            <div class="flex items-center gap-2">
+              <div
+                class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center"
+              >
+                <UIcon
+                  name="i-lucide-alert-triangle"
+                  class="w-4 h-4 text-red-600"
+                />
+              </div>
+              <h3 class="text-lg font-bold text-slate-900">确认删除</h3>
+            </div>
+            <button
+              class="p-1 rounded-lg hover:bg-slate-200 transition-colors"
+              @click="showDeleteDialog = false"
+            >
+              <UIcon name="i-lucide-x" class="w-5 h-5 text-slate-400" />
+            </button>
+          </div>
+
+          <!-- 内容 -->
+          <div class="p-6">
+            <p class="text-sm text-slate-600">
+              确定要删除模块
+              <strong class="text-slate-900">{{
+                deleteTarget ? getSectionName(deleteTarget) : ""
+              }}</strong>
+              <span class="text-xs text-slate-400 ml-1"
+                >({{ deleteTarget?.id }})</span
+              >
+              吗？
+            </p>
+            <p class="text-xs text-red-500 mt-2">
+              此操作不可撤销，该模块下的所有分类也将被移除。
+            </p>
+          </div>
+
+          <!-- 底部按钮 -->
+          <div
+            class="flex justify-end gap-3 px-6 py-4 border-t border-slate-200 bg-slate-50"
+          >
             <UButton
               variant="outline"
               color="neutral"
-              @click="showDeleteConfirm = false"
+              @click="showDeleteDialog = false"
             >
               取消
             </UButton>
-            <UButton color="error" @click="handleDelete"> 确认删除 </UButton>
+            <UButton color="error" :loading="isDeleting" @click="handleDelete">
+              确认删除
+            </UButton>
           </div>
         </div>
       </template>

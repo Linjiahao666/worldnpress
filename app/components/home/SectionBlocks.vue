@@ -53,7 +53,7 @@ function formatDate(dateStr: string) {
       >
         <!-- 版块标题 -->
         <div
-          class="flex items-center justify-between px-4 py-3 border-b border-slate-100 bg-slate-50/50"
+          class="flex items-center justify-between px-4 py-3 border-b border-blue-100 bg-blue-50/50"
         >
           <div class="flex items-center gap-2">
             <UIcon
@@ -67,7 +67,7 @@ function formatDate(dateStr: string) {
           </div>
           <NuxtLink
             :to="localePath(`/${section.id}`)"
-            class="text-xs text-green-600 hover:text-green-700 font-medium"
+            class="text-xs text-blue-600 hover:text-blue-700 font-medium"
           >
             {{ t("common.viewAll") }} →
           </NuxtLink>
@@ -76,10 +76,7 @@ function formatDate(dateStr: string) {
         <!-- 新闻列表 -->
         <div class="divide-y divide-slate-50" style="min-height: 240px">
           <template
-            v-if="
-              sectionArticles[section.id] &&
-              sectionArticles[section.id]!.length > 0
-            "
+            v-if="sectionArticles[section.id] && sectionArticles[section.id]!.length > 0"
           >
             <NuxtLink
               v-for="(article, index) in sectionArticles[section.id]"
@@ -89,13 +86,13 @@ function formatDate(dateStr: string) {
                   `/${article.section}/${article.category}/${article.id}`,
                 )
               "
-              class="group flex items-start gap-3 px-4 py-2.5 hover:bg-slate-50 transition-colors"
+              class="group flex items-start gap-3 px-4 py-2.5 hover:bg-blue-50 transition-colors"
             >
               <span
                 class="shrink-0 w-5 h-5 mt-0.5 rounded flex items-center justify-center text-xs font-bold"
                 :class="
                   index < 3
-                    ? 'bg-green-500 text-white'
+                    ? 'bg-blue-700 text-white'
                     : 'bg-slate-100 text-slate-500'
                 "
               >
@@ -103,7 +100,7 @@ function formatDate(dateStr: string) {
               </span>
               <div class="flex-1 min-w-0">
                 <h4
-                  class="text-sm font-medium text-slate-700 group-hover:text-green-600 transition-colors line-clamp-1"
+                  class="text-sm font-medium text-slate-700 group-hover:text-blue-600 transition-colors line-clamp-1"
                 >
                   {{ article.title }}
                 </h4>

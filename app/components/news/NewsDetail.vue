@@ -68,9 +68,7 @@ function formatViews(count: number) {
     </div>
 
     <!-- 摘要 -->
-    <div
-      class="bg-green-50/50 border-l-4 border-green-400 p-4 mb-8 rounded-r-lg"
-    >
+    <div class="bg-blue-50/50 border-l-4 border-blue-500 p-4 mb-8 rounded-r-lg">
       <p class="text-slate-600 text-base leading-relaxed">
         {{ article.summary }}
       </p>

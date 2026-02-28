@@ -5,14 +5,14 @@ defineProps<{
   articles: Article[];
 }>();
 
-const { t, locale } = useI18n();
+const { locale } = useI18n();
 const activeIndex = ref(0);
 const localePath = useLocalePath();
 
 const PLACEHOLDER_IMAGE =
   "data:image/svg+xml," +
   encodeURIComponent(
-    '<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600"><rect fill="#1e293b" width="1200" height="600"/><text fill="#64748b" font-family="sans-serif" font-size="48" text-anchor="middle" x="600" y="310">WorldnPress</text></svg>',
+    '<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600"><rect fill="#1e3a8a" width="1200" height="600"/><text fill="#93c5fd" font-family="sans-serif" font-size="48" text-anchor="middle" x="600" y="310">IET</text></svg>',
   );
 
 let timer: ReturnType<typeof setInterval> | null = null;
@@ -68,14 +68,12 @@ onUnmounted(() => {
           :key="article.id"
           class="absolute inset-0"
         >
-          <!-- 封面图 -->
           <img
             :src="getCoverSrc(article)"
             :alt="article.title"
             class="w-full h-full object-cover"
             loading="lazy"
           />
-          <!-- 底部渐变遮罩 + 标题 -->
           <div
             class="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent pointer-events-none"
           />
@@ -89,7 +87,7 @@ onUnmounted(() => {
               class="block group"
             >
               <h2
-                class="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-1 group-hover:text-green-400 transition-colors line-clamp-2 drop-shadow-md"
+                class="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-1 group-hover:text-blue-300 transition-colors line-clamp-2 drop-shadow-md"
               >
                 {{ article.title }}
               </h2>
@@ -102,7 +100,7 @@ onUnmounted(() => {
     <!-- 左右箭头 -->
     <button
       v-if="articles.length > 1"
-      class="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 flex items-center justify-center rounded-full bg-black/40 text-white hover:bg-black/60 transition-colors"
+      class="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 flex items-center justify-center rounded-full bg-black/40 text-white hover:bg-blue-700/80 transition-colors"
       aria-label="Previous"
       @click="prev(articles.length)"
     >
@@ -110,7 +108,7 @@ onUnmounted(() => {
     </button>
     <button
       v-if="articles.length > 1"
-      class="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 flex items-center justify-center rounded-full bg-black/40 text-white hover:bg-black/60 transition-colors"
+      class="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 flex items-center justify-center rounded-full bg-black/40 text-white hover:bg-blue-700/80 transition-colors"
       aria-label="Next"
       @click="next(articles.length)"
     >
@@ -125,7 +123,7 @@ onUnmounted(() => {
         class="w-2 h-2 rounded-full transition-all"
         :class="
           index === activeIndex
-            ? 'bg-green-400 w-6'
+            ? 'bg-blue-400 w-6'
             : 'bg-white/40 hover:bg-white/60'
         "
         :aria-label="`Slide ${index + 1}`"

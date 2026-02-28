@@ -14,8 +14,8 @@ const availableLocales = computed(() => {
       class="px-2 py-1 text-sm rounded transition-colors"
       :class="[
         locale === loc.code
-          ? 'text-green-700 font-semibold bg-green-50'
-          : 'text-slate-500 hover:text-slate-700',
+          ? 'text-blue-200 font-semibold bg-blue-800/50'
+          : 'text-blue-300/70 hover:text-blue-100',
       ]"
       @click="setLocale(loc.code)"
     >

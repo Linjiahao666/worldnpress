@@ -28,7 +28,7 @@ function formatViews(count: number) {
 <template>
   <NuxtLink
     :to="localePath(`/${article.section}/${article.category}/${article.id}`)"
-    class="group block rounded-xl border border-slate-100 bg-white hover:border-green-200 hover:shadow-md transition-all overflow-hidden"
+    class="group block rounded-xl border border-slate-100 bg-white hover:border-blue-200 hover:shadow-md transition-all overflow-hidden"
     :class="layout === 'horizontal' ? 'flex' : ''"
   >
     <div
@@ -54,7 +54,7 @@ function formatViews(count: number) {
 
       <!-- 標題 -->
       <h3
-        class="text-lg font-semibold text-slate-800 group-hover:text-green-600 transition-colors line-clamp-2 mb-2"
+        class="text-lg font-semibold text-slate-800 group-hover:text-blue-600 transition-colors line-clamp-2 mb-2"
       >
         {{ article.title }}
       </h3>

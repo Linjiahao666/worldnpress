@@ -51,13 +51,13 @@ export default defineNuxtConfig({
     head: {
       charset: 'utf-8',
       viewport: 'width=device-width, initial-scale=1',
-      title: '国际经济网',
+      title: '国际经济时报',
       meta: [
-        { name: 'description', content: '世界財經新聞門戶 - 提供全球財經、ESG可持續發展、綠色金融等專業資訊' },
-        { name: 'theme-color', content: '#4ADE80' },
+        { name: 'description', content: '国际视野·财经权威·大湾区特色·ESG与绿色金融标杆·AI数据智库' },
+        { name: 'theme-color', content: '#1d4ed8' },
         { property: 'og:type', content: 'website' },
-        { property: 'og:title', content: '国际经济网' },
-        { property: 'og:description', content: '世界財經新聞門戶 - 提供全球財經、ESG可持續發展、綠色金融等專業資訊' },
+        { property: 'og:title', content: '国际经济时报' },
+        { property: 'og:description', content: '国际视野·财经权威·大湾区特色·ESG与绿色金融标杆·AI数据智库' },
         { name: 'twitter:card', content: 'summary_large_image' },
       ],
       link: [

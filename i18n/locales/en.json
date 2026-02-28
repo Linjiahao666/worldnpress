@@ -88,6 +88,41 @@
   },
   "aiData": {
     "title": "AI Sentiment & Big Data",
+    "hero": {
+      "title": "AI Sentiment & Big Data Center",
+      "subtitle": "Powered by AI and big data to provide global financial sentiment monitoring, intelligent alerts, data verification, and enterprise risk profiling."
+    },
+    "featuresTitle": "Core Service Capabilities",
+    "features": {
+      "monitoring": {
+        "title": "Real-time Sentiment Monitoring",
+        "desc": "24/7 global financial sentiment tracking across over a million media sources."
+      },
+      "alert": {
+        "title": "Intelligent Alert System",
+        "desc": "AI-driven anomaly alerts with customizable thresholds and notifications."
+      },
+      "verification": {
+        "title": "Data Verification",
+        "desc": "Cross-source validation to detect misinformation and abnormal data."
+      },
+      "riskProfile": {
+        "title": "Enterprise Risk Profiling",
+        "desc": "Multi-dimensional profiling across ESG rating, sentiment heat, and credit risk."
+      },
+      "subscription": {
+        "title": "Enterprise Subscription",
+        "desc": "Customized reports, industry briefs, and dedicated data API services."
+      },
+      "macroData": {
+        "title": "Macro Data Center",
+        "desc": "Visualization and comparative analysis of key indicators such as GDP, CPI, and PMI."
+      }
+    },
+    "cta": {
+      "title": "Need Customized Data Services?",
+      "subtitle": "We provide dedicated analytics and sentiment monitoring solutions for financial institutions, listed companies, and public agencies."
+    },
     "categories": {
       "real-time-monitoring": "Real-Time Monitoring",
       "sentiment-warning": "Sentiment Warning",
@@ -120,6 +155,63 @@
   },
   "events": {
     "title": "Events & Exhibitions",
+    "page": {
+      "hero": {
+        "title": "Events & Activity Center",
+        "subtitle": "Bringing you premium event insights on global economy forums, ESG summits, roadshows, and industry expos."
+      },
+      "upcoming": {
+        "title": "Upcoming Events",
+        "items": {
+          "esgSummit": {
+            "title": "2026 Global ESG Summit",
+            "location": "Shenzhen · International Convention Center",
+            "type": "Summit Forum",
+            "desc": "Gathering global ESG experts to discuss latest trends and practical cases."
+          },
+          "gbaForum": {
+            "title": "GBA Economic Forum",
+            "location": "Hong Kong · Convention Center",
+            "type": "International Forum",
+            "desc": "In-depth discussion on regional synergy, cross-border finance, and industry cooperation in the GBA."
+          },
+          "greenRoadshow": {
+            "title": "Green Finance Investment Roadshow",
+            "location": "Beijing · Financial Street",
+            "type": "Roadshow",
+            "desc": "Project matchmaking for selected green bonds and carbon finance products."
+          },
+          "aiSeminar": {
+            "title": "AI-Powered Financial Media Seminar",
+            "location": "Online Live",
+            "type": "Online Conference",
+            "desc": "Exploring AI applications in financial journalism, sentiment analysis, and data visualization."
+          }
+        }
+      },
+      "past": {
+        "title": "Past Event Highlights",
+        "items": {
+          "esgRating": {
+            "title": "2025 Annual ESG Rating Release",
+            "location": "Guangzhou"
+          },
+          "carbonExpo": {
+            "title": "Carbon Neutral Industry Expo",
+            "location": "Shanghai"
+          },
+          "economyTalk": {
+            "title": "International Economic Outlook Roundtable",
+            "location": "Beijing"
+          }
+        }
+      },
+      "status": {
+        "open": "Registration Open",
+        "soon": "Opening Soon",
+        "preparing": "In Preparation"
+      }
+    },
     "categories": {
       "global-forum": "Global Forum",
       "esg-summit": "ESG Summit",
@@ -150,6 +242,57 @@
     }
   },
   "about": {
+    "page": {
+      "introduction": {
+        "p1": "International Economy Times is a comprehensive financial media platform focused on global economy, financial markets, ESG, and sustainability. We uphold authority, professionalism, depth, and global vision to serve decision-makers across government, business, academia, and research.",
+        "p2": "The platform covers nine major channels including News Center, GBA & Hong Kong Finance, ESG & Sustainability, Green Finance, AI Big Data Center, Think Tank, Events, Supervision & Integrity, and Brand Services, spanning core areas such as macro economy, global finance, financial markets, industry, and international trade."
+      },
+      "policy": {
+        "values": {
+          "title": "Editorial Philosophy",
+          "desc": "We adhere to professional journalism with objective, fair, and independent reporting to support economic decisions with quality content."
+        },
+        "direction": {
+          "title": "Development Direction",
+          "desc": "Focused on ESG, green finance, and AI big data to build an integrated platform of media, think tank, data, and services."
+        },
+        "core": {
+          "title": "Core Values",
+          "desc": "Authoritative voice, in-depth analysis, global vision, and innovation-driven development."
+        },
+        "mission": {
+          "title": "Service Mission",
+          "desc": "Providing accurate information support and professional consulting services to institutions and enterprises."
+        }
+      },
+      "qualification": {
+        "title": "Qualifications & Honors",
+        "items": {
+          "newsLicense": "Internet News Information Service License (pending)",
+          "icp": "ICP Registration (pending)",
+          "culture": "Online Culture Business License (pending)"
+        }
+      },
+      "contact": {
+        "editorial": "Editorial Office",
+        "business": "Business Cooperation",
+        "address": "Address",
+        "phone": "Phone",
+        "email": "Email",
+        "ad": "Advertising",
+        "content": "Content Partnership",
+        "thinktank": "Think Tank Service"
+      },
+      "legal": {
+        "title": "Legal Notice & Disclaimer",
+        "copyrightTitle": "Copyright Notice",
+        "copyrightText": "All content on this website, including text, images, audio, video, software, programs, and web layout design, is protected by copyright and relevant laws. No entity or individual may reproduce, copy, quote, link, scrape, or otherwise use without written authorization.",
+        "disclaimerTitle": "Disclaimer",
+        "disclaimerText": "All information on this website is for reference only and does not constitute investment advice. We are not liable for any direct or indirect losses arising from the use of website materials.",
+        "privacyTitle": "Privacy Policy",
+        "privacyText": "We value user privacy. We only collect the minimum data necessary to provide services and do not sell or share personal data with third parties unless required by law."
+      }
+    },
     "categories": {
       "introduction": "About Us",
       "policy": "Business Policy",
@@ -363,6 +506,43 @@
     "sectionColor": "Color",
     "sectionSortOrder": "Sort Order",
     "showOnHome": "Show on Home",
-    "sectionActive": "Active"
+    "sectionActive": "Active",
+    "sectionsPage": {
+      "updated": "Section updated successfully",
+      "created": "Section created successfully",
+      "deleted": "Section deleted",
+      "actionFailed": "Action failed",
+      "deleteFailed": "Delete failed",
+      "unknownError": "Unknown error",
+      "allSections": "All sections ({count})",
+      "listHint": "Toggle home display · Edit / Delete",
+      "disabled": "Disabled",
+      "sortAndCategories": "Sort: {sort} · Categories: {count}",
+      "empty": "No sections yet. Click “New Section” to create the first one.",
+      "sectionIdPlaceholder": "e.g. global-economy",
+      "sectionIdHelp": "Used for URL paths and cannot be changed after creation",
+      "labelKeyPlaceholder": "e.g. nav.globalEconomy",
+      "labelKeyHelp": "Corresponding i18n translation key",
+      "iconPlaceholder": "Or enter icon class name directly",
+      "showOnHomeLabel": "Show this section on homepage",
+      "create": "Create",
+      "confirmDeletePrefix": "Are you sure you want to delete section",
+      "confirmDeleteTitle": "Confirm Delete",
+      "confirmDeleteSuffix": "?",
+      "deleteWarning": "This action cannot be undone, and all categories under this section will be removed.",
+      "confirmDeleteButton": "Confirm Delete",
+      "colors": {
+        "blue": "Blue",
+        "red": "Red",
+        "green": "Green",
+        "amber": "Amber",
+        "purple": "Purple",
+        "indigo": "Indigo",
+        "cyan": "Cyan",
+        "slate": "Slate",
+        "pink": "Pink",
+        "orange": "Orange"
+      }
+    }
   }
 }

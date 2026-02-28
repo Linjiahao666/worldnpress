@@ -88,6 +88,41 @@
   },
   "aiData": {
     "title": "AI舆情大数据中心",
+    "hero": {
+      "title": "AI 舆情大数据中心",
+      "subtitle": "基于人工智能与大数据技术，为机构与企业提供全球财经舆情监控、智能预警、数据核查与风险画像服务。"
+    },
+    "featuresTitle": "核心服务能力",
+    "features": {
+      "monitoring": {
+        "title": "实时舆情监控",
+        "desc": "7×24小时全球财经舆情实时追踪，覆盖百万+媒体源"
+      },
+      "alert": {
+        "title": "智能预警系统",
+        "desc": "基于AI算法的异常波动预警，支持自定义阈值与推送"
+      },
+      "verification": {
+        "title": "数据核查验证",
+        "desc": "多源交叉验证，自动识别虚假信息与数据异常"
+      },
+      "riskProfile": {
+        "title": "企业风险画像",
+        "desc": "ESG评级、舆情热度、信用风险多维度企业画像分析"
+      },
+      "subscription": {
+        "title": "企业订阅服务",
+        "desc": "定制化数据报告、行业简报与专属数据接口服务"
+      },
+      "macroData": {
+        "title": "宏观数据中心",
+        "desc": "GDP、CPI、PMI等核心宏观经济数据可视化与对比分析"
+      }
+    },
+    "cta": {
+      "title": "需要定制化数据服务？",
+      "subtitle": "我们为金融机构、上市公司、政府部门提供专属的数据分析与舆情监控解决方案"
+    },
     "categories": {
       "real-time-monitoring": "实时监测",
       "sentiment-warning": "舆情预警",
@@ -120,6 +155,57 @@
   },
   "events": {
     "title": "会展与活动中心",
+    "page": {
+      "hero": {
+        "title": "会展与活动中心",
+        "subtitle": "汇聚全球经济论坛、ESG峰会、投资路演、行业博览等高端财经活动资讯"
+      },
+      "upcoming": {
+        "title": "近期活动",
+        "items": {
+          "esgSummit": {
+            "title": "2026 全球ESG峰会",
+            "location": "深圳·国际会展中心",
+            "type": "峰会论坛",
+            "desc": "聚集全球ESG领域专家学者，探讨最新ESG发展趋势与实践案例。"
+          },
+          "gbaForum": {
+            "title": "粤港澳大湾区经济论坛",
+            "location": "香港·会展中心",
+            "type": "国际论坛",
+            "desc": "大湾区经济协同发展、跨境金融创新与产业合作深度探讨。"
+          },
+          "greenRoadshow": {
+            "title": "绿色金融投资路演",
+            "location": "北京·金融街",
+            "type": "路演活动",
+            "desc": "绿色债券、碳金融产品等绿色金融领域精选项目投资对接。"
+          },
+          "aiSeminar": {
+            "title": "AI赋能财经媒体研讨会",
+            "location": "线上直播",
+            "type": "线上会议",
+            "desc": "探讨人工智能在财经新闻生产、舆情分析与数据可视化的应用。"
+          }
+        }
+      },
+      "past": {
+        "title": "往期活动回顾",
+        "items": {
+          "esgRating": {
+            "title": "2025 年度ESG评级发布会",
+            "location": "广州"
+          },
+          "carbonExpo": { "title": "碳中和产业博览会", "location": "上海" },
+          "economyTalk": { "title": "国际经济形势座谈会", "location": "北京" }
+        }
+      },
+      "status": {
+        "open": "报名中",
+        "soon": "即将开放",
+        "preparing": "筹备中"
+      }
+    },
     "categories": {
       "global-forum": "全球论坛",
       "esg-summit": "ESG峰会",
@@ -150,6 +236,57 @@
     }
   },
   "about": {
+    "page": {
+      "introduction": {
+        "p1": "《国际经济时报》是一家专注于全球经济、金融市场、ESG与可持续发展的综合性财经媒体平台。平台以“权威、专业、深度、全球视野”为办刊宗旨，致力于为政商学研各界提供高质量的财经资讯与智库服务。",
+        "p2": "平台设有新闻中心、粤港澳大湾区·香港财经、ESG与可持续发展、绿色金融、AI舆情大数据中心、智库研究中心、会展与活动中心、舆论监督与诚信建设、品牌与企业服务等九大频道，覆盖宏观经济、环球财经、金融市场、产业经济、国际贸易等核心报道领域。"
+      },
+      "policy": {
+        "values": {
+          "title": "办刊理念",
+          "desc": "坚持新闻专业主义，秉承客观、公正、独立的报道原则，以高质量内容服务经济决策。"
+        },
+        "direction": {
+          "title": "发展方向",
+          "desc": "聚焦ESG、绿色金融、AI大数据三大战略方向，打造「媒体+智库+数据+服务」四位一体的新型财经平台。"
+        },
+        "core": {
+          "title": "核心价值",
+          "desc": "权威发声、深度分析、全球视野、创新驱动。致力于成为中国与世界经济对话的重要桥梁。"
+        },
+        "mission": {
+          "title": "服务宗旨",
+          "desc": "为政府机构、金融机构、上市公司、研究机构提供精准的资讯支持与专业的智库咨询服务。"
+        }
+      },
+      "qualification": {
+        "title": "资质与荣誉",
+        "items": {
+          "newsLicense": "互联网新闻信息服务许可证（待申领）",
+          "icp": "ICP备案信息（待备案）",
+          "culture": "网络文化经营许可证（待申领）"
+        }
+      },
+      "contact": {
+        "editorial": "编辑部",
+        "business": "商务合作",
+        "address": "地址",
+        "phone": "电话",
+        "email": "邮箱",
+        "ad": "广告合作",
+        "content": "内容合作",
+        "thinktank": "智库服务"
+      },
+      "legal": {
+        "title": "法律声明与免责条款",
+        "copyrightTitle": "版权声明",
+        "copyrightText": "本网站所有内容，包括但不限于文字、图片、音频、视频、软件、程序及网页版式设计等，均受《中华人民共和国著作权法》及相关法律法规的保护。未经本站书面授权，任何单位或个人不得以任何方式转载、复制、引用、链接、抓取或以其他方式使用。",
+        "disclaimerTitle": "免责条款",
+        "disclaimerText": "本网站所刊载的所有资料及信息，仅供参考之用，不构成任何投资建议。本网站对任何由于使用本网站材料而造成的直接或间接损失不承担责任。市场有风险，投资需谨慎。",
+        "privacyTitle": "隐私政策",
+        "privacyText": "我们重视用户隐私保护。本站仅收集提供服务所必需的最少信息，不会将用户个人信息出售或分享给第三方（法律要求除外）。使用本网站即表示您同意本隐私政策。"
+      }
+    },
     "categories": {
       "introduction": "平台介绍",
       "policy": "经营方针",
@@ -363,6 +500,43 @@
     "sectionColor": "颜色",
     "sectionSortOrder": "排序",
     "showOnHome": "首页展示",
-    "sectionActive": "启用"
+    "sectionActive": "启用",
+    "sectionsPage": {
+      "updated": "模块更新成功",
+      "created": "模块创建成功",
+      "deleted": "模块已删除",
+      "actionFailed": "操作失败",
+      "deleteFailed": "删除失败",
+      "unknownError": "未知错误",
+      "allSections": "全部模块 ({count})",
+      "listHint": "开关首页展示 · 编辑删除",
+      "disabled": "已停用",
+      "sortAndCategories": "排序: {sort} · 分类: {count} 个",
+      "empty": "暂无模块，点击“新增模块”创建第一个",
+      "sectionIdPlaceholder": "例如: global-economy",
+      "sectionIdHelp": "用于 URL 路径，创建后不可修改",
+      "labelKeyPlaceholder": "例如: nav.globalEconomy",
+      "labelKeyHelp": "对应 i18n 翻译键",
+      "iconPlaceholder": "或直接输入图标类名",
+      "showOnHomeLabel": "在首页展示此模块",
+      "create": "创建",
+      "confirmDeletePrefix": "确定要删除模块",
+      "confirmDeleteTitle": "确认删除",
+      "confirmDeleteSuffix": "吗？",
+      "deleteWarning": "此操作不可撤销，该模块下的所有分类也将被移除。",
+      "confirmDeleteButton": "确认删除",
+      "colors": {
+        "blue": "蓝色",
+        "red": "红色",
+        "green": "绿色",
+        "amber": "琥珀",
+        "purple": "紫色",
+        "indigo": "靛蓝",
+        "cyan": "青色",
+        "slate": "灰色",
+        "pink": "粉色",
+        "orange": "橙色"
+      }
+    }
   }
 }

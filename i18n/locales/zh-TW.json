@@ -88,6 +88,41 @@
   },
   "aiData": {
     "title": "AI輿情大數據中心",
+    "hero": {
+      "title": "AI 輿情大數據中心",
+      "subtitle": "基於人工智慧與大數據技術，為機構與企業提供全球財經輿情監控、智能預警、數據核查與風險畫像服務。"
+    },
+    "featuresTitle": "核心服務能力",
+    "features": {
+      "monitoring": {
+        "title": "實時輿情監控",
+        "desc": "7×24小時全球財經輿情實時追蹤，覆蓋百萬+媒體源"
+      },
+      "alert": {
+        "title": "智能預警系統",
+        "desc": "基於AI算法的異常波動預警，支持自定義閾值與推送"
+      },
+      "verification": {
+        "title": "數據核查驗證",
+        "desc": "多源交叉驗證，自動識別虛假信息與數據異常"
+      },
+      "riskProfile": {
+        "title": "企業風險畫像",
+        "desc": "ESG評級、輿情熱度、信用風險多維度企業畫像分析"
+      },
+      "subscription": {
+        "title": "企業訂閱服務",
+        "desc": "定制化數據報告、行業簡報與專屬數據接口服務"
+      },
+      "macroData": {
+        "title": "宏觀數據中心",
+        "desc": "GDP、CPI、PMI等核心宏觀經濟數據可視化與對比分析"
+      }
+    },
+    "cta": {
+      "title": "需要定制化數據服務？",
+      "subtitle": "我們為金融機構、上市公司、政府部門提供專屬的數據分析與輿情監控解決方案"
+    },
     "categories": {
       "real-time-monitoring": "實時監測",
       "sentiment-warning": "輿情預警",
@@ -120,6 +155,57 @@
   },
   "events": {
     "title": "會展與活動中心",
+    "page": {
+      "hero": {
+        "title": "會展與活動中心",
+        "subtitle": "匯聚全球經濟論壇、ESG峰會、投資路演、行業博覽等高端財經活動資訊"
+      },
+      "upcoming": {
+        "title": "近期活動",
+        "items": {
+          "esgSummit": {
+            "title": "2026 全球ESG峰會",
+            "location": "深圳·國際會展中心",
+            "type": "峰會論壇",
+            "desc": "聚集全球ESG領域專家學者，探討最新ESG發展趨勢與實踐案例。"
+          },
+          "gbaForum": {
+            "title": "粵港澳大灣區經濟論壇",
+            "location": "香港·會展中心",
+            "type": "國際論壇",
+            "desc": "大灣區經濟協同發展、跨境金融創新與產業合作深度探討。"
+          },
+          "greenRoadshow": {
+            "title": "綠色金融投資路演",
+            "location": "北京·金融街",
+            "type": "路演活動",
+            "desc": "綠色債券、碳金融產品等綠色金融領域精選項目投資對接。"
+          },
+          "aiSeminar": {
+            "title": "AI賦能財經媒體研討會",
+            "location": "線上直播",
+            "type": "線上會議",
+            "desc": "探討人工智慧在財經新聞生產、輿情分析與數據可視化的應用。"
+          }
+        }
+      },
+      "past": {
+        "title": "往期活動回顧",
+        "items": {
+          "esgRating": {
+            "title": "2025 年度ESG評級發布會",
+            "location": "廣州"
+          },
+          "carbonExpo": { "title": "碳中和產業博覽會", "location": "上海" },
+          "economyTalk": { "title": "國際經濟形勢座談會", "location": "北京" }
+        }
+      },
+      "status": {
+        "open": "報名中",
+        "soon": "即將開放",
+        "preparing": "籌備中"
+      }
+    },
     "categories": {
       "global-forum": "全球論壇",
       "esg-summit": "ESG峰會",
@@ -150,6 +236,57 @@
     }
   },
   "about": {
+    "page": {
+      "introduction": {
+        "p1": "《國際經濟時報》是一家專注於全球經濟、金融市場、ESG與可持續發展的綜合性財經媒體平台。平台以「權威、專業、深度、全球視野」為辦刊宗旨，致力於為政商學研各界提供高品質的財經資訊與智庫服務。",
+        "p2": "平台設有新聞中心、粵港澳大灣區·香港財經、ESG與可持續發展、綠色金融、AI輿情大數據中心、智庫研究中心、會展與活動中心、輿論監督與誠信建設、品牌與企業服務等九大頻道，覆蓋宏觀經濟、環球財經、金融市場、產業經濟、國際貿易等核心報導領域。"
+      },
+      "policy": {
+        "values": {
+          "title": "辦刊理念",
+          "desc": "堅持新聞專業主義，秉承客觀、公正、獨立的報導原則，以高品質內容服務經濟決策。"
+        },
+        "direction": {
+          "title": "發展方向",
+          "desc": "聚焦ESG、綠色金融、AI大數據三大戰略方向，打造「媒體+智庫+數據+服務」四位一體的新型財經平台。"
+        },
+        "core": {
+          "title": "核心價值",
+          "desc": "權威發聲、深度分析、全球視野、創新驅動。"
+        },
+        "mission": {
+          "title": "服務宗旨",
+          "desc": "為政府機構、金融機構、上市公司、研究機構提供精準資訊支持與專業智庫諮詢服務。"
+        }
+      },
+      "qualification": {
+        "title": "資質與榮譽",
+        "items": {
+          "newsLicense": "互聯網新聞信息服務許可證（待申領）",
+          "icp": "ICP備案信息（待備案）",
+          "culture": "網絡文化經營許可證（待申領）"
+        }
+      },
+      "contact": {
+        "editorial": "編輯部",
+        "business": "商務合作",
+        "address": "地址",
+        "phone": "電話",
+        "email": "郵箱",
+        "ad": "廣告合作",
+        "content": "內容合作",
+        "thinktank": "智庫服務"
+      },
+      "legal": {
+        "title": "法律聲明與免責條款",
+        "copyrightTitle": "版權聲明",
+        "copyrightText": "本網站所有內容，包括但不限於文字、圖片、音頻、視頻、軟件、程序及網頁版式設計等，均受相關法律法規保護。未經本站書面授權，任何單位或個人不得以任何方式轉載、複製、引用、鏈接、抓取或以其他方式使用。",
+        "disclaimerTitle": "免責條款",
+        "disclaimerText": "本網站所刊載的所有資料及信息僅供參考，不構成任何投資建議。對任何由於使用本網站材料而造成的直接或間接損失，本網站不承擔責任。",
+        "privacyTitle": "隱私政策",
+        "privacyText": "我們重視用戶隱私保護。本站僅收集提供服務所必需的最少信息，不會將個人信息出售或分享給第三方（法律要求除外）。"
+      }
+    },
     "categories": {
       "introduction": "平台介紹",
       "policy": "經營方針",
@@ -363,6 +500,43 @@
     "sectionColor": "顏色",
     "sectionSortOrder": "排序",
     "showOnHome": "首頁展示",
-    "sectionActive": "啟用"
+    "sectionActive": "啟用",
+    "sectionsPage": {
+      "updated": "模塊更新成功",
+      "created": "模塊創建成功",
+      "deleted": "模塊已刪除",
+      "actionFailed": "操作失敗",
+      "deleteFailed": "刪除失敗",
+      "unknownError": "未知錯誤",
+      "allSections": "全部模塊 ({count})",
+      "listHint": "開關首頁展示 · 編輯刪除",
+      "disabled": "已停用",
+      "sortAndCategories": "排序: {sort} · 分類: {count} 個",
+      "empty": "暫無模塊，點擊「新增模塊」創建第一個",
+      "sectionIdPlaceholder": "例如: global-economy",
+      "sectionIdHelp": "用於 URL 路徑，創建後不可修改",
+      "labelKeyPlaceholder": "例如: nav.globalEconomy",
+      "labelKeyHelp": "對應 i18n 翻譯鍵",
+      "iconPlaceholder": "或直接輸入圖標類名",
+      "showOnHomeLabel": "在首頁展示此模塊",
+      "create": "創建",
+      "confirmDeletePrefix": "確定要刪除模塊",
+      "confirmDeleteTitle": "確認刪除",
+      "confirmDeleteSuffix": "嗎？",
+      "deleteWarning": "此操作不可撤銷，該模塊下的所有分類也將被移除。",
+      "confirmDeleteButton": "確認刪除",
+      "colors": {
+        "blue": "藍色",
+        "red": "紅色",
+        "green": "綠色",
+        "amber": "琥珀",
+        "purple": "紫色",
+        "indigo": "靛藍",
+        "cyan": "青色",
+        "slate": "灰色",
+        "pink": "粉色",
+        "orange": "橙色"
+      }
+    }
   }
 }

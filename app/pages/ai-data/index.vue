@@ -20,38 +20,38 @@ useSeoMeta({ title: () => `${t("nav.aiData")} - ${t("site.title")}` });
 const features = [
   {
     icon: "i-lucide-activity",
-    title: "实时舆情监控",
-    desc: "7×24小时全球财经舆情实时追踪，覆盖百万+媒体源",
+    titleKey: "aiData.features.monitoring.title",
+    descKey: "aiData.features.monitoring.desc",
     color: "text-blue-600 bg-blue-50",
   },
   {
     icon: "i-lucide-bell",
-    title: "智能预警系统",
-    desc: "基于AI算法的异常波动预警，支持自定义阈值与推送",
+    titleKey: "aiData.features.alert.title",
+    descKey: "aiData.features.alert.desc",
     color: "text-amber-600 bg-amber-50",
   },
   {
     icon: "i-lucide-check-circle",
-    title: "数据核查验证",
-    desc: "多源交叉验证，自动识别虚假信息与数据异常",
+    titleKey: "aiData.features.verification.title",
+    descKey: "aiData.features.verification.desc",
     color: "text-emerald-600 bg-emerald-50",
   },
   {
     icon: "i-lucide-user-search",
-    title: "企业风险画像",
-    desc: "ESG评级、舆情热度、信用风险多维度企业画像分析",
+    titleKey: "aiData.features.riskProfile.title",
+    descKey: "aiData.features.riskProfile.desc",
     color: "text-purple-600 bg-purple-50",
   },
   {
     icon: "i-lucide-briefcase",
-    title: "企业订阅服务",
-    desc: "定制化数据报告、行业简报与专属数据接口服务",
+    titleKey: "aiData.features.subscription.title",
+    descKey: "aiData.features.subscription.desc",
     color: "text-red-600 bg-red-50",
   },
   {
     icon: "i-lucide-bar-chart-3",
-    title: "宏观数据中心",
-    desc: "GDP、CPI、PMI等核心宏观经济数据可视化与对比分析",
+    titleKey: "aiData.features.macroData.title",
+    descKey: "aiData.features.macroData.desc",
     color: "text-teal-600 bg-teal-50",
   },
 ];
@@ -99,9 +99,11 @@ const dashboardStats = computed(() => [
           class="mb-6 opacity-70"
         />
         <div class="max-w-3xl">
-          <h1 class="text-3xl sm:text-4xl font-bold mb-4">AI 舆情大数据中心</h1>
+          <h1 class="text-3xl sm:text-4xl font-bold mb-4">
+            {{ t("aiData.hero.title") }}
+          </h1>
           <p class="text-lg text-blue-200 leading-relaxed">
-            基于人工智能与大数据技术，为机构与企业提供全球财经舆情监控、智能预警、数据核查与风险画像服务。
+            {{ t("aiData.hero.subtitle") }}
           </p>
         </div>
 
@@ -123,12 +125,12 @@ const dashboardStats = computed(() => [
     <!-- 功能服务 -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <h2 class="text-2xl font-bold text-slate-800 mb-8 text-center">
-        核心服务能力
+        {{ t("aiData.featuresTitle") }}
       </h2>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div
           v-for="feature in features"
-          :key="feature.title"
+          :key="feature.titleKey"
           class="group bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg hover:border-blue-200 transition-all"
         >
           <div
@@ -138,10 +140,10 @@ const dashboardStats = computed(() => [
             <UIcon :name="feature.icon" class="w-6 h-6" />
           </div>
           <h3 class="text-lg font-bold text-slate-800 mb-2">
-            {{ feature.title }}
+            {{ t(feature.titleKey) }}
           </h3>
           <p class="text-sm text-slate-500 leading-relaxed">
-            {{ feature.desc }}
+            {{ t(feature.descKey) }}
           </p>
         </div>
       </div>
@@ -151,17 +153,17 @@ const dashboardStats = computed(() => [
     <section class="bg-slate-50 border-t border-slate-200">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
         <h2 class="text-xl font-bold text-slate-800 mb-3">
-          需要定制化数据服务？
+          {{ t("aiData.cta.title") }}
         </h2>
         <p class="text-slate-500 mb-6 max-w-xl mx-auto">
-          我们为金融机构、上市公司、政府部门提供专属的数据分析与舆情监控解决方案
+          {{ t("aiData.cta.subtitle") }}
         </p>
         <NuxtLink
           :to="localePath('/about')"
           class="inline-flex items-center gap-2 px-6 py-3 bg-blue-700 text-white rounded-lg font-semibold hover:bg-blue-800 transition-colors"
         >
           <UIcon name="i-lucide-mail" class="w-5 h-5" />
-          联系我们
+          {{ t("footer.links.contact") }}
         </NuxtLink>
       </div>
     </section>

@@ -7,10 +7,11 @@ definePageMeta({
 });
 
 useHead({
-  title: "模块管理 - WorldnPress 管理后台",
+  title: () => `${t("admin.sections")} - WorldnPress ${t("admin.title")}`,
 });
 
 const { t } = useI18n();
+const localePath = useLocalePath();
 const toast = useToast();
 
 // 获取所有模块
@@ -79,20 +80,21 @@ async function handleSave() {
           showOnHome: editForm.value.showOnHome,
         },
       });
-      toast.add({ title: "模块更新成功", color: "success" });
+      toast.add({ title: t("admin.sectionsPage.updated"), color: "success" });
     } else {
       await $fetch("/api/sections", {
         method: "POST",
         body: editForm.value,
       });
-      toast.add({ title: "模块创建成功", color: "success" });
+      toast.add({ title: t("admin.sectionsPage.created"), color: "success" });
     }
     showDialog.value = false;
     refresh();
   } catch (err: any) {
     toast.add({
-      title: "操作失败",
-      description: err?.data?.statusMessage || "未知错误",
+      title: t("admin.sectionsPage.actionFailed"),
+      description:
+        err?.data?.statusMessage || t("admin.sectionsPage.unknownError"),
       color: "error",
     });
   } finally {
@@ -112,13 +114,14 @@ async function handleDelete() {
     await $fetch(`/api/sections/${deleteTarget.value.id}`, {
       method: "DELETE",
     });
-    toast.add({ title: "模块已删除", color: "success" });
+    toast.add({ title: t("admin.sectionsPage.deleted"), color: "success" });
     showDeleteDialog.value = false;
     refresh();
   } catch (err: any) {
     toast.add({
-      title: "删除失败",
-      description: err?.data?.statusMessage || "未知错误",
+      title: t("admin.sectionsPage.deleteFailed"),
+      description:
+        err?.data?.statusMessage || t("admin.sectionsPage.unknownError"),
       color: "error",
     });
   } finally {
@@ -137,7 +140,7 @@ async function toggleHomeDisplay(section: Section) {
     });
   } catch {
     section.showOnHome = original;
-    toast.add({ title: "操作失败", color: "error" });
+    toast.add({ title: t("admin.sectionsPage.actionFailed"), color: "error" });
   }
 }
 
@@ -152,7 +155,7 @@ async function toggleActive(section: Section) {
     });
   } catch {
     section.isActive = original;
-    toast.add({ title: "操作失败", color: "error" });
+    toast.add({ title: t("admin.sectionsPage.actionFailed"), color: "error" });
   }
 }
 
@@ -190,16 +193,16 @@ const iconOptions = [
 ];
 
 const colorOptions = [
-  { label: "蓝色", value: "text-blue-600" },
-  { label: "红色", value: "text-red-600" },
-  { label: "绿色", value: "text-green-600" },
-  { label: "琥珀", value: "text-amber-600" },
-  { label: "紫色", value: "text-purple-600" },
-  { label: "靛蓝", value: "text-indigo-600" },
-  { label: "青色", value: "text-cyan-600" },
-  { label: "灰色", value: "text-slate-600" },
-  { label: "粉色", value: "text-pink-600" },
-  { label: "橙色", value: "text-orange-600" },
+  { label: t("admin.sectionsPage.colors.blue"), value: "text-blue-600" },
+  { label: t("admin.sectionsPage.colors.red"), value: "text-red-600" },
+  { label: t("admin.sectionsPage.colors.green"), value: "text-green-600" },
+  { label: t("admin.sectionsPage.colors.amber"), value: "text-amber-600" },
+  { label: t("admin.sectionsPage.colors.purple"), value: "text-purple-600" },
+  { label: t("admin.sectionsPage.colors.indigo"), value: "text-indigo-600" },
+  { label: t("admin.sectionsPage.colors.cyan"), value: "text-cyan-600" },
+  { label: t("admin.sectionsPage.colors.slate"), value: "text-slate-600" },
+  { label: t("admin.sectionsPage.colors.pink"), value: "text-pink-600" },
+  { label: t("admin.sectionsPage.colors.orange"), value: "text-orange-600" },
 ];
 </script>
 
@@ -212,16 +215,18 @@ const colorOptions = [
       >
         <div class="flex items-center gap-3">
           <NuxtLink
-            to="/admin"
+            :to="localePath('/admin')"
             class="text-slate-500 hover:text-blue-600 flex items-center gap-1"
           >
             <UIcon name="i-lucide-arrow-left" class="w-4 h-4" />
-            返回
+            {{ t("admin.backToDashboard") }}
           </NuxtLink>
-          <h1 class="text-lg font-bold text-slate-900">模块管理</h1>
+          <h1 class="text-lg font-bold text-slate-900">
+            {{ t("admin.sections") }}
+          </h1>
         </div>
         <UButton icon="i-lucide-plus" color="primary" @click="openCreateDialog">
-          新增模块
+          {{ t("admin.createSection") }}
         </UButton>
       </div>
     </header>
@@ -232,9 +237,15 @@ const colorOptions = [
         <template #header>
           <div class="flex items-center justify-between">
             <h2 class="text-lg font-semibold text-slate-900">
-              全部模块 ({{ sections?.length ?? 0 }})
+              {{
+                t("admin.sectionsPage.allSections", {
+                  count: sections?.length ?? 0,
+                })
+              }}
             </h2>
-            <p class="text-sm text-slate-500">开关首页展示 · 编辑删除</p>
+            <p class="text-sm text-slate-500">
+              {{ t("admin.sectionsPage.listHint") }}
+            </p>
           </div>
         </template>
 
@@ -242,7 +253,7 @@ const colorOptions = [
           v-if="status === 'pending'"
           class="text-center py-12 text-slate-400"
         >
-          加载中...
+          {{ t("common.loading") }}
         </div>
 
         <div
@@ -280,18 +291,24 @@ const colorOptions = [
                   v-if="!section.isActive"
                   class="px-1.5 py-0.5 text-xs rounded bg-red-50 text-red-500"
                 >
-                  已停用
+                  {{ t("admin.sectionsPage.disabled") }}
                 </span>
               </div>
               <p class="text-xs text-slate-400 mt-0.5">
-                排序: {{ section.sortOrder }} · 分类:
-                {{ section.categories?.length ?? 0 }} 个
+                {{
+                  t("admin.sectionsPage.sortAndCategories", {
+                    sort: section.sortOrder,
+                    count: section.categories?.length ?? 0,
+                  })
+                }}
               </p>
             </div>
 
             <!-- 首页展示开关 -->
             <div class="flex items-center gap-2 shrink-0">
-              <span class="text-xs text-slate-500">首页展示</span>
+              <span class="text-xs text-slate-500">{{
+                t("admin.showOnHome")
+              }}</span>
               <button
                 class="relative inline-flex h-5 w-9 items-center rounded-full transition-colors"
                 :class="section.showOnHome ? 'bg-blue-500' : 'bg-slate-300'"
@@ -308,7 +325,9 @@ const colorOptions = [
 
             <!-- 启用/停用 -->
             <div class="flex items-center gap-2 shrink-0">
-              <span class="text-xs text-slate-500">启用</span>
+              <span class="text-xs text-slate-500">{{
+                t("admin.sectionActive")
+              }}</span>
               <button
                 class="relative inline-flex h-5 w-9 items-center rounded-full transition-colors"
                 :class="section.isActive ? 'bg-blue-500' : 'bg-slate-300'"
@@ -348,7 +367,7 @@ const colorOptions = [
             name="i-lucide-inbox"
             class="w-12 h-12 mx-auto mb-3 text-slate-300"
           />
-          <p>暂无模块，点击"新增模块"创建第一个</p>
+          <p>{{ t("admin.sectionsPage.empty") }}</p>
         </div>
       </UCard>
     </div>
@@ -367,7 +386,9 @@ const colorOptions = [
                 class="w-5 h-5 text-blue-600"
               />
               <h3 class="text-lg font-bold text-slate-900">
-                {{ isEditing ? "编辑模块" : "新增模块" }}
+                {{
+                  isEditing ? t("admin.editSection") : t("admin.createSection")
+                }}
               </h3>
             </div>
             <button
@@ -383,39 +404,41 @@ const colorOptions = [
             <!-- ID -->
             <div>
               <label class="block text-sm font-medium text-slate-700 mb-1"
-                >模块 ID (slug)</label
+                >{{ t("admin.sectionId") }} (slug)</label
               >
               <input
                 v-model="editForm.id"
                 type="text"
                 :disabled="isEditing"
-                placeholder="例如: global-economy"
+                :placeholder="t('admin.sectionsPage.sectionIdPlaceholder')"
                 class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-slate-100 disabled:text-slate-500"
               />
               <p class="text-xs text-slate-400 mt-1">
-                用于 URL 路径，创建后不可修改
+                {{ t("admin.sectionsPage.sectionIdHelp") }}
               </p>
             </div>
 
             <!-- Label Key -->
             <div>
               <label class="block text-sm font-medium text-slate-700 mb-1"
-                >国际化标签键 (labelKey)</label
+                >{{ t("admin.sectionLabelKey") }} (labelKey)</label
               >
               <input
                 v-model="editForm.labelKey"
                 type="text"
-                placeholder="例如: nav.globalEconomy"
+                :placeholder="t('admin.sectionsPage.labelKeyPlaceholder')"
                 class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              <p class="text-xs text-slate-400 mt-1">对应 i18n 翻译键</p>
+              <p class="text-xs text-slate-400 mt-1">
+                {{ t("admin.sectionsPage.labelKeyHelp") }}
+              </p>
             </div>
 
             <!-- 图标 -->
             <div>
-              <label class="block text-sm font-medium text-slate-700 mb-1"
-                >图标</label
-              >
+              <label class="block text-sm font-medium text-slate-700 mb-1">{{
+                t("admin.sectionIcon")
+              }}</label>
               <div class="grid grid-cols-8 gap-2">
                 <button
                   v-for="icon in iconOptions"
@@ -434,16 +457,16 @@ const colorOptions = [
               <input
                 v-model="editForm.icon"
                 type="text"
-                placeholder="或直接输入图标类名"
+                :placeholder="t('admin.sectionsPage.iconPlaceholder')"
                 class="w-full px-3 py-2 mt-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
             <!-- 颜色 -->
             <div>
-              <label class="block text-sm font-medium text-slate-700 mb-1"
-                >颜色</label
-              >
+              <label class="block text-sm font-medium text-slate-700 mb-1">{{
+                t("admin.sectionColor")
+              }}</label>
               <div class="flex flex-wrap gap-2">
                 <button
                   v-for="color in colorOptions"
@@ -463,9 +486,9 @@ const colorOptions = [
 
             <!-- 排序 -->
             <div>
-              <label class="block text-sm font-medium text-slate-700 mb-1"
-                >排序</label
-              >
+              <label class="block text-sm font-medium text-slate-700 mb-1">{{
+                t("admin.sectionSortOrder")
+              }}</label>
               <input
                 v-model.number="editForm.sortOrder"
                 type="number"
@@ -481,7 +504,9 @@ const colorOptions = [
                 type="checkbox"
                 class="w-4 h-4 rounded text-blue-500 focus:ring-blue-500"
               />
-              <label class="text-sm text-slate-700">在首页展示此模块</label>
+              <label class="text-sm text-slate-700">{{
+                t("admin.sectionsPage.showOnHomeLabel")
+              }}</label>
             </div>
           </div>
 
@@ -494,10 +519,10 @@ const colorOptions = [
               color="neutral"
               @click="showDialog = false"
             >
-              取消
+              {{ t("common.cancel") }}
             </UButton>
             <UButton color="primary" :loading="isSaving" @click="handleSave">
-              {{ isEditing ? "保存" : "创建" }}
+              {{ isEditing ? t("admin.save") : t("admin.sectionsPage.create") }}
             </UButton>
           </div>
         </div>
@@ -521,7 +546,9 @@ const colorOptions = [
                   class="w-4 h-4 text-red-600"
                 />
               </div>
-              <h3 class="text-lg font-bold text-slate-900">确认删除</h3>
+              <h3 class="text-lg font-bold text-slate-900">
+                {{ t("admin.sectionsPage.confirmDeleteTitle") }}
+              </h3>
             </div>
             <button
               class="p-1 rounded-lg hover:bg-slate-200 transition-colors"
@@ -534,17 +561,17 @@ const colorOptions = [
           <!-- 内容 -->
           <div class="p-6">
             <p class="text-sm text-slate-600">
-              确定要删除模块
+              {{ t("admin.sectionsPage.confirmDeletePrefix") }}
               <strong class="text-slate-900">{{
                 deleteTarget ? getSectionName(deleteTarget) : ""
               }}</strong>
               <span class="text-xs text-slate-400 ml-1"
                 >({{ deleteTarget?.id }})</span
               >
-              吗？
+              {{ t("admin.sectionsPage.confirmDeleteSuffix") }}
             </p>
             <p class="text-xs text-red-500 mt-2">
-              此操作不可撤销，该模块下的所有分类也将被移除。
+              {{ t("admin.sectionsPage.deleteWarning") }}
             </p>
           </div>
 
@@ -557,10 +584,10 @@ const colorOptions = [
               color="neutral"
               @click="showDeleteDialog = false"
             >
-              取消
+              {{ t("common.cancel") }}
             </UButton>
             <UButton color="error" :loading="isDeleting" @click="handleDelete">
-              确认删除
+              {{ t("admin.sectionsPage.confirmDeleteButton") }}
             </UButton>
           </div>
         </div>

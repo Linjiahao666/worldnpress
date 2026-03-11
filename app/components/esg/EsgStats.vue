@@ -1,20 +1,26 @@
 <script setup lang="ts">
 const { t, locale } = useI18n();
 
+const { data } = useFetch<{
+  totalArticles: number;
+  totalCategories: number;
+  totalViews: number;
+}>("/api/esg/stats");
+
 const stats = computed(() => [
   {
     labelKey: "esg.stats.articles",
-    value: 156,
+    value: data.value?.totalArticles ?? 0,
     icon: "i-lucide-file-text",
   },
   {
     labelKey: "esg.stats.categories",
-    value: 8,
+    value: data.value?.totalCategories ?? 0,
     icon: "i-lucide-folder-open",
   },
   {
     labelKey: "esg.stats.views",
-    value: 89400,
+    value: data.value?.totalViews ?? 0,
     icon: "i-lucide-eye",
   },
 ]);

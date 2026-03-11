@@ -4,73 +4,14 @@ const localePath = useLocalePath();
 
 useSeoMeta({ title: () => `${t("nav.events")} - ${t("site.title")}` });
 
-const upcomingEvents = [
-  {
-    id: 1,
-    titleKey: "events.page.upcoming.items.esgSummit.title",
-    date: "2026-04-15",
-    locationKey: "events.page.upcoming.items.esgSummit.location",
-    typeKey: "events.page.upcoming.items.esgSummit.type",
-    statusKey: "events.page.status.open",
-    descKey: "events.page.upcoming.items.esgSummit.desc",
-    icon: "i-lucide-mountain",
-    color: "bg-emerald-50 text-emerald-700 border-emerald-200",
-  },
-  {
-    id: 2,
-    titleKey: "events.page.upcoming.items.gbaForum.title",
-    date: "2026-05-20",
-    locationKey: "events.page.upcoming.items.gbaForum.location",
-    typeKey: "events.page.upcoming.items.gbaForum.type",
-    statusKey: "events.page.status.soon",
-    descKey: "events.page.upcoming.items.gbaForum.desc",
-    icon: "i-lucide-globe",
-    color: "bg-blue-50 text-blue-700 border-blue-200",
-  },
-  {
-    id: 3,
-    titleKey: "events.page.upcoming.items.greenRoadshow.title",
-    date: "2026-06-10",
-    locationKey: "events.page.upcoming.items.greenRoadshow.location",
-    typeKey: "events.page.upcoming.items.greenRoadshow.type",
-    statusKey: "events.page.status.preparing",
-    descKey: "events.page.upcoming.items.greenRoadshow.desc",
-    icon: "i-lucide-presentation",
-    color: "bg-teal-50 text-teal-700 border-teal-200",
-  },
-  {
-    id: 4,
-    titleKey: "events.page.upcoming.items.aiSeminar.title",
-    date: "2026-07-08",
-    locationKey: "events.page.upcoming.items.aiSeminar.location",
-    typeKey: "events.page.upcoming.items.aiSeminar.type",
-    statusKey: "events.page.status.preparing",
-    descKey: "events.page.upcoming.items.aiSeminar.desc",
-    icon: "i-lucide-cloud",
-    color: "bg-purple-50 text-purple-700 border-purple-200",
-  },
-];
-
-const pastEvents = [
-  {
-    id: 101,
-    titleKey: "events.page.past.items.esgRating.title",
-    date: "2025-12-15",
-    locationKey: "events.page.past.items.esgRating.location",
-  },
-  {
-    id: 102,
-    titleKey: "events.page.past.items.carbonExpo.title",
-    date: "2025-11-08",
-    locationKey: "events.page.past.items.carbonExpo.location",
-  },
-  {
-    id: 103,
-    titleKey: "events.page.past.items.economyTalk.title",
-    date: "2025-10-20",
-    locationKey: "events.page.past.items.economyTalk.location",
-  },
-];
+const { events: upcomingEvents } = useEvents({
+  category: "upcoming",
+  activeOnly: true,
+});
+const { events: pastEvents } = useEvents({
+  category: "past",
+  activeOnly: true,
+});
 
 function formatDate(dateStr: string) {
   const d = new Date(dateStr);

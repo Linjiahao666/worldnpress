@@ -75,6 +75,23 @@ function initDB(db: Database.Database) {
     // Tables don't exist yet, that's fine
   }
 
+  try {
+    const articleColumns = db.prepare("PRAGMA table_info(articles)").all() as Array<{ name: string }>
+    const articleColumnNames = new Set(articleColumns.map(c => c.name))
+
+    if (!articleColumnNames.has('content_html')) {
+      db.exec("ALTER TABLE articles ADD COLUMN content_html TEXT NOT NULL DEFAULT ''")
+      db.exec("UPDATE articles SET content_html = content WHERE content_html = ''")
+    }
+
+    if (!articleColumnNames.has('content_json')) {
+      db.exec("ALTER TABLE articles ADD COLUMN content_json TEXT")
+    }
+  }
+  catch {
+    // ignore when table not ready yet
+  }
+
   db.exec(`
     CREATE TABLE IF NOT EXISTS authors (
       id TEXT PRIMARY KEY,
@@ -87,6 +104,8 @@ function initDB(db: Database.Database) {
       title TEXT NOT NULL,
       summary TEXT NOT NULL DEFAULT '',
       content TEXT NOT NULL DEFAULT '',
+      content_html TEXT NOT NULL DEFAULT '',
+      content_json TEXT,
       cover_image TEXT DEFAULT '',
       category TEXT NOT NULL,
       section TEXT NOT NULL,
@@ -120,6 +139,35 @@ function initDB(db: Database.Database) {
       updated_at TEXT
     );
 
+    CREATE TABLE IF NOT EXISTS reporters (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      department TEXT NOT NULL,
+      position TEXT NOT NULL,
+      contact TEXT NOT NULL,
+      sort_order INTEGER DEFAULT 0,
+      is_active INTEGER DEFAULT 1,
+      created_at TEXT NOT NULL DEFAULT (datetime('now')),
+      updated_at TEXT
+    );
+
+    CREATE TABLE IF NOT EXISTS events (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      title_key TEXT NOT NULL,
+      date TEXT NOT NULL,
+      location_key TEXT NOT NULL,
+      type_key TEXT DEFAULT '',
+      status_key TEXT DEFAULT '',
+      desc_key TEXT DEFAULT '',
+      icon TEXT DEFAULT '',
+      color TEXT DEFAULT '',
+      category TEXT NOT NULL DEFAULT 'upcoming',
+      sort_order INTEGER DEFAULT 0,
+      is_active INTEGER DEFAULT 1,
+      created_at TEXT NOT NULL DEFAULT (datetime('now')),
+      updated_at TEXT
+    );
+
     CREATE INDEX IF NOT EXISTS idx_articles_section ON articles(section);
     CREATE INDEX IF NOT EXISTS idx_articles_category ON articles(category);
     CREATE INDEX IF NOT EXISTS idx_articles_published_at ON articles(published_at DESC);
@@ -127,6 +175,12 @@ function initDB(db: Database.Database) {
     CREATE INDEX IF NOT EXISTS idx_articles_is_featured ON articles(is_featured);
     CREATE INDEX IF NOT EXISTS idx_sections_sort_order ON sections(sort_order);
     CREATE INDEX IF NOT EXISTS idx_sections_show_on_home ON sections(show_on_home);
+    CREATE INDEX IF NOT EXISTS idx_reporters_sort_order ON reporters(sort_order);
+    CREATE INDEX IF NOT EXISTS idx_reporters_is_active ON reporters(is_active);
+    CREATE INDEX IF NOT EXISTS idx_events_category ON events(category);
+    CREATE INDEX IF NOT EXISTS idx_events_date ON events(date DESC);
+    CREATE INDEX IF NOT EXISTS idx_events_sort_order ON events(sort_order);
+    CREATE INDEX IF NOT EXISTS idx_events_is_active ON events(is_active);
   `)
 }
 
@@ -137,7 +191,7 @@ function mapRowToArticle(row: any): Article {
     id: row.id,
     title: row.title,
     summary: row.summary,
-    content: row.content,
+    content: row.content_html || row.content,
     coverImage: row.cover_image || '',
     category: row.category,
     section: row.section as Article['section'],
@@ -239,6 +293,7 @@ export function createArticle(data: {
   title: string
   summary: string
   content: string
+  contentJson?: string
   section: string
   category: string
   coverImage?: string
@@ -253,10 +308,10 @@ export function createArticle(data: {
     .run(authorId, data.author?.name || '編輯部', data.author?.avatar || '')
 
   db.prepare(`
-    INSERT INTO articles (id, title, summary, content, cover_image, category, section, author_id, tags_json, published_at, view_count, is_hot, is_featured, status)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0, 0, 'published')
+    INSERT INTO articles (id, title, summary, content, content_html, content_json, cover_image, category, section, author_id, tags_json, published_at, view_count, is_hot, is_featured, status)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0, 0, 'published')
   `).run(
-    id, data.title, data.summary, data.content, data.coverImage || '',
+    id, data.title, data.summary, data.content, data.content, data.contentJson || null, data.coverImage || '',
     data.category, data.section, authorId, JSON.stringify(data.tags || []),
     new Date().toISOString(),
   )
@@ -268,6 +323,7 @@ export function updateArticle(id: string, data: {
   title?: string
   summary?: string
   content?: string
+  contentJson?: string | null
   section?: string
   category?: string
   coverImage?: string
@@ -295,6 +351,8 @@ export function updateArticle(id: string, data: {
       title = ?,
       summary = ?,
       content = ?,
+      content_html = ?,
+      content_json = ?,
       cover_image = ?,
       category = ?,
       section = ?,
@@ -308,6 +366,8 @@ export function updateArticle(id: string, data: {
     data.title ?? existing.title,
     data.summary ?? existing.summary,
     data.content ?? existing.content,
+    data.content ?? existing.content_html ?? existing.content,
+    data.contentJson !== undefined ? data.contentJson : (existing.content_json ?? null),
     data.coverImage ?? existing.cover_image,
     data.category ?? existing.category,
     data.section ?? existing.section,
@@ -445,4 +505,71 @@ export function getSectionCategories(sectionId: string) {
     label_key: string
     icon: string
   }>
+}
+
+export interface ReporterRecord {
+  id: number
+  name: string
+  department: string
+  position: string
+  contact: string
+  sort_order: number
+  is_active: number
+  created_at: string
+  updated_at: string | null
+}
+
+export interface EventRecord {
+  id: number
+  title_key: string
+  date: string
+  location_key: string
+  type_key: string
+  status_key: string
+  desc_key: string
+  icon: string
+  color: string
+  category: 'upcoming' | 'past'
+  sort_order: number
+  is_active: number
+  created_at: string
+  updated_at: string | null
+}
+
+export function getReporters(options?: { activeOnly?: boolean }) {
+  const db = useDB()
+  const conditions: string[] = []
+  if (options?.activeOnly)
+    conditions.push('is_active = 1')
+  const where = conditions.length ? `WHERE ${conditions.join(' AND ')}` : ''
+  return db.prepare(`SELECT * FROM reporters ${where} ORDER BY sort_order ASC, id ASC`).all() as ReporterRecord[]
+}
+
+export function getEvents(options?: { category?: 'upcoming' | 'past', activeOnly?: boolean }) {
+  const db = useDB()
+  const conditions: string[] = []
+  const params: Array<string | number> = []
+
+  if (options?.category) {
+    conditions.push('category = ?')
+    params.push(options.category)
+  }
+  if (options?.activeOnly)
+    conditions.push('is_active = 1')
+
+  const where = conditions.length ? `WHERE ${conditions.join(' AND ')}` : ''
+  return db.prepare(`SELECT * FROM events ${where} ORDER BY sort_order ASC, date DESC, id DESC`).all(...params) as EventRecord[]
+}
+
+export function getEsgStats() {
+  const db = useDB()
+  const articleRow = db.prepare(`SELECT COUNT(*) as count FROM articles WHERE section = 'esg'`).get() as { count: number }
+  const categoryRow = db.prepare(`SELECT COUNT(*) as count FROM categories WHERE section = 'esg'`).get() as { count: number }
+  const viewsRow = db.prepare(`SELECT COALESCE(SUM(view_count), 0) as total FROM articles WHERE section = 'esg'`).get() as { total: number }
+
+  return {
+    totalArticles: articleRow.count,
+    totalCategories: categoryRow.count,
+    totalViews: viewsRow.total,
+  }
 }

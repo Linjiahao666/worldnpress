@@ -15,6 +15,101 @@ const defaultSections = [
   { id: 'brand', labelKey: 'nav.brand', icon: 'i-lucide-star', color: 'text-pink-600', sortOrder: 9, showOnHome: false },
 ]
 
+const defaultReporters = [
+  { name: '张明', department: '新闻采编部', position: '首席记者', contact: 'zhangming@worldnpress.com', sortOrder: 1 },
+  { name: '李华', department: '新闻采编部', position: '记者', contact: 'lihua@worldnpress.com', sortOrder: 2 },
+  { name: '王芳', department: 'ESG报道部', position: '高级记者', contact: 'wangfang@worldnpress.com', sortOrder: 3 },
+  { name: '陈伟', department: '财经报道部', position: '记者', contact: 'chenwei@worldnpress.com', sortOrder: 4 },
+  { name: '刘洋', department: '国际报道部', position: '驻外记者', contact: 'liuyang@worldnpress.com', sortOrder: 5 },
+]
+
+const defaultEvents = [
+  {
+    titleKey: 'events.page.upcoming.items.esgSummit.title',
+    date: '2026-04-15',
+    locationKey: 'events.page.upcoming.items.esgSummit.location',
+    typeKey: 'events.page.upcoming.items.esgSummit.type',
+    statusKey: 'events.page.status.open',
+    descKey: 'events.page.upcoming.items.esgSummit.desc',
+    icon: 'i-lucide-mountain',
+    color: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+    category: 'upcoming',
+    sortOrder: 1,
+  },
+  {
+    titleKey: 'events.page.upcoming.items.gbaForum.title',
+    date: '2026-05-20',
+    locationKey: 'events.page.upcoming.items.gbaForum.location',
+    typeKey: 'events.page.upcoming.items.gbaForum.type',
+    statusKey: 'events.page.status.soon',
+    descKey: 'events.page.upcoming.items.gbaForum.desc',
+    icon: 'i-lucide-globe',
+    color: 'bg-blue-50 text-blue-700 border-blue-200',
+    category: 'upcoming',
+    sortOrder: 2,
+  },
+  {
+    titleKey: 'events.page.upcoming.items.greenRoadshow.title',
+    date: '2026-06-10',
+    locationKey: 'events.page.upcoming.items.greenRoadshow.location',
+    typeKey: 'events.page.upcoming.items.greenRoadshow.type',
+    statusKey: 'events.page.status.preparing',
+    descKey: 'events.page.upcoming.items.greenRoadshow.desc',
+    icon: 'i-lucide-presentation',
+    color: 'bg-teal-50 text-teal-700 border-teal-200',
+    category: 'upcoming',
+    sortOrder: 3,
+  },
+  {
+    titleKey: 'events.page.upcoming.items.aiSeminar.title',
+    date: '2026-07-08',
+    locationKey: 'events.page.upcoming.items.aiSeminar.location',
+    typeKey: 'events.page.upcoming.items.aiSeminar.type',
+    statusKey: 'events.page.status.preparing',
+    descKey: 'events.page.upcoming.items.aiSeminar.desc',
+    icon: 'i-lucide-cloud',
+    color: 'bg-purple-50 text-purple-700 border-purple-200',
+    category: 'upcoming',
+    sortOrder: 4,
+  },
+  {
+    titleKey: 'events.page.past.items.esgRating.title',
+    date: '2025-12-15',
+    locationKey: 'events.page.past.items.esgRating.location',
+    typeKey: '',
+    statusKey: '',
+    descKey: '',
+    icon: '',
+    color: '',
+    category: 'past',
+    sortOrder: 101,
+  },
+  {
+    titleKey: 'events.page.past.items.carbonExpo.title',
+    date: '2025-11-08',
+    locationKey: 'events.page.past.items.carbonExpo.location',
+    typeKey: '',
+    statusKey: '',
+    descKey: '',
+    icon: '',
+    color: '',
+    category: 'past',
+    sortOrder: 102,
+  },
+  {
+    titleKey: 'events.page.past.items.economyTalk.title',
+    date: '2025-10-20',
+    locationKey: 'events.page.past.items.economyTalk.location',
+    typeKey: '',
+    statusKey: '',
+    descKey: '',
+    icon: '',
+    color: '',
+    category: 'past',
+    sortOrder: 103,
+  },
+]
+
 export default defineNitroPlugin(() => {
   // 确保 data 目录存在
   const dataDir = resolve(process.cwd(), 'data')
@@ -62,5 +157,46 @@ export default defineNitroPlugin(() => {
   }
 
   const articleCount = db.prepare('SELECT COUNT(*) as count FROM articles').get() as { count: number }
+
+  const reporterCount = db.prepare('SELECT COUNT(*) as count FROM reporters').get() as { count: number }
+  if (reporterCount.count === 0) {
+    console.log('[DB] Seeding reporters...')
+    const insertReporter = db.prepare(`
+      INSERT INTO reporters (name, department, position, contact, sort_order, is_active, created_at)
+      VALUES (?, ?, ?, ?, ?, 1, ?)
+    `)
+    const now = new Date().toISOString()
+    for (const item of defaultReporters) {
+      insertReporter.run(item.name, item.department, item.position, item.contact, item.sortOrder, now)
+    }
+    console.log('[DB] Reporters seeded.')
+  }
+
+  const eventCount = db.prepare('SELECT COUNT(*) as count FROM events').get() as { count: number }
+  if (eventCount.count === 0) {
+    console.log('[DB] Seeding events...')
+    const insertEvent = db.prepare(`
+      INSERT INTO events (title_key, date, location_key, type_key, status_key, desc_key, icon, color, category, sort_order, is_active, created_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?)
+    `)
+    const now = new Date().toISOString()
+    for (const item of defaultEvents) {
+      insertEvent.run(
+        item.titleKey,
+        item.date,
+        item.locationKey,
+        item.typeKey,
+        item.statusKey,
+        item.descKey,
+        item.icon,
+        item.color,
+        item.category,
+        item.sortOrder,
+        now,
+      )
+    }
+    console.log('[DB] Events seeded.')
+  }
+
   console.log(`[DB] Database ready. ${articleCount.count} articles in database.`)
 })

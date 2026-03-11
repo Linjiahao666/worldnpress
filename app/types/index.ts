@@ -113,3 +113,32 @@ export interface ArticleQuery {
   featured?: boolean
   search?: string
 }
+
+export interface Reporter {
+  id: number
+  name: string
+  department: string
+  position: string
+  contact: string
+  sortOrder: number
+  isActive: boolean
+  createdAt: string
+  updatedAt?: string | null
+}
+
+export interface EventItem {
+  id: number
+  titleKey: string
+  date: string
+  locationKey: string
+  typeKey: string
+  statusKey: string
+  descKey: string
+  icon: string
+  color: string
+  category: 'upcoming' | 'past'
+  sortOrder: number
+  isActive: boolean
+  createdAt: string
+  updatedAt?: string | null
+}

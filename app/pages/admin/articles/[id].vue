@@ -23,6 +23,7 @@ const form = reactive({
   title: "",
   summary: "",
   content: "",
+  contentJson: null as string | null,
   section: "global-economy" as string,
   category: "",
   coverImage: "",
@@ -123,6 +124,7 @@ async function handleSave() {
         title: form.title,
         summary: form.summary,
         content: form.content,
+        contentJson: form.contentJson,
         section: form.section,
         category: form.category,
         coverImage: form.coverImage,
@@ -314,11 +316,7 @@ async function handleSave() {
                 <label class="block text-sm font-medium text-slate-700 mb-1"
                   >內容 (HTML)</label
                 >
-                <UTextarea
-                  v-model="form.content"
-                  :rows="16"
-                  class="w-full [&_textarea]:min-h-64"
-                />
+                <AdminRichTextEditor v-model="form.content" />
               </div>
               <div>
                 <label class="block text-sm font-medium text-slate-700 mb-1"

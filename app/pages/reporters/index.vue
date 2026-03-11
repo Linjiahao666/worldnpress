@@ -3,51 +3,7 @@ const { t } = useI18n();
 
 useSeoMeta({ title: () => `${t("reporters.title")} - ${t("site.title")}` });
 
-interface Reporter {
-  id: number;
-  name: string;
-  department: string;
-  position: string;
-  contact: string;
-}
-
-const reporters = ref<Reporter[]>([
-  {
-    id: 1,
-    name: "张明",
-    department: "新闻采编部",
-    position: "首席记者",
-    contact: "zhangming@worldnpress.com",
-  },
-  {
-    id: 2,
-    name: "李华",
-    department: "新闻采编部",
-    position: "记者",
-    contact: "lihua@worldnpress.com",
-  },
-  {
-    id: 3,
-    name: "王芳",
-    department: "ESG报道部",
-    position: "高级记者",
-    contact: "wangfang@worldnpress.com",
-  },
-  {
-    id: 4,
-    name: "陈伟",
-    department: "财经报道部",
-    position: "记者",
-    contact: "chenwei@worldnpress.com",
-  },
-  {
-    id: 5,
-    name: "刘洋",
-    department: "国际报道部",
-    position: "驻外记者",
-    contact: "liuyang@worldnpress.com",
-  },
-]);
+const { reporters } = useReporters({ activeOnly: true });
 </script>
 
 <template>

@@ -17,6 +17,7 @@ const form = reactive({
   title: "",
   summary: "",
   content: "",
+  contentJson: null,
   section: "global-economy" as string,
   category: "",
   coverImage: "",
@@ -298,12 +299,9 @@ async function handleSubmit() {
                 <label class="block text-sm font-medium text-slate-700 mb-1">
                   內容 (支持 HTML) *
                 </label>
-                <UTextarea
+                <AdminRichTextEditor
                   v-model="form.content"
-                  :rows="16"
-                  placeholder="請輸入文章內容，支持 HTML 格式..."
-                  required
-                  class="w-full [&_textarea]:min-h-64"
+                  placeholder="請輸入文章內容..."
                 />
               </div>
 

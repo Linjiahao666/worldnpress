@@ -7,6 +7,7 @@ export default defineEventHandler(async (event) => {
     title: body.title,
     summary: body.summary,
     content: body.content,
+    contentJson: body.contentJson,
     section: body.section,
     category: body.category,
     coverImage: body.coverImage,

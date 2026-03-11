@@ -6,11 +6,12 @@ definePageMeta({
   middleware: ["admin-auth"],
 });
 
+const { t } = useI18n();
+
 useHead({
   title: () => `${t("admin.sections")} - WorldnPress ${t("admin.title")}`,
 });
 
-const { t } = useI18n();
 const localePath = useLocalePath();
 const toast = useToast();
 

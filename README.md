@@ -68,3 +68,25 @@ fix：
 4. 非新闻类页面（ai-data/events/brand/supervision/gba-hk/green-finance）重构布局 ✅
 5. SectionBlocks 网格改为 2x2 ✅
 6. 整体排版优化，侧边栏卡片化 ✅
+
+deploy：
+
+# 1. 拉取新代码
+
+cd ~/apps/worldnpress
+git pull
+
+# 2. 首次：安装 Node.js 和 pm2
+
+./deploy.sh setup
+
+# 3. 首次部署 + SSL 已有证书
+
+./deploy.sh deploy
+
+# 4. 如果需要重新申请 SSL（证书已经有了可跳过）
+
+# ./deploy.sh init-ssl
+
+skill：
+nuxt-news-portal

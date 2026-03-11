@@ -3,12 +3,12 @@ export default defineEventHandler(async (event) => {
 
   const id = getRouterParam(event, 'id')
   if (!id) {
-    throw createError({ statusCode: 400, statusMessage: '缺少模块ID' })
+    throw createError({ statusCode: 400, statusMessage: 'Article ID is required' })
   }
 
-  const deleted = deleteSection(id)
+  const deleted = deleteArticle(id)
   if (!deleted) {
-    throw createError({ statusCode: 404, statusMessage: '模块不存在' })
+    throw createError({ statusCode: 404, statusMessage: 'Article not found' })
   }
 
   return { success: true, id }

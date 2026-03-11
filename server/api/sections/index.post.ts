@@ -1,4 +1,6 @@
 export default defineEventHandler(async (event) => {
+  await requireAdminSession(event)
+
   const body = await readBody(event)
 
   if (!body.id || !body.labelKey) {

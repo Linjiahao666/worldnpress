@@ -2,12 +2,7 @@ import { mkdir, writeFile } from 'node:fs/promises'
 import { extname, join } from 'node:path'
 
 export default defineEventHandler(async (event) => {
-  const session = await useSession(event, {
-    password: 'worldnpress-admin-session-secret-2026!',
-  })
-  if (!session.data?.authenticated) {
-    throw createError({ statusCode: 401, statusMessage: '未授權，請先登錄' })
-  }
+  await requireAdminSession(event)
 
   const form = await readMultipartFormData(event)
   const file = form?.find((item) => item.name === 'file')

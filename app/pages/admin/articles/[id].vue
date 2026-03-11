@@ -13,6 +13,7 @@ useHead({
 const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
+const toast = useToast();
 
 const articleId = computed(() => route.params.id as string);
 
@@ -111,11 +112,32 @@ const isSubmitting = ref(false);
 async function handleSave() {
   isSubmitting.value = true;
   try {
-    // 後續接入：PUT /api/articles/:id
-    console.log("保存文章：", { id: articleId.value, ...form });
+    const tags = form.tags
+      .split(",")
+      .map((tag) => tag.trim())
+      .filter(Boolean);
+
+    await $fetch(`/api/articles/${articleId.value}`, {
+      method: "PUT" as never,
+      body: {
+        title: form.title,
+        summary: form.summary,
+        content: form.content,
+        section: form.section,
+        category: form.category,
+        coverImage: form.coverImage,
+        tags,
+        author: {
+          name: form.authorName || "編輯部",
+        },
+      },
+    });
+
+    toast.add({ title: "文章保存成功", color: "success" });
     router.push("/admin/articles");
   } catch (error) {
     console.error("保存文章失敗：", error);
+    toast.add({ title: "保存失敗", color: "error" });
   } finally {
     isSubmitting.value = false;
   }

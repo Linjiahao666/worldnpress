@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Article } from "~/types";
+import DOMPurify from "isomorphic-dompurify";
 
 const props = defineProps<{
   article: Article;
@@ -20,6 +21,14 @@ function formatDate(dateStr: string) {
 function formatViews(count: number) {
   return new Intl.NumberFormat(locale.value).format(count);
 }
+
+const sanitizedContent = computed(() =>
+  props.article.content
+    ? DOMPurify.sanitize(props.article.content, {
+        USE_PROFILES: { html: true },
+      })
+    : "",
+);
 </script>
 
 <template>
@@ -101,7 +110,7 @@ function formatViews(count: number) {
     <div
       v-else-if="article.content"
       class="article-content text-slate-700 leading-relaxed"
-      v-html="article.content"
+      v-html="sanitizedContent"
     />
     <p v-else class="text-slate-500">
       {{ t("common.noData") }}

@@ -264,6 +264,70 @@ export function createArticle(data: {
   return getArticleById(id)!
 }
 
+export function updateArticle(id: string, data: {
+  title?: string
+  summary?: string
+  content?: string
+  section?: string
+  category?: string
+  coverImage?: string
+  tags?: string[]
+  status?: 'draft' | 'published'
+  isHot?: boolean
+  isFeatured?: boolean
+  authorName?: string
+  authorAvatar?: string
+}): Article | null {
+  const db = useDB()
+  const existing = db.prepare('SELECT * FROM articles WHERE id = ?').get(id) as any
+  if (!existing) return null
+
+  if (data.authorName || data.authorAvatar) {
+    db.prepare('UPDATE authors SET name = ?, avatar = ? WHERE id = ?').run(
+      data.authorName ?? '',
+      data.authorAvatar ?? '',
+      existing.author_id,
+    )
+  }
+
+  db.prepare(`
+    UPDATE articles SET
+      title = ?,
+      summary = ?,
+      content = ?,
+      cover_image = ?,
+      category = ?,
+      section = ?,
+      tags_json = ?,
+      status = ?,
+      is_hot = ?,
+      is_featured = ?,
+      updated_at = ?
+    WHERE id = ?
+  `).run(
+    data.title ?? existing.title,
+    data.summary ?? existing.summary,
+    data.content ?? existing.content,
+    data.coverImage ?? existing.cover_image,
+    data.category ?? existing.category,
+    data.section ?? existing.section,
+    JSON.stringify(data.tags ?? JSON.parse(existing.tags_json || '[]')),
+    data.status ?? existing.status,
+    data.isHot !== undefined ? (data.isHot ? 1 : 0) : existing.is_hot,
+    data.isFeatured !== undefined ? (data.isFeatured ? 1 : 0) : existing.is_featured,
+    new Date().toISOString(),
+    id,
+  )
+
+  return getArticleById(id)
+}
+
+export function deleteArticle(id: string): boolean {
+  const db = useDB()
+  const result = db.prepare('DELETE FROM articles WHERE id = ?').run(id)
+  return result.changes > 0
+}
+
 export function getAdminStats() {
   const db = useDB()
   const articleCount = db.prepare('SELECT COUNT(*) as count FROM articles').get() as { count: number }

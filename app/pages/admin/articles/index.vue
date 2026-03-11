@@ -8,7 +8,31 @@ useHead({
   title: "文章管理 - WorldnPress",
 });
 
-const { articles, status } = useArticles({ page: 1, pageSize: 50 });
+const toast = useToast();
+const { articles, status, refresh } = useArticles({ page: 1, pageSize: 50 });
+const deletingId = ref<string | null>(null);
+
+async function handleDelete(articleId: string) {
+  const confirmed = confirm("確定要刪除這篇文章嗎？");
+  if (!confirmed) return;
+
+  deletingId.value = articleId;
+  try {
+    await $fetch(`/api/articles/${articleId}`, {
+      method: "DELETE" as never,
+    });
+    toast.add({ title: "文章已刪除", color: "success" });
+    await refresh();
+  } catch (error: any) {
+    toast.add({
+      title: "刪除失敗",
+      description: error?.data?.statusMessage,
+      color: "error",
+    });
+  } finally {
+    deletingId.value = null;
+  }
+}
 </script>
 
 <template>
@@ -98,6 +122,14 @@ const { articles, status } = useArticles({ page: 1, pageSize: 50 });
                         size="xs"
                         color="neutral"
                         variant="ghost"
+                      />
+                      <UButton
+                        icon="i-lucide-trash-2"
+                        size="xs"
+                        color="error"
+                        variant="ghost"
+                        :loading="deletingId === article.id"
+                        @click="handleDelete(article.id)"
                       />
                     </div>
                   </td>

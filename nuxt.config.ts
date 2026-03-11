@@ -3,6 +3,12 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
 
+  runtimeConfig: {
+    adminUsername: process.env.ADMIN_USERNAME,
+    adminPassword: process.env.ADMIN_PASSWORD,
+    sessionPassword: process.env.SESSION_PASSWORD,
+  },
+
   modules: [
     '@nuxt/ui',
     '@nuxtjs/i18n',

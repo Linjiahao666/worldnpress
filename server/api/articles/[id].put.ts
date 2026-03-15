@@ -7,20 +7,21 @@ export default defineEventHandler(async (event) => {
   }
 
   const body = await readBody(event)
+  const payload = normalizeArticlePayload(body, { partial: true })
   const updated = updateArticle(id, {
-    title: body.title,
-    summary: body.summary,
-    content: body.content,
-    contentJson: body.contentJson,
-    section: body.section,
-    category: body.category,
-    coverImage: body.coverImage,
-    tags: body.tags,
-    status: body.status,
-    isHot: body.isHot,
-    isFeatured: body.isFeatured,
-    authorName: body.author?.name,
-    authorAvatar: body.author?.avatar,
+    title: payload.title || undefined,
+    summary: payload.summary || undefined,
+    content: payload.content || undefined,
+    contentJson: payload.contentJson,
+    section: payload.section || undefined,
+    category: payload.category || undefined,
+    coverImage: payload.coverImage || undefined,
+    tags: payload.tags,
+    status: payload.status,
+    isHot: payload.isHot,
+    isFeatured: payload.isFeatured,
+    authorName: payload.author.name || undefined,
+    authorAvatar: payload.author.avatar || undefined,
   })
 
   if (!updated) {

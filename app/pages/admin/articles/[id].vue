@@ -110,7 +110,29 @@ const categoryOptions = computed(() => {
 
 const isSubmitting = ref(false);
 
+function hasMeaningfulContent(html: string) {
+  return (
+    html
+      .replace(/<[^>]+>/g, "")
+      .replace(/&nbsp;/g, "")
+      .trim().length > 0
+  );
+}
+
 async function handleSave() {
+  if (!form.title.trim()) {
+    toast.add({ title: "請輸入文章標題", color: "warning" });
+    return;
+  }
+  if (!form.summary.trim()) {
+    toast.add({ title: "請輸入文章摘要", color: "warning" });
+    return;
+  }
+  if (!hasMeaningfulContent(form.content)) {
+    toast.add({ title: "請輸入文章內容", color: "warning" });
+    return;
+  }
+
   isSubmitting.value = true;
   try {
     const tags = form.tags
@@ -316,7 +338,10 @@ async function handleSave() {
                 <label class="block text-sm font-medium text-slate-700 mb-1"
                   >內容 (HTML)</label
                 >
-                <AdminRichTextEditor v-model="form.content" />
+                <AdminRichTextEditor
+                  v-model="form.content"
+                  v-model:model-json="form.contentJson"
+                />
               </div>
               <div>
                 <label class="block text-sm font-medium text-slate-700 mb-1"

@@ -12,6 +12,7 @@ useHead({
 
 const { t } = useI18n();
 const router = useRouter();
+const toast = useToast();
 
 const form = reactive({
   title: "",
@@ -96,7 +97,29 @@ watch(
 
 const isSubmitting = ref(false);
 
+function hasMeaningfulContent(html: string) {
+  return (
+    html
+      .replace(/<[^>]+>/g, "")
+      .replace(/&nbsp;/g, "")
+      .trim().length > 0
+  );
+}
+
 async function handleSubmit() {
+  if (!form.title.trim()) {
+    toast.add({ title: "請輸入文章標題", color: "warning" });
+    return;
+  }
+  if (!form.summary.trim()) {
+    toast.add({ title: "請輸入文章摘要", color: "warning" });
+    return;
+  }
+  if (!hasMeaningfulContent(form.content)) {
+    toast.add({ title: "請輸入文章內容", color: "warning" });
+    return;
+  }
+
   isSubmitting.value = true;
   try {
     await $fetch("/api/articles", {
@@ -116,6 +139,7 @@ async function handleSubmit() {
     router.push("/admin/articles");
   } catch (error) {
     console.error("创建文章失败：", error);
+    toast.add({ title: "發佈失敗", color: "error" });
   } finally {
     isSubmitting.value = false;
   }
@@ -301,6 +325,7 @@ async function handleSubmit() {
                 </label>
                 <AdminRichTextEditor
                   v-model="form.content"
+                  v-model:model-json="form.contentJson"
                   placeholder="請輸入文章內容..."
                 />
               </div>

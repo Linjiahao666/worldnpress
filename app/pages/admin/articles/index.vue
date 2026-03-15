@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Article } from "~/types";
+
 definePageMeta({
   layout: "admin",
   middleware: ["admin-auth"],
@@ -12,16 +14,25 @@ const toast = useToast();
 const { articles, status, refresh } = useArticles({ page: 1, pageSize: 50 });
 const deletingId = ref<string | null>(null);
 
-async function handleDelete(articleId: string) {
-  const confirmed = confirm("確定要刪除這篇文章嗎？");
-  if (!confirmed) return;
+// 删除确认对话框
+const showDeleteDialog = ref(false);
+const deleteTarget = ref<Article | null>(null);
 
-  deletingId.value = articleId;
+function confirmDelete(article: Article) {
+  deleteTarget.value = article;
+  showDeleteDialog.value = true;
+}
+
+async function handleDelete() {
+  if (!deleteTarget.value) return;
+
+  deletingId.value = deleteTarget.value.id;
   try {
-    await $fetch(`/api/articles/${articleId}`, {
+    await $fetch(`/api/articles/${deleteTarget.value.id}`, {
       method: "DELETE" as never,
     });
     toast.add({ title: "文章已刪除", color: "success" });
+    showDeleteDialog.value = false;
     await refresh();
   } catch (error: any) {
     toast.add({
@@ -129,7 +140,7 @@ async function handleDelete(articleId: string) {
                         color="error"
                         variant="ghost"
                         :loading="deletingId === article.id"
-                        @click="handleDelete(article.id)"
+                        @click="confirmDelete(article)"
                       />
                     </div>
                   </td>
@@ -154,5 +165,62 @@ async function handleDelete(articleId: string) {
         </UButton>
       </div>
     </div>
+
+    <!-- 删除确认对话框 -->
+    <UModal v-model:open="showDeleteDialog">
+      <template #content>
+        <div class="bg-white rounded-xl overflow-hidden">
+          <div
+            class="flex items-center justify-between px-6 py-4 border-b border-slate-200"
+          >
+            <div class="flex items-center gap-2">
+              <div
+                class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center"
+              >
+                <UIcon
+                  name="i-lucide-alert-triangle"
+                  class="w-4 h-4 text-red-600"
+                />
+              </div>
+              <h3 class="text-lg font-bold text-slate-900">確認刪除文章</h3>
+            </div>
+            <button
+              class="p-1 rounded-lg hover:bg-slate-200 transition-colors"
+              @click="showDeleteDialog = false"
+            >
+              <UIcon name="i-lucide-x" class="w-5 h-5 text-slate-400" />
+            </button>
+          </div>
+          <div class="p-6">
+            <p class="text-sm text-slate-600">
+              確定要刪除文章
+              <strong class="text-slate-900">{{ deleteTarget?.title }}</strong>
+              嗎？
+            </p>
+            <p class="text-xs text-red-500 mt-2">
+              此操作不可撤銷，文章內容將被永久刪除。
+            </p>
+          </div>
+          <div
+            class="flex justify-end gap-3 px-6 py-4 border-t border-slate-200 bg-slate-50"
+          >
+            <UButton
+              variant="outline"
+              color="neutral"
+              @click="showDeleteDialog = false"
+            >
+              取消
+            </UButton>
+            <UButton
+              color="error"
+              :loading="!!deletingId"
+              @click="handleDelete"
+            >
+              確認刪除
+            </UButton>
+          </div>
+        </div>
+      </template>
+    </UModal>
   </div>
 </template>

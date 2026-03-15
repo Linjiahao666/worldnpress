@@ -186,12 +186,126 @@ function initDB(db: Database.Database) {
 
 // --- 数据映射 ---
 
+function extractTextFromTipTapNode(node: any): string {
+  if (!node || typeof node !== 'object') return ''
+  if (node.type === 'text') return typeof node.text === 'string' ? node.text : ''
+  if (node.type === 'hardBreak') return '\n'
+  if (Array.isArray(node.content)) {
+    return node.content.map(extractTextFromTipTapNode).join('')
+  }
+  return ''
+}
+
+function normalizeHeadingLevel(level: unknown): 2 | 3 {
+  const normalized = Number(level)
+  return normalized === 3 ? 3 : 2
+}
+
+function normalizeContentBlocks(parsed: unknown): Article['contentBlocks'] | undefined {
+  if (Array.isArray(parsed)) {
+    const blocks = parsed
+      .map((item): Article['contentBlocks'][number] | null => {
+        if (!item || typeof item !== 'object') return null
+        const block = item as Record<string, unknown>
+        const text = typeof block.text === 'string' ? block.text : ''
+
+        if (block.type === 'paragraph') return { type: 'paragraph', text }
+        if (block.type === 'quote') return { type: 'quote', text }
+        if (block.type === 'image') {
+          return {
+            type: 'image',
+            src: typeof block.src === 'string' ? block.src : '',
+            alt: typeof block.alt === 'string' ? block.alt : '',
+            caption: typeof block.caption === 'string' ? block.caption : '',
+          }
+        }
+
+        if (block.type === 'h2') return { type: 'heading', level: 2, text }
+        if (block.type === 'h3') return { type: 'heading', level: 3, text }
+        if (block.type === 'heading') {
+          return {
+            type: 'heading',
+            level: normalizeHeadingLevel(block.level),
+            text,
+          }
+        }
+
+        return null
+      })
+      .filter((item): item is Article['contentBlocks'][number] => !!item)
+
+    return blocks.length > 0 ? blocks : undefined
+  }
+
+  if (parsed && typeof parsed === 'object') {
+    const doc = parsed as Record<string, unknown>
+    if (doc.type !== 'doc' || !Array.isArray(doc.content)) return undefined
+
+    const blocks = doc.content
+      .map((node): Article['contentBlocks'][number] | null => {
+        if (!node || typeof node !== 'object') return null
+        const tiptapNode = node as Record<string, any>
+        const type = tiptapNode.type
+
+        if (type === 'paragraph') {
+          return {
+            type: 'paragraph',
+            text: extractTextFromTipTapNode(tiptapNode).trim(),
+          }
+        }
+
+        if (type === 'heading') {
+          return {
+            type: 'heading',
+            level: normalizeHeadingLevel(tiptapNode.attrs?.level),
+            text: extractTextFromTipTapNode(tiptapNode).trim(),
+          }
+        }
+
+        if (type === 'blockquote') {
+          return {
+            type: 'quote',
+            text: extractTextFromTipTapNode(tiptapNode).trim(),
+          }
+        }
+
+        if (type === 'image') {
+          return {
+            type: 'image',
+            src: typeof tiptapNode.attrs?.src === 'string' ? tiptapNode.attrs.src : '',
+            alt: typeof tiptapNode.attrs?.alt === 'string' ? tiptapNode.attrs.alt : '',
+            caption: typeof tiptapNode.attrs?.title === 'string' ? tiptapNode.attrs.title : '',
+          }
+        }
+
+        return null
+      })
+      .filter((item): item is Article['contentBlocks'][number] => !!item)
+
+    return blocks.length > 0 ? blocks : undefined
+  }
+
+  return undefined
+}
+
 function mapRowToArticle(row: any): Article {
+  let contentBlocks: Article['contentBlocks'] | undefined
+  if (row.content_json) {
+    try {
+      const parsed = JSON.parse(row.content_json)
+      contentBlocks = normalizeContentBlocks(parsed)
+    }
+    catch {
+      contentBlocks = undefined
+    }
+  }
+
   return {
     id: row.id,
     title: row.title,
     summary: row.summary,
     content: row.content_html || row.content,
+    contentBlocks,
     coverImage: row.cover_image || '',
     category: row.category,
     section: row.section as Article['section'],

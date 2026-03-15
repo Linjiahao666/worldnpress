@@ -24,6 +24,15 @@ interface BackupItem {
 const backups = ref<BackupItem[]>([]);
 const loading = ref(true);
 
+// 删除确认对话框
+const showDeleteDialog = ref(false);
+const deleteTargetFile = ref("");
+const isDeletingBackup = ref(false);
+
+// 恢复确认对话框
+const showRestoreDialog = ref(false);
+const restoreTargetFile = ref("");
+
 async function fetchBackups() {
   loading.value = true;
   try {
@@ -48,19 +57,22 @@ async function createBackup() {
   }
 }
 
-async function restoreBackup(fileName: string) {
-  const confirmed = window.confirm(
-    "恢复操作将覆盖当前数据库，系统会自动备份当前数据。确定要继续吗？",
-  );
-  if (!confirmed) return;
+function confirmRestore(fileName: string) {
+  restoreTargetFile.value = fileName;
+  showRestoreDialog.value = true;
+}
+
+async function restoreBackup() {
+  if (!restoreTargetFile.value) return;
 
   isRestoring.value = true;
-  restoringFile.value = fileName;
+  restoringFile.value = restoreTargetFile.value;
   try {
     await $fetch("/api/backup/restore", {
       method: "POST",
-      body: { fileName },
+      body: { fileName: restoreTargetFile.value },
     });
+    showRestoreDialog.value = false;
     await fetchBackups();
   } catch (err: any) {
     console.error("恢复失败:", err);
@@ -79,18 +91,26 @@ function downloadBackup(fileName: string) {
   document.body.removeChild(link);
 }
 
-async function deleteBackup(fileName: string) {
-  const confirmed = window.confirm("确认删除这个备份文件吗？此操作不可撤销。");
-  if (!confirmed) return;
+function confirmDeleteBackup(fileName: string) {
+  deleteTargetFile.value = fileName;
+  showDeleteDialog.value = true;
+}
 
+async function deleteBackup() {
+  if (!deleteTargetFile.value) return;
+
+  isDeletingBackup.value = true;
   try {
     await $fetch("/api/backup/delete", {
       method: "POST",
-      body: { fileName },
+      body: { fileName: deleteTargetFile.value },
     });
+    showDeleteDialog.value = false;
     await fetchBackups();
   } catch (err: any) {
     console.error("删除失败:", err);
+  } finally {
+    isDeletingBackup.value = false;
   }
 }
 
@@ -306,7 +326,7 @@ onMounted(() => {
                   size="xs"
                   icon="i-lucide-rotate-ccw"
                   :loading="isRestoring && restoringFile === backup.fileName"
-                  @click="restoreBackup(backup.fileName)"
+                  @click="confirmRestore(backup.fileName)"
                 >
                   恢复
                 </UButton>
@@ -315,7 +335,7 @@ onMounted(() => {
                   color="error"
                   size="xs"
                   icon="i-lucide-trash-2"
-                  @click="deleteBackup(backup.fileName)"
+                  @click="confirmDeleteBackup(backup.fileName)"
                 >
                   删除
                 </UButton>
@@ -348,5 +368,119 @@ onMounted(() => {
         </div>
       </div>
     </div>
+
+    <!-- 删除备份确认对话框 -->
+    <UModal v-model:open="showDeleteDialog">
+      <template #content>
+        <div class="bg-white rounded-xl overflow-hidden">
+          <div
+            class="flex items-center justify-between px-6 py-4 border-b border-slate-200"
+          >
+            <div class="flex items-center gap-2">
+              <div
+                class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center"
+              >
+                <UIcon
+                  name="i-lucide-alert-triangle"
+                  class="w-4 h-4 text-red-600"
+                />
+              </div>
+              <h3 class="text-lg font-bold text-slate-900">确认删除备份</h3>
+            </div>
+            <button
+              class="p-1 rounded-lg hover:bg-slate-200 transition-colors"
+              @click="showDeleteDialog = false"
+            >
+              <UIcon name="i-lucide-x" class="w-5 h-5 text-slate-400" />
+            </button>
+          </div>
+          <div class="p-6">
+            <p class="text-sm text-slate-600">
+              确认删除备份文件
+              <strong class="text-slate-900">{{ deleteTargetFile }}</strong>
+              吗？
+            </p>
+            <p class="text-xs text-red-500 mt-2">
+              此操作不可撤销，备份文件将被永久删除。
+            </p>
+          </div>
+          <div
+            class="flex justify-end gap-3 px-6 py-4 border-t border-slate-200 bg-slate-50"
+          >
+            <UButton
+              variant="outline"
+              color="neutral"
+              @click="showDeleteDialog = false"
+            >
+              取消
+            </UButton>
+            <UButton
+              color="error"
+              :loading="isDeletingBackup"
+              @click="deleteBackup"
+            >
+              确认删除
+            </UButton>
+          </div>
+        </div>
+      </template>
+    </UModal>
+
+    <!-- 恢复备份确认对话框 -->
+    <UModal v-model:open="showRestoreDialog">
+      <template #content>
+        <div class="bg-white rounded-xl overflow-hidden">
+          <div
+            class="flex items-center justify-between px-6 py-4 border-b border-slate-200"
+          >
+            <div class="flex items-center gap-2">
+              <div
+                class="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center"
+              >
+                <UIcon
+                  name="i-lucide-alert-triangle"
+                  class="w-4 h-4 text-amber-600"
+                />
+              </div>
+              <h3 class="text-lg font-bold text-slate-900">确认恢复备份</h3>
+            </div>
+            <button
+              class="p-1 rounded-lg hover:bg-slate-200 transition-colors"
+              @click="showRestoreDialog = false"
+            >
+              <UIcon name="i-lucide-x" class="w-5 h-5 text-slate-400" />
+            </button>
+          </div>
+          <div class="p-6">
+            <p class="text-sm text-slate-600">
+              确定要从备份
+              <strong class="text-slate-900">{{ restoreTargetFile }}</strong>
+              恢复数据库吗？
+            </p>
+            <p class="text-xs text-amber-600 mt-2">
+              恢复操作将覆盖当前数据库，系统会在恢复前自动创建一份安全备份。
+            </p>
+          </div>
+          <div
+            class="flex justify-end gap-3 px-6 py-4 border-t border-slate-200 bg-slate-50"
+          >
+            <UButton
+              variant="outline"
+              color="neutral"
+              @click="showRestoreDialog = false"
+            >
+              取消
+            </UButton>
+            <UButton
+              color="warning"
+              :loading="isRestoring"
+              @click="restoreBackup"
+            >
+              确认恢复
+            </UButton>
+          </div>
+        </div>
+      </template>
+    </UModal>
   </div>
 </template>

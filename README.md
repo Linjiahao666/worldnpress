@@ -82,6 +82,7 @@ git pull
 
 # 3. 首次部署 + SSL 已有证书
 
+chmod +x deploy.sh
 ./deploy.sh deploy
 
 # 4. 如果需要重新申请 SSL（证书已经有了可跳过）

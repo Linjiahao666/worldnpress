@@ -186,6 +186,24 @@ function formatViews(n: number) {
               模块管理
             </UButton>
             <UButton
+              to="/admin/reporters"
+              icon="i-lucide-users"
+              color="neutral"
+              variant="outline"
+              block
+            >
+              记者管理
+            </UButton>
+            <UButton
+              to="/admin/events"
+              icon="i-lucide-calendar"
+              color="neutral"
+              variant="outline"
+              block
+            >
+              活动管理
+            </UButton>
+            <UButton
               to="/admin/backup"
               icon="i-lucide-database-backup"
               color="neutral"

@@ -675,6 +675,167 @@ export function getEvents(options?: { category?: 'upcoming' | 'past', activeOnly
   return db.prepare(`SELECT * FROM events ${where} ORDER BY sort_order ASC, date DESC, id DESC`).all(...params) as EventRecord[]
 }
 
+// --- Reporters CRUD ---
+
+export function getReporterById(id: number): ReporterRecord | null {
+  const db = useDB()
+  return (db.prepare('SELECT * FROM reporters WHERE id = ?').get(id) as ReporterRecord) || null
+}
+
+export function createReporter(data: {
+  name: string
+  department: string
+  position: string
+  contact: string
+  sortOrder?: number
+  isActive?: boolean
+}): ReporterRecord {
+  const db = useDB()
+  const now = new Date().toISOString()
+  const result = db.prepare(`
+    INSERT INTO reporters (name, department, position, contact, sort_order, is_active, created_at)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
+  `).run(
+    data.name,
+    data.department,
+    data.position,
+    data.contact,
+    data.sortOrder ?? 0,
+    data.isActive !== false ? 1 : 0,
+    now,
+  )
+  return getReporterById(Number(result.lastInsertRowid))!
+}
+
+export function updateReporter(id: number, data: {
+  name?: string
+  department?: string
+  position?: string
+  contact?: string
+  sortOrder?: number
+  isActive?: boolean
+}): ReporterRecord | null {
+  const db = useDB()
+  const existing = getReporterById(id)
+  if (!existing) return null
+
+  const now = new Date().toISOString()
+  db.prepare(`
+    UPDATE reporters SET
+      name = ?, department = ?, position = ?, contact = ?,
+      sort_order = ?, is_active = ?, updated_at = ?
+    WHERE id = ?
+  `).run(
+    data.name ?? existing.name,
+    data.department ?? existing.department,
+    data.position ?? existing.position,
+    data.contact ?? existing.contact,
+    data.sortOrder ?? existing.sort_order,
+    data.isActive !== undefined ? (data.isActive ? 1 : 0) : existing.is_active,
+    now,
+    id,
+  )
+  return getReporterById(id)
+}
+
+export function deleteReporter(id: number): boolean {
+  const db = useDB()
+  const result = db.prepare('DELETE FROM reporters WHERE id = ?').run(id)
+  return result.changes > 0
+}
+
+// --- Events CRUD ---
+
+export function getEventById(id: number): EventRecord | null {
+  const db = useDB()
+  return (db.prepare('SELECT * FROM events WHERE id = ?').get(id) as EventRecord) || null
+}
+
+export function createEvent(data: {
+  titleKey: string
+  date: string
+  locationKey: string
+  typeKey?: string
+  statusKey?: string
+  descKey?: string
+  icon?: string
+  color?: string
+  category: 'upcoming' | 'past'
+  sortOrder?: number
+  isActive?: boolean
+}): EventRecord {
+  const db = useDB()
+  const now = new Date().toISOString()
+  const result = db.prepare(`
+    INSERT INTO events (title_key, date, location_key, type_key, status_key, desc_key, icon, color, category, sort_order, is_active, created_at)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `).run(
+    data.titleKey,
+    data.date,
+    data.locationKey,
+    data.typeKey || '',
+    data.statusKey || '',
+    data.descKey || '',
+    data.icon || '',
+    data.color || '',
+    data.category,
+    data.sortOrder ?? 0,
+    data.isActive !== false ? 1 : 0,
+    now,
+  )
+  return getEventById(Number(result.lastInsertRowid))!
+}
+
+export function updateEvent(id: number, data: {
+  titleKey?: string
+  date?: string
+  locationKey?: string
+  typeKey?: string
+  statusKey?: string
+  descKey?: string
+  icon?: string
+  color?: string
+  category?: 'upcoming' | 'past'
+  sortOrder?: number
+  isActive?: boolean
+}): EventRecord | null {
+  const db = useDB()
+  const existing = getEventById(id)
+  if (!existing) return null
+
+  const now = new Date().toISOString()
+  db.prepare(`
+    UPDATE events SET
+      title_key = ?, date = ?, location_key = ?, type_key = ?,
+      status_key = ?, desc_key = ?, icon = ?, color = ?,
+      category = ?, sort_order = ?, is_active = ?, updated_at = ?
+    WHERE id = ?
+  `).run(
+    data.titleKey ?? existing.title_key,
+    data.date ?? existing.date,
+    data.locationKey ?? existing.location_key,
+    data.typeKey ?? existing.type_key,
+    data.statusKey ?? existing.status_key,
+    data.descKey ?? existing.desc_key,
+    data.icon ?? existing.icon,
+    data.color ?? existing.color,
+    data.category ?? existing.category,
+    data.sortOrder ?? existing.sort_order,
+    data.isActive !== undefined ? (data.isActive ? 1 : 0) : existing.is_active,
+    now,
+    id,
+  )
+  return getEventById(id)
+}
+
+export function deleteEvent(id: number): boolean {
+  const db = useDB()
+  const result = db.prepare('DELETE FROM events WHERE id = ?').run(id)
+  return result.changes > 0
+}
+
+// --- ESG Stats ---
+
 export function getEsgStats() {
   const db = useDB()
   const articleRow = db.prepare(`SELECT COUNT(*) as count FROM articles WHERE section = 'esg'`).get() as { count: number }

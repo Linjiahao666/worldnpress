@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { categoriesBySection } from "~/utils/navigation";
+import type { Category, Section } from "~/types";
 
 definePageMeta({
   layout: "admin",
@@ -10,7 +10,7 @@ useHead({
   title: "編輯文章 - WorldnPress",
 });
 
-const { t } = useI18n();
+const { t, te } = useI18n();
 const route = useRoute();
 const router = useRouter();
 const toast = useToast();
@@ -24,7 +24,7 @@ const form = reactive({
   summary: "",
   content: "",
   contentJson: null as string | null,
-  section: "global-economy" as string,
+  section: "" as string,
   category: "",
   coverImage: "",
   tags: "",
@@ -92,20 +92,53 @@ watch(
   { immediate: true },
 );
 
-const sectionOptions = [
-  { label: "全球经济", value: "global-economy" },
-  { label: "大陸经济", value: "mainland-economy" },
-  { label: "产业经济", value: "industry" },
-  { label: "智库研究", value: "think-tank" },
-  { label: "数据中心", value: "data-center" },
-  { label: "新聞中心", value: "news" },
-  { label: "國際時政", value: "politics" },
-  { label: "ESG 可持續發展", value: "esg" },
-];
+const { data: sectionList } = useFetch<Section[]>("/api/sections", {
+  query: { active: "1" },
+});
+
+const sectionOptions = computed(() => {
+  return (sectionList.value ?? []).map((section) => ({
+    label: te(section.labelKey) ? t(section.labelKey) : section.id,
+    value: section.id,
+  }));
+});
+
+watch(
+  sectionOptions,
+  (options) => {
+    const firstOption = options[0];
+    if (!form.section && firstOption) {
+      form.section = firstOption.value;
+    }
+  },
+  { immediate: true },
+);
+
+const { data: categoryList } = useFetch<Category[]>("/api/categories", {
+  query: computed(() => ({ section: form.section })),
+  default: () => [],
+});
 
 const categoryOptions = computed(() => {
-  const cats = categoriesBySection[form.section] || [];
-  return cats.map((c) => ({ label: t(c.labelKey), value: c.slug }));
+  return (categoryList.value ?? []).map((category) => ({
+    label: te(category.labelKey) ? t(category.labelKey) : category.slug,
+    value: category.slug,
+  }));
+});
+
+watch(
+  () => form.section,
+  (newSection, oldSection) => {
+    if (oldSection && newSection !== oldSection) {
+      form.category = "";
+    }
+  },
+);
+
+watch(categoryOptions, (options) => {
+  if (!options.some((option) => option.value === form.category)) {
+    form.category = "";
+  }
 });
 
 const isSubmitting = ref(false);

@@ -751,7 +751,7 @@ export function getEventById(id: number): EventRecord | null {
   return (db.prepare('SELECT * FROM events WHERE id = ?').get(id) as EventRecord) || null
 }
 
-export function createEvent(data: {
+export function createEventRecord(data: {
   titleKey: string
   date: string
   locationKey: string

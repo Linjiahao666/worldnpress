@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, statusMessage: '分类必须是 upcoming 或 past' })
   }
 
-  const created = createEvent(body)
+  const created = createEventRecord(body)
   return {
     id: created.id,
     titleKey: created.title_key,

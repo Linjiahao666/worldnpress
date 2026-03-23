@@ -72,5 +72,21 @@ export default defineNuxtConfig({
     },
   },
 
+  vite: {
+    build: {
+      sourcemap: false,
+      reportCompressedSize: false,
+      rollupOptions: {
+        maxParallelFileOps: 2,
+      },
+    },
+  },
+
+  nitro: {
+    sourceMap: false,
+    timing: false,
+    compressPublicAssets: false,
+  },
+
   css: ['~/assets/css/main.css'],
 })

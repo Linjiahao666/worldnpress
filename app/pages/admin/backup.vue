@@ -11,8 +11,11 @@ useHead({
 const router = useRouter();
 const isLoggingOut = ref(false);
 const isCreating = ref(false);
+const isImporting = ref(false);
 const isRestoring = ref(false);
 const restoringFile = ref("");
+const importFile = ref<File | null>(null);
+const importFileInput = ref<HTMLInputElement | null>(null);
 
 interface BackupItem {
   fileName: string;
@@ -54,6 +57,49 @@ async function createBackup() {
     console.error("备份创建失败:", err);
   } finally {
     isCreating.value = false;
+  }
+}
+
+function onImportFileChange(event: Event) {
+  const target = event.target as HTMLInputElement | null;
+  const file = target?.files?.[0] || null;
+
+  if (!file) {
+    importFile.value = null;
+    return;
+  }
+
+  if (!file.name.toLowerCase().endsWith(".db")) {
+    importFile.value = null;
+    target.value = "";
+    return;
+  }
+
+  importFile.value = file;
+}
+
+async function importBackup() {
+  if (!importFile.value) return;
+
+  isImporting.value = true;
+  try {
+    const formData = new FormData();
+    formData.append("file", importFile.value);
+
+    await $fetch("/api/backup/import", {
+      method: "POST",
+      body: formData,
+    });
+
+    importFile.value = null;
+    if (importFileInput.value) {
+      importFileInput.value.value = "";
+    }
+    await fetchBackups();
+  } catch (err: any) {
+    console.error("导入备份失败:", err);
+  } finally {
+    isImporting.value = false;
   }
 }
 
@@ -234,6 +280,43 @@ onMounted(() => {
         </div>
       </UCard>
 
+      <!-- 导入备份 -->
+      <UCard class="mb-6">
+        <div class="flex items-center justify-between gap-6 flex-wrap">
+          <div class="flex items-center gap-3 min-w-0">
+            <div
+              class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center"
+            >
+              <UIcon name="i-lucide-file-up" class="w-5 h-5 text-blue-600" />
+            </div>
+            <div>
+              <h3 class="font-semibold text-slate-900">导入本地备份</h3>
+              <p class="text-sm text-slate-500">
+                上传本地 .db 备份文件，导入后可在下方列表执行恢复
+              </p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <input
+              ref="importFileInput"
+              type="file"
+              accept=".db"
+              class="block text-sm text-slate-500 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200"
+              @change="onImportFileChange"
+            />
+            <UButton
+              color="primary"
+              icon="i-lucide-upload"
+              :disabled="!importFile"
+              :loading="isImporting"
+              @click="importBackup"
+            >
+              {{ isImporting ? "正在导入..." : "导入备份" }}
+            </UButton>
+          </div>
+        </div>
+      </UCard>
+
       <!-- 备份列表 -->
       <UCard>
         <template #header>
@@ -363,6 +446,7 @@ onMounted(() => {
               </li>
               <li>建议定期创建备份，并将重要备份下载到本地保存</li>
               <li>备份文件存储在服务器 data/backups/ 目录下</li>
+              <li>可导入本地 .db 备份文件，再从列表执行恢复</li>
             </ul>
           </div>
         </div>

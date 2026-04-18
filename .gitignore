@@ -36,6 +36,6 @@ public/uploads/
 .docker/
 docker-compose.override.yml
 
-.github
+# .github
 
 .vscode

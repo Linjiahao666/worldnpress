@@ -10,7 +10,9 @@ useSeoMeta({
 
 const { articles: featuredArticles } = useTopViewedArticles(5);
 const { articles: latestArticles } = useArticles({ pageSize: 8 });
-const { articles: hotArticles } = useTopViewedArticles(10);
+const { articles: hotArticles } = useTopViewedArticles(10, {
+  dailyRandom: true,
+});
 </script>
 
 <template>

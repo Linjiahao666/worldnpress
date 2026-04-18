@@ -32,12 +32,6 @@ function formatDate(dateStr: string) {
     day: "numeric",
   }).format(new Date(dateStr));
 }
-
-function formatViews(count: number) {
-  return new Intl.NumberFormat(locale.value, {
-    notation: count > 10000 ? "compact" : "standard",
-  }).format(count);
-}
 </script>
 
 <template>
@@ -84,11 +78,6 @@ function formatViews(count: number) {
         <span>{{ article.author.name }}</span>
         <span>·</span>
         <span>{{ formatDate(article.publishedAt) }}</span>
-        <span>·</span>
-        <span class="flex items-center gap-1">
-          <UIcon name="i-lucide-eye" class="w-3 h-3" />
-          {{ formatViews(article.viewCount) }}
-        </span>
       </div>
     </div>
   </NuxtLink>

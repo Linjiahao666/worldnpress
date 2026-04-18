@@ -18,10 +18,6 @@ function formatDate(dateStr: string) {
   }).format(new Date(dateStr));
 }
 
-function formatViews(count: number) {
-  return new Intl.NumberFormat(locale.value).format(count);
-}
-
 const sanitizedContent = computed(() =>
   props.article.content
     ? DOMPurify.sanitize(props.article.content, {
@@ -69,10 +65,6 @@ const sanitizedContent = computed(() =>
       <span class="flex items-center gap-1">
         <UIcon name="i-lucide-clock" class="w-4 h-4" />
         {{ formatDate(article.publishedAt) }}
-      </span>
-      <span class="flex items-center gap-1">
-        <UIcon name="i-lucide-eye" class="w-4 h-4" />
-        {{ formatViews(article.viewCount) }}
       </span>
     </div>
 

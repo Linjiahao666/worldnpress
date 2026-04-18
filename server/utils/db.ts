@@ -390,8 +390,44 @@ export function incrementViewCount(id: string): number {
   return row?.view_count ?? 0
 }
 
-export function getTopViewedArticles(limit = 5): Article[] {
+function hashString(input: string): number {
+  let hash = 2166136261
+  for (let i = 0; i < input.length; i += 1) {
+    hash ^= input.charCodeAt(i)
+    hash = Math.imul(hash, 16777619)
+  }
+  return hash >>> 0
+}
+
+export function getTopViewedArticles(limit = 5, options?: { dailySeed?: string }): Article[] {
   const db = useDB()
+  const normalizedLimit = Number.isFinite(limit) ? Math.max(1, Math.floor(limit)) : 5
+  const dailySeed = options?.dailySeed?.trim()
+
+  if (dailySeed) {
+    const rows = db.prepare(`
+      SELECT a.*, au.name as author_name, au.avatar as author_avatar
+      FROM articles a
+      LEFT JOIN authors au ON a.author_id = au.id
+      WHERE a.status = 'published'
+    `).all() as any[]
+
+    return rows
+      .map(mapRowToArticle)
+      .map(article => ({
+        article,
+        score: hashString(`${dailySeed}:${article.id}`),
+      }))
+      .sort((a, b) => {
+        if (a.score !== b.score) return a.score - b.score
+        const publishedCompare = b.article.publishedAt.localeCompare(a.article.publishedAt)
+        if (publishedCompare !== 0) return publishedCompare
+        return a.article.id.localeCompare(b.article.id)
+      })
+      .slice(0, normalizedLimit)
+      .map(item => item.article)
+  }
+
   const rows = db.prepare(`
     SELECT a.*, au.name as author_name, au.avatar as author_avatar
     FROM articles a
@@ -399,7 +435,7 @@ export function getTopViewedArticles(limit = 5): Article[] {
     WHERE a.status = 'published'
     ORDER BY a.view_count DESC, a.published_at DESC
     LIMIT ?
-  `).all(limit) as any[]
+  `).all(normalizedLimit) as any[]
   return rows.map(mapRowToArticle)
 }
 

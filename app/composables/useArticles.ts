@@ -48,9 +48,14 @@ export function useFeaturedArticles(section?: string) {
   })
 }
 
-export function useTopViewedArticles(limit = 5) {
+export function useTopViewedArticles(limit = 5, options?: { dailyRandom?: boolean }) {
+  const fetchQuery: Record<string, string | number> = { limit }
+  if (options?.dailyRandom) {
+    fetchQuery.dailyRandom = 'true'
+  }
+
   const { data, status, refresh } = useFetch<Article[]>('/api/articles/top-viewed', {
-    query: { limit },
+    query: fetchQuery,
   })
 
   return {

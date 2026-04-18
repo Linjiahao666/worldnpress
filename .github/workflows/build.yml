@@ -50,6 +50,7 @@ jobs:
         with:
           name: nuxt-linux-build-${{ github.sha }}
           path: release
+          include-hidden-files: true
           retention-days: 7
 
       # ===================== 下面是新增的关键代码 =====================
@@ -57,7 +58,7 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/') # 只有打 tag 才执行
         run: |
           cd release
-          zip -r ../nuxt-app.zip ./*
+          zip -r ../nuxt-app.zip .
 
       - name: Upload to GitHub Release
         if: startsWith(github.ref, 'refs/tags/') # 只有打 tag 才执行

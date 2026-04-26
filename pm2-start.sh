@@ -52,6 +52,18 @@ load_env() {
   export PORT="${PORT:-3000}"
   export NUXT_HOST="${NUXT_HOST:-$HOST}"
   export NUXT_PORT="${NUXT_PORT:-$PORT}"
+
+  # Normalize runtimeConfig env vars to NUXT_* for Nuxt server runtime.
+  export NUXT_ADMIN_USERNAME="${NUXT_ADMIN_USERNAME:-${ADMIN_USERNAME:-}}"
+  export NUXT_ADMIN_PASSWORD="${NUXT_ADMIN_PASSWORD:-${ADMIN_PASSWORD:-}}"
+  export NUXT_SESSION_PASSWORD="${NUXT_SESSION_PASSWORD:-${SESSION_PASSWORD:-}}"
+  export NUXT_API_KEY="${NUXT_API_KEY:-${API_KEY:-}}"
+
+  # Keep non-prefixed vars aligned for backward compatibility.
+  export ADMIN_USERNAME="${ADMIN_USERNAME:-${NUXT_ADMIN_USERNAME:-}}"
+  export ADMIN_PASSWORD="${ADMIN_PASSWORD:-${NUXT_ADMIN_PASSWORD:-}}"
+  export SESSION_PASSWORD="${SESSION_PASSWORD:-${NUXT_SESSION_PASSWORD:-}}"
+  export API_KEY="${API_KEY:-${NUXT_API_KEY:-}}"
 }
 
 start_app() {

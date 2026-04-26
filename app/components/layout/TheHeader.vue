@@ -103,7 +103,7 @@ const formattedDate = computed(() =>
           >
             <span class="text-2xl font-black text-blue-700">IET</span>
             <div class="hidden sm:flex flex-col leading-tight">
-              <span class="text-base font-bold text-slate-800">{{
+              <span class="sm:text-2xl text-lg font-extrabold text-slate-800">{{
                 t("site.title")
               }}</span>
               <span class="text-xs text-slate-400">{{

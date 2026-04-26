@@ -1,14 +1,7 @@
 name: Build Nuxt
 
 on:
-  push:
-    branches:
-      - main
-    tags:
-      - "*"
-  pull_request:
-    branches:
-      - main
+  create:
   workflow_dispatch:
 
 # 必须加权限！否则不能上传 Release
@@ -17,6 +10,9 @@ permissions:
 
 jobs:
   build:
+    if: |
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'create' && github.event.ref_type == 'tag')
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
@@ -55,13 +51,13 @@ jobs:
 
       # ===================== 下面是新增的关键代码 =====================
       - name: Package release zip
-        if: startsWith(github.ref, 'refs/tags/') # 只有打 tag 才执行
+        if: github.event_name == 'create' && github.event.ref_type == 'tag' # 只有创建 tag 才执行
         run: |
           cd release
           zip -r ../nuxt-app.zip .
 
       - name: Upload to GitHub Release
-        if: startsWith(github.ref, 'refs/tags/') # 只有打 tag 才执行
+        if: github.event_name == 'create' && github.event.ref_type == 'tag' # 只有创建 tag 才执行
         uses: softprops/action-gh-release@v2
         with:
           files: nuxt-app.zip

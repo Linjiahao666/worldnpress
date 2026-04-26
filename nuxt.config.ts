@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     adminUsername: process.env.ADMIN_USERNAME,
     adminPassword: process.env.ADMIN_PASSWORD,
     sessionPassword: process.env.SESSION_PASSWORD,
+    apiKey: process.env.API_KEY,
   },
 
   modules: [

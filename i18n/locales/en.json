@@ -407,9 +407,10 @@
     "viewAll": "View All"
   },
   "footer": {
-    "companyName": "International Economy Times",
-    "companyNameEn": "International Economy Times",
-    "address": "B27 SHINGLEE COMMERCIAL BUILDING 8 WING KUT STREET, CENTRAL HK",
+    "brandName": "International Economy News",
+    "companyName": "International Social Responsibility News Agency Co., Limited",
+    "companyNameEn": "INTERNATIONAL SOCIAL RESPONSIBILITY NEWS AGENCY CO., LIMITED",
+    "address": "B27 SHING LEE COMMERCIAL BUILDING 8 WING KUT STREET, CENTRAL HK",
     "phone": "+85234667423",
     "fax": "+85226916469",
     "email": "info{'@'}worldnpress.com",
@@ -434,6 +435,19 @@
       "title": "Compliance Disclosure",
       "disclaimer": "All materials and information published on this website are for reference only. This website shall not be liable for any direct or indirect losses arising from the use of materials on this website.",
       "copyright": "Unauthorized reproduction, copying, or mirroring is prohibited."
+    },
+    "printUnit": {
+      "title": "Printed by",
+      "nameZh": "International Social Responsibility News Agency Co., Limited",
+      "nameEn": "INTERNATIONAL SOCIAL RESPONSIBILITY NEWS AGENCY CO., LIMITED",
+      "addressZhLabel": "Chinese Address",
+      "addressEnLabel": "English Address",
+      "addressZh": "Hong Kong Central, 8 Wing Kut Street, Shing Lee Commercial Building, Room B27",
+      "addressEn": "B27 SHING LEE COMMERCIAL BUILDING 8 WING KUT STREET, CENTRAL HK",
+      "phoneLabel": "Tel",
+      "faxLabel": "Fax",
+      "phone": "+85234667423",
+      "fax": "+85226916469"
     }
   },
   "reporters": {

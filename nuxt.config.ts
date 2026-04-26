@@ -4,10 +4,10 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   runtimeConfig: {
-    adminUsername: process.env.ADMIN_USERNAME,
-    adminPassword: process.env.ADMIN_PASSWORD,
-    sessionPassword: process.env.SESSION_PASSWORD,
-    apiKey: process.env.API_KEY,
+    adminUsername: process.env.NUXT_ADMIN_USERNAME || process.env.ADMIN_USERNAME,
+    adminPassword: process.env.NUXT_ADMIN_PASSWORD || process.env.ADMIN_PASSWORD,
+    sessionPassword: process.env.NUXT_SESSION_PASSWORD || process.env.SESSION_PASSWORD,
+    apiKey: process.env.NUXT_API_KEY || process.env.API_KEY,
   },
 
   modules: [
